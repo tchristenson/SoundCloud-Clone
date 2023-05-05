@@ -1,6 +1,5 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
 from werkzeug.security import generate_password_hash, check_password_hash
-from sqlalchemy.schema import ForeignKey
 from flask_login import UserMixin
 
 
@@ -14,15 +13,6 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(40), nullable=False, unique=True)
     email = db.Column(db.String(255), nullable=False, unique=True)
     hashed_password = db.Column(db.String(255), nullable=False)
-    bio = db.Column(db.String(255))
-    alias = db.Column(db.String(40))
-    profile_image = db.Column(db.String(40), nullable=False)
-    first_name = db.Column(db.String(40), nullable=False)
-    last_name = db.Column(db.String(40))
-    style_id = db.Column(db.Integer, ForeignKey('styles.id'))
-
-
-
 
     @property
     def password(self):
@@ -39,11 +29,5 @@ class User(db.Model, UserMixin):
         return {
             'id': self.id,
             'username': self.username,
-            'email': self.email,
-            'alias': self.alias,
-            'bio': self.bio,
-            'profileImage': self.profile_image,
-            'firstName': self.first_name,
-            'lastName': self.last_name,
-            'styleId': self.style_id
+            'email': self.email
         }
