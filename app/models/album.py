@@ -1,7 +1,8 @@
 from .db import db, environment, SCHEMA
 from sqlalchemy.schema import ForeignKey
-from user import User
-from style import Style
+# from .user import User
+# from .style import Style
+# from .song import Song
 
 
 class Album(db.Model):
@@ -17,9 +18,10 @@ class Album(db.Model):
     style_id = db.Column(db.Integer, ForeignKey('styles.id'))
     cover_image = db.Column(db.String)
 
+    owner = db.relationship('User', back_populates='albums')
+    style = db.relationship('Style', back_populates='albums')
+
     songs = db.relationship('Song', back_populates='album')
-    owner = db.relationship('User', back_populates='album')
-    style = db.relationship('Style', back_populates='album')
 
 
 

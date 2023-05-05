@@ -1,7 +1,7 @@
 from .db import db, environment, SCHEMA
 from sqlalchemy.schema import ForeignKey
-from user import User
-from song import Song
+# from .user import User
+# from .song import Song
 
 
 
@@ -16,7 +16,7 @@ class Like(db.Model):
     song_id = db.Column(db.Integer, ForeignKey('songs.id'))
 
     owner = db.relationship('User', back_populates='likes')
-    songs = db.relationship('Song', back_populates='likes')
+    song = db.relationship('Song', back_populates='likes')
 
     def to_dict(self):
         return {

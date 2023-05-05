@@ -2,7 +2,11 @@ from .db import db, environment, SCHEMA, add_prefix_for_prod
 from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy.schema import ForeignKey
 from flask_login import UserMixin
-from style import Style
+# from .style import Style
+# from .song import Song
+# from .album import Album
+# from .like import Like
+
 
 
 class User(db.Model, UserMixin):
@@ -22,7 +26,8 @@ class User(db.Model, UserMixin):
     last_name = db.Column(db.String(40))
     style_id = db.Column(db.Integer, ForeignKey('styles.id'))
 
-    style = db.relationship('Style', back_populates='owner')
+    style = db.relationship('Style', back_populates='owners')
+
     songs = db.relationship('Song', back_populates='owner')
     albums = db.relationship('Album', back_populates='owner')
     likes = db.relationship('Like', back_populates='owner')

@@ -1,6 +1,9 @@
 from .db import db, environment, SCHEMA
 from sqlalchemy.schema import ForeignKey
-from user import User
+# from .user import User
+# from .album import Album
+# from .style import Style
+# from .like import Like
 
 
 class Song(db.Model):
@@ -21,7 +24,8 @@ class Song(db.Model):
     owner = db.relationship('User', back_populates='songs')
     album = db.relationship('Album', back_populates='songs')
     style = db.relationship('Style', back_populates='songs')
-    likes = db.relationship('Like', back_populates='songs')
+
+    likes = db.relationship('Like', back_populates='song')
 
     def to_dict(self):
         return {
