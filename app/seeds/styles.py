@@ -24,7 +24,7 @@ def seed_styles():
         db.session.add(style)
         db.session.commit()
 
-def undo_users():
+def undo_styles():
     if environment == "production":
         db.session.execute(f"TRUNCATE table {SCHEMA}.styles RESTART IDENTITY CASCADE;")
     else:

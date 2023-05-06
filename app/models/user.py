@@ -24,7 +24,7 @@ class User(db.Model, UserMixin):
     profile_image = db.Column(db.String(40))
     first_name = db.Column(db.String(40))
     last_name = db.Column(db.String(40))
-    style_id = db.Column(db.Integer, ForeignKey('styles.id'))
+    style_id = db.Column(db.Integer, ForeignKey(add_prefix_for_prod('styles.id')))
 
     style = db.relationship('Style', back_populates='owners')
 
