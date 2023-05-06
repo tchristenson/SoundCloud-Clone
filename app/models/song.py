@@ -1,9 +1,9 @@
-from .db import db, environment, SCHEMA
+from .db import db, environment, SCHEMA, add_prefix_for_prod
 from sqlalchemy.schema import ForeignKey
 # from .user import User
 # from .album import Album
 # from .style import Style
-# from .like import Like
+from .like import likes
 
 
 class Song(db.Model):
@@ -13,11 +13,11 @@ class Song(db.Model):
         __table_args__ = {'schema': SCHEMA}
 
     id = db.Column(db.Integer, primary_key=True)
-    owner_id = db.Column(db.Integer, ForeignKey('users.id'))
-    album_id = db.Column(db.Integer, ForeignKey('albums.id'))
+    owner_id = db.Column(db.Integer, ForeignKey(add_prefix_for_prod('users.id')))
+    album_id = db.Column(db.Integer, ForeignKey(add_prefix_for_prod('albums.id')))
     name = db.Column(db.String(50), nullable=False)
     runtime = db.Column(db.String) # Undecided on datatype. Date, datetime, or integer?
-    style_id = db.Column(db.Integer, ForeignKey('styles.id'))
+    style_id = db.Column(db.Integer, ForeignKey(add_prefix_for_prod('styles.id')))
     cover_image = db.Column(db.String)
     content = db.Column(db.String, nullable=False) # Keeping as a string for now. TBD based on AWS
 
@@ -25,7 +25,7 @@ class Song(db.Model):
     album = db.relationship('Album', back_populates='songs')
     style = db.relationship('Style', back_populates='songs')
 
-    likes = db.relationship('Like', back_populates='song')
+    likes = db.relationship('Like', secondary=likes, back_populates='song')
 
     def to_dict(self):
         return {
@@ -36,5 +36,6 @@ class Song(db.Model):
             'name': self.name,
             'runtime': self.runtime,
             'coverImage': self.cover_image,
-            'content': self.content
+            'content': self.content,
+            'likes': len(self.likes)
         }

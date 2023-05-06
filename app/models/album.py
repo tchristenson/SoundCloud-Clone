@@ -1,4 +1,4 @@
-from .db import db, environment, SCHEMA
+from .db import db, environment, SCHEMA, add_prefix_for_prod
 from sqlalchemy.schema import ForeignKey
 # from .user import User
 # from .style import Style
@@ -12,10 +12,10 @@ class Album(db.Model):
         __table_args__ = {'schema': SCHEMA}
 
     id = db.Column(db.Integer, primary_key=True)
-    owner_id = db.Column(db.Integer, ForeignKey('users.id'))
+    owner_id = db.Column(db.Integer, ForeignKey(add_prefix_for_prod('users.id')))
     name = db.Column(db.String(50), nullable=False)
     total_runtime = db.Column(db.String)  #Undecided on datatype. Date, datetime, integer?
-    style_id = db.Column(db.Integer, ForeignKey('styles.id'))
+    style_id = db.Column(db.Integer, ForeignKey(add_prefix_for_prod('styles.id')))
     cover_image = db.Column(db.String)
 
     owner = db.relationship('User', back_populates='albums')

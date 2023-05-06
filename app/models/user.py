@@ -5,7 +5,7 @@ from flask_login import UserMixin
 # from .style import Style
 # from .song import Song
 # from .album import Album
-# from .like import Like
+from .like import likes
 
 
 
@@ -30,7 +30,7 @@ class User(db.Model, UserMixin):
 
     songs = db.relationship('Song', back_populates='owner')
     albums = db.relationship('Album', back_populates='owner')
-    likes = db.relationship('Like', back_populates='owner')
+    likes = db.relationship('Like', secondary=likes, back_populates='owner')
 
 
 
@@ -56,5 +56,6 @@ class User(db.Model, UserMixin):
             'profileImage': self.profile_image,
             'firstName': self.first_name,
             'lastName': self.last_name,
-            'styleId': self.style_id
+            'styleId': self.style_id,
+            'likes': self.likes
         }
