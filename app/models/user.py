@@ -21,8 +21,8 @@ class User(db.Model, UserMixin):
     hashed_password = db.Column(db.String(255), nullable=False)
     bio = db.Column(db.String(255))
     alias = db.Column(db.String(40))
-    profile_image = db.Column(db.String(40), nullable=False)
-    first_name = db.Column(db.String(40), nullable=False)
+    profile_image = db.Column(db.String(40))
+    first_name = db.Column(db.String(40))
     last_name = db.Column(db.String(40))
     style_id = db.Column(db.Integer, ForeignKey('styles.id'))
 
