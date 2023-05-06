@@ -25,7 +25,7 @@ class Song(db.Model):
     album = db.relationship('Album', back_populates='songs')
     style = db.relationship('Style', back_populates='songs')
 
-    likes = db.relationship('Like', secondary=likes, back_populates='song')
+    song_likes = db.relationship('User', secondary=likes, back_populates='user_likes')
 
     def to_dict(self):
         return {
@@ -37,5 +37,5 @@ class Song(db.Model):
             'runtime': self.runtime,
             'coverImage': self.cover_image,
             'content': self.content,
-            'likes': len(self.likes)
+            'likes': len(self.song_likes)
         }
