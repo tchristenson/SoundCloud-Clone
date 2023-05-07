@@ -1,6 +1,12 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
 from werkzeug.security import generate_password_hash, check_password_hash
+from sqlalchemy.schema import ForeignKey
 from flask_login import UserMixin
+# from .style import Style
+# from .song import Song
+# from .album import Album
+from .like import likes
+
 
 
 class User(db.Model, UserMixin):
@@ -13,6 +19,21 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(40), nullable=False, unique=True)
     email = db.Column(db.String(255), nullable=False, unique=True)
     hashed_password = db.Column(db.String(255), nullable=False)
+    bio = db.Column(db.String(255))
+    alias = db.Column(db.String(40))
+    profile_image = db.Column(db.String(40))
+    first_name = db.Column(db.String(40))
+    last_name = db.Column(db.String(40))
+    style_id = db.Column(db.Integer, ForeignKey(add_prefix_for_prod('styles.id')))
+
+    style = db.relationship('Style', back_populates='owners')
+
+    songs = db.relationship('Song', back_populates='owner')
+    albums = db.relationship('Album', back_populates='owner')
+    user_likes = db.relationship('Song', secondary=likes, back_populates='song_likes')
+
+
+
 
     @property
     def password(self):
@@ -29,5 +50,12 @@ class User(db.Model, UserMixin):
         return {
             'id': self.id,
             'username': self.username,
-            'email': self.email
+            'email': self.email,
+            'alias': self.alias,
+            'bio': self.bio,
+            'profileImage': self.profile_image,
+            'firstName': self.first_name,
+            'lastName': self.last_name,
+            'styleId': self.style_id,
+            'likes': self.user_likes
         }
