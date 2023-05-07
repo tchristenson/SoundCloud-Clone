@@ -19,14 +19,16 @@ function SongPage() {
     return <h1>testerrrrr</h1>;
   }
   return (
-    // <div>
-    //   <div>{songs[0].name}</div>
-    //   <div>Song Page response</div>
-    // </div>
-
     <div id="songPage">
-      {songs?.map(({name, runtime, coverImage, content, id})=>(
-        <div key={id}>{name}</div>
+      {songs?.map(({name,albumId, styleId, ownerId, runtime, coverImage, content, id})=>(
+        <div key={id}>
+          <div className="playlogo"></div>
+          <div>{name}</div>
+          <div>artist name ? (artist id):{ownerId} , style: {styleId}</div>
+          <div>album name? album id: {albumId}</div>
+          <div>wav thing</div>
+          <div>{coverImage}</div>
+        </div>
       ))}
     </div>
   );
