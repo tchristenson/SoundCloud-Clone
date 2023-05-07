@@ -24,7 +24,7 @@ function SongPage() {
         <div key={id}>
           <div className="playlogo"></div>
           <div>{name}</div>
-          <div>artist name ? (artist id):{ownerId} , style: {styleId}</div>
+          <div>user name ? (owner id):{ownerId} , style: {styleId}</div>
           <div>album name? album id: {albumId}</div>
           <div>wav thing</div>
           <div>{coverImage}</div>

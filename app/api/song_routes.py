@@ -1,5 +1,6 @@
 from flask import Blueprint
-from app.models import Song
+from app.models import Song, User
+
 
 
 song_routes = Blueprint('songs', __name__)
@@ -11,6 +12,13 @@ def songs():
     songs = Song.query.all()
     return {'songs': [song.to_dict() for song in songs]}
 
+@song_routes.route('/current')
+def user_songs():
+    """Query for songs owned by the current user"""
+    # songs = Song.query.filter(Song.owner_id.like(User.id)).all()
+    songs = Song.query.join(User, User.id == Song.owner_id).all()
+    return {'songs': [song.to_dict() for song in songs]}
+
 @song_routes.route('/<int:id>')
 def song(id):
     """
@@ -18,5 +26,3 @@ def song(id):
     """
     song = Song.query.get(id)
     return song.to_dict()
-
-

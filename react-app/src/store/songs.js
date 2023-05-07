@@ -39,6 +39,17 @@ export const getOneSongThunk = (songId) => async (dispatch) => {
   }
 }
 
+export const getCurrentUsersSongsThunk = () => async (dispatch) => {
+  const res = await fetch(`/api/songs/current`)
+
+  if(res.ok) {
+    const userSongs = await res.json()
+    dispatch(getAllSongsAction(userSongs))
+  } else {
+    return console.log("get current user songs: res not ok")
+  }
+}
+
 const initState = {};
 function songReducer(state = initState, action){
     let newState;

@@ -23,8 +23,12 @@ function SongPageSingle() {
     return (
         <div id="singSongPage">
             <h1>single song page</h1>
-            {song.name}
-            {song.runtime}
+            <div className="playlogo"></div>
+            <div>{song.name}</div>
+            <div>user name ? (owner id):{song.ownerId} , style: {song.styleId}</div>
+            <div>album name? album id: {song.albumId}</div>
+            <div>wav thing</div>
+            <div>{song.coverImage}</div>
         </div>
     )
 }
