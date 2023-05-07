@@ -7,6 +7,7 @@ import { authenticate } from "./store/session";
 import Navigation from "./components/Navigation";
 import UserProfilePage from "./components/UserProfilePage";
 import SongPage from "./components/SongPage";
+import SongPageSingle from "./components/SongPageSingle";
 import AlbumPage from "./components/AlbumPage";
 
 function App() {
@@ -33,8 +34,11 @@ function App() {
           <Route exact path="/songs">
             <SongPage />
           </Route>
+          <Route exact path="/songs/:songId">
+            <SongPageSingle />
+          </Route>
           <Route exact path="/albums/:albumId">
-            <AlbumPage />            
+            <AlbumPage />
           </Route>
         </Switch>
       )}

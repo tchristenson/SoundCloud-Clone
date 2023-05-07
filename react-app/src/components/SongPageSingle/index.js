@@ -24,6 +24,7 @@ function SongPageSingle() {
         <div id="singSongPage">
             <h1>single song page</h1>
             {song.name}
+            {song.runtime}
         </div>
     )
 }
