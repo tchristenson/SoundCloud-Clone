@@ -1,5 +1,5 @@
 // ACTIONS
-const GET_ONE_ALBUM = 'albums/getOneAlbum'
+const GET_ONE_ALBUM = '/GET_ONE_ALBUM'
 
 const getOneAlbumAction = (album) => {
   return {
@@ -10,8 +10,10 @@ const getOneAlbumAction = (album) => {
 
 
 // THUNKS
-export const getOneAlbumThunk = (albumId) = async (dispatch) => {
+export const getOneAlbumThunk = (albumId) => async (dispatch) => {
   const response = await fetch(`/api/albums/${albumId}`)
+  console.log('response ', response)
+
   if (response.ok) {
     const album = await response.json()
     dispatch(getOneAlbumAction(album))
@@ -32,3 +34,5 @@ const albumReducer = (state = {}, action) => {
       return state
   }
 }
+
+export default albumReducer;
