@@ -1,5 +1,13 @@
 // ACTIONS
-const GET_ONE_ALBUM = '/GET_ONE_ALBUM'
+const GET_ALL_ALBUMS = 'albums/GET_ALL_ALBUMS'
+const GET_ONE_ALBUM = 'albums/GET_ONE_ALBUM'
+
+const getAllAlbumsAction = (albums) => {
+  return {
+    type: GET_ALL_ALBUMS,
+    albums
+  }
+}
 
 const getOneAlbumAction = (album) => {
   return {
@@ -10,6 +18,15 @@ const getOneAlbumAction = (album) => {
 
 
 // THUNKS
+export const getAllAlbumsThunk = () => async (dispatch) => {
+  const response = await fetch('/api/albums')
+  if (response.ok) {
+    const albums = await response.json()
+    dispatch(getAllAlbumsAction(albums))
+    return albums
+  }
+}
+
 export const getOneAlbumThunk = (albumId) => async (dispatch) => {
   const response = await fetch(`/api/albums/${albumId}`)
   console.log('response ', response)
