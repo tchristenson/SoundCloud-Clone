@@ -11,3 +11,13 @@ def songs():
     songs = Song.query.all()
 
     return {'songs': [song.to_dict() for song in songs]}
+
+@song_routes.route('/<int:id>')
+def song(id):
+    """
+    Query for a song by id and returns that song in a dictionary
+    """
+    song = Song.query.get(id)
+    return song.to_dict()
+
+
