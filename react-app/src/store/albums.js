@@ -43,6 +43,10 @@ export const getOneAlbumThunk = (albumId) => async (dispatch) => {
 const albumReducer = (state = {}, action) => {
   let newState
   switch (action.type) {
+    case GET_ALL_ALBUMS:
+      newState = {...state}
+      action.albums.Albums.forEach(album => newState[album.id] = album)
+      return newState
     case GET_ONE_ALBUM:
       newState = {...state}
       newState[action.album.id] = action.album

@@ -8,7 +8,7 @@ album_routes = Blueprint('albums', __name__)
 def get_all_albums():
     """Query for all albums and return them in a list of dictionaries"""
     albums = Album.query.all()
-    return {'albums': [album.to_dict() for album in albums]}
+    return {'Albums': [album.to_dict() for album in albums]}
 
 
 @album_routes.route('/<int:id>')
