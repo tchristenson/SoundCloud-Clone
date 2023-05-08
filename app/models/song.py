@@ -37,5 +37,5 @@ class Song(db.Model):
             'runtime': self.runtime,
             'coverImage': self.cover_image,
             'content': self.content,
-            'likes': len(self.song_likes)
+            'likes': len(self.user_likes)
         }
