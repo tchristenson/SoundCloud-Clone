@@ -1,9 +1,16 @@
 const GET_ALL_SONGS = "/GET_SONGS";
+const GET_USERS_SONGS = "/GET_USERS_SONGS";
 const GET_SONG = "/GET_SONG";
 
 const getAllSongsAction = (songs) => {
   return {
     type: GET_ALL_SONGS,
+    songs,
+  };
+};
+const getAllSongsAction2 = (songs) => {
+  return {
+    type: GET_USERS_SONGS,
     songs,
   };
 };
@@ -19,7 +26,7 @@ export const getAllSongsThunk = () => async (dispatch) => {
     const response = await fetch("/api/songs");
     console.log('response', response)
   if (response.ok) {
-    const{songs} = await response.json();
+    const {songs} = await response.json();
     console.log('songsTHUNK', songs)
     dispatch(getAllSongsAction(songs));
 
@@ -43,8 +50,8 @@ export const getCurrentUsersSongsThunk = () => async (dispatch) => {
   const res = await fetch(`/api/songs/current`)
 
   if(res.ok) {
-    const userSongs = await res.json()
-    dispatch(getAllSongsAction(userSongs))
+    const {songs} = await res.json()
+    dispatch(getAllSongsAction2(songs))
   } else {
     return console.log("get current user songs: res not ok")
   }
@@ -57,6 +64,13 @@ function songReducer(state = initState, action){
         case GET_SONG:
           newState = {...state}
           newState[action.song.id] = action.song
+          return newState
+        case GET_USERS_SONGS:
+          newState = {...state}
+          console.log('action, action', action.songs)
+          action.songs.forEach(song => {
+              newState[song.id] = song
+          });
           return newState
         case GET_ALL_SONGS:
             newState = {...state}

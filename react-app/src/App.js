@@ -10,6 +10,7 @@ import SongPage from "./components/SongPage";
 import SongPageSingle from "./components/SongPageSingle";
 import AlbumPage from "./components/AlbumPage";
 import AllAlbums from "./components/AllAlbums";
+import UsersSongsPage from "./components/UsersSongPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -34,6 +35,9 @@ function App() {
           </Route>
           <Route exact path="/songs">
             <SongPage />
+          </Route>
+          <Route exact path="/songs/current">
+            <UsersSongsPage />
           </Route>
           <Route exact path="/songs/:songId">
             <SongPageSingle />

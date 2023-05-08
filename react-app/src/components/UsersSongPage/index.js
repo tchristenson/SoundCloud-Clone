@@ -20,11 +20,23 @@ function UsersSongsPage() {
     }
 
     return (
-        <div>
-            <div>current users songs foundish</div>
-            <h1>{songs[0].name}</h1>
-            <h4>song name above?</h4>
-        </div>
+        // <div>
+        //     <div>current users songs foundish</div>
+        //     <div>{songs}</div>
+        //     <h4>song name above?</h4>
+        // </div>
+        <div id="usersSongPage">
+        {songs?.map(({name,albumId, styleId, ownerId, runtime, coverImage, content, id})=>(
+          <div key={id}>
+            <div className="playlogo"></div>
+            <div>{name}</div>
+            <div>user name ? (owner id):{ownerId} , style: {styleId}</div>
+            <div>album name? album id: {albumId}</div>
+            <div>wav thing</div>
+            <div>{coverImage}</div>
+          </div>
+        ))}
+      </div>
     )
 }
 
