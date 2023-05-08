@@ -1,5 +1,13 @@
 // ACTIONS
-const GET_ONE_ALBUM = '/GET_ONE_ALBUM'
+const GET_ALL_ALBUMS = 'albums/GET_ALL_ALBUMS'
+const GET_ONE_ALBUM = 'albums/GET_ONE_ALBUM'
+
+const getAllAlbumsAction = (albums) => {
+  return {
+    type: GET_ALL_ALBUMS,
+    albums
+  }
+}
 
 const getOneAlbumAction = (album) => {
   return {
@@ -10,6 +18,15 @@ const getOneAlbumAction = (album) => {
 
 
 // THUNKS
+export const getAllAlbumsThunk = () => async (dispatch) => {
+  const response = await fetch('/api/albums')
+  if (response.ok) {
+    const albums = await response.json()
+    dispatch(getAllAlbumsAction(albums))
+    return albums
+  }
+}
+
 export const getOneAlbumThunk = (albumId) => async (dispatch) => {
   const response = await fetch(`/api/albums/${albumId}`)
   console.log('response ', response)
@@ -26,6 +43,10 @@ export const getOneAlbumThunk = (albumId) => async (dispatch) => {
 const albumReducer = (state = {}, action) => {
   let newState
   switch (action.type) {
+    case GET_ALL_ALBUMS:
+      newState = {...state}
+      action.albums.Albums.forEach(album => newState[album.id] = album)
+      return newState
     case GET_ONE_ALBUM:
       newState = {...state}
       newState[action.album.id] = action.album
