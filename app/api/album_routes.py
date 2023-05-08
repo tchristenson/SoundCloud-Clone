@@ -12,6 +12,14 @@ def get_all_albums():
     return {'Albums': [album.to_dict() for album in albums]}
 
 
+@album_routes.route('/current')
+@login_required
+def user_albums():
+    """Query for albums owned by the current user"""
+    albums = Album.query.filter(Album.owner_id.like(current_user.id)).all()
+    return {'Albums': [album.to_dict() for album in albums]}
+
+
 @album_routes.route('/<int:id>')
 def get_album_by_id(id):
     """
@@ -19,11 +27,3 @@ def get_album_by_id(id):
     """
     album = Album.query.get(id)
     return album.to_dict()
-
-
-@album_routes.route('/current')
-@login_required
-def user_albums():
-    """Query for albums owned by the current user"""
-    albums = Album.query.filter(Album.owner_id.like(current_user.id)).all()
-    return {'Albums': [album.to_dict() for album in albums]}
