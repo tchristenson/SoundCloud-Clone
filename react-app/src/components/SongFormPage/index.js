@@ -23,24 +23,24 @@ function SongFormPage() {
         setHasSubmitted(true)
         if (validationErrors.length) return alert('Your Post has errors, cannot submit!')
 
-        const payload = {
-            'name': name,
-            'runtime': runtime,
-            'content': content,
-            'album_id': albumId,
-            'style': style,
-            'cover_image': coverImage
-        }
+        // const payload = {
+        //     'name': name,
+        //     'runtime': runtime,
+        //     'content': content,
+        //     'album_id': albumId,
+        //     'style': style,
+        //     'cover_image': coverImage
+        // }
 
-        await dispatch(createSongThunk(payload))
+        // await dispatch(createSongThunk(payload))
 
-        // const formData = new FormData()
-        // formData.append('name', name)
-        // formData.append('runtime', runtime)
-        // formData.append('content', content)
-        // formData.append('album_id', albumId) // Placeholder as an integer until we refactor it into a drop down
-        // formData.append('cover_image', coverImage)
-        // formData.append('style', style)
+        const formData = new FormData()
+        formData.append('name', name)
+        formData.append('runtime', runtime)
+        formData.append('content', content)
+        formData.append('album_id', albumId) // Placeholder as an integer until we refactor it into a drop down
+        formData.append('cover_image', coverImage)
+        formData.append('style', style)
 
         // console.log('Object.values(formData)', Object.values(formData))
 
@@ -59,7 +59,7 @@ function SongFormPage() {
         // console.log('style inside of SongFormPage ------>', style)
         // console.log('formData inside of SongFormPage ------>', formData)
 
-        // await dispatch(createSongThunk(formData))
+        await dispatch(createSongThunk(formData))
 
         setName('')
         setRuntime('')

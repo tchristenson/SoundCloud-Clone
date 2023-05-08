@@ -73,10 +73,10 @@ export const createSongThunk = (song) => async (dispatch) => {
   });
   console.log('res inside of createSongThunk', res)
   if (res.ok) {
-    const { newSong } = await res.json();
-    console.log('newSong inside of createSongThunk', newSong)
-    dispatch(createSongAction(newSong));
-    return newSong;
+    const song = await res.json();
+    console.log('newSong inside of createSongThunk',song)
+    dispatch(createSongAction(song));
+    return song;
   } else {
     return console.log("create songs: res not ok");
   }
@@ -107,7 +107,7 @@ function songReducer(state = initState, action){
         case CREATE_SONG:
           newState = {...state}
           console.log('action.song inside CREATE_SONG Reducer', action.song)
-          newState.songs[action.song.id] = action.song
+          newState[action.song.id] = action.song
           return newState;
         default:
             return state

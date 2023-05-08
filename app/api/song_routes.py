@@ -47,16 +47,17 @@ def add_song():
 
     if form.validate_on_submit():
         print('form.data -------->', form.data)
-        new_song = Song(name = form.data['name'],
+        song= Song(name = form.data['name'],
+                        owner_id = current_user.id,
                         runtime = form.data['runtime'],
                         cover_image = form.data['cover_image'],
                         content = form.data['content'],
                         album_id = form.data['album_id'], # placeholder until we can make this a dropdown
-                        style = form.data['style'])
-        print('new_song -------->', new_song)
-        db.session.add(new_song)
+                        style_id = 1) # placeholder
+        print('new_song -------->', song)
+        db.session.add(song)
         db.session.commit()
-        return {"newSong": new_song.to_dict()}
+        return song.to_dict()
 
 
     return { "errors": form.errors}
