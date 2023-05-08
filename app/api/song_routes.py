@@ -1,6 +1,6 @@
 from flask import Blueprint, request
 from app.models import Song
-from flask_login import current_user, login_required
+from flask_login import current_user, login_required, current_user
 from ..forms.song_form import NewSong
 from ..models import db
 
@@ -58,3 +58,16 @@ def add_song():
 
 
     return { "errors": form.errors}
+
+
+@song_routes.route("/delete/<int:id>", methods=["DELETE"])
+@login_required
+def delete_song(id):
+    """ Handles deleting a song by its id that is owned by the user
+    """
+    song = Song.query.get(id)
+    if song.owner_id == current_user.id:
+        db.session.delete(song)
+        db.session.commit()
+    else:
+        return 'Must be song owner to delete song.'

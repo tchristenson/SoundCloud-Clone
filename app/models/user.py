@@ -57,5 +57,5 @@ class User(db.Model, UserMixin):
             'firstName': self.first_name,
             'lastName': self.last_name,
             'styleId': self.style_id,
-            'likes': self.user_likes
+            # 'likes': self.user_likes
         }

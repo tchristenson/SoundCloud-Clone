@@ -1,6 +1,7 @@
 const GET_ALL_SONGS = "/GET_SONGS";
 const GET_USERS_SONGS = "/GET_USERS_SONGS";
 const GET_SONG = "/GET_SONG";
+const DELETE_SONG = "/DELETE_SONG";
 
 const getAllSongsAction = (songs) => {
   return {
@@ -18,71 +19,94 @@ const getAllSongsAction2 = (songs) => {
 const getOneSongAction = (song) => {
   return {
     type: GET_SONG,
-    song
-  }
-}
+    song,
+  };
+};
+
+const deleteOneSongAction = (songId) => {
+  return {
+    type: DELETE_SONG,
+    songId,
+  };
+};
 
 export const getAllSongsThunk = () => async (dispatch) => {
-    const response = await fetch("/api/songs");
-    console.log('response', response)
+  const response = await fetch("/api/songs");
+  console.log("response", response);
   if (response.ok) {
-    const {songs} = await response.json();
-    console.log('songsTHUNK', songs)
+    const { songs } = await response.json();
+    console.log("songsTHUNK", songs);
     dispatch(getAllSongsAction(songs));
-
   } else {
-    console.log('Response not ok')
+    console.log("Response not ok");
   }
 };
 
 export const getOneSongThunk = (songId) => async (dispatch) => {
   const response = await fetch(`/api/songs/${songId}`);
-  console.log("getOneSongThunk Hit ##")
+  console.log("getOneSongThunk Hit ##");
 
   if (response.ok) {
     const song = await response.json();
-    dispatch(getOneSongAction(song))
-    return song
+    dispatch(getOneSongAction(song));
+    return song;
   }
-}
+};
 
 export const getCurrentUsersSongsThunk = () => async (dispatch) => {
-  const res = await fetch(`/api/songs/current`)
+  const res = await fetch(`/api/songs/current`);
 
-  if(res.ok) {
-    const {songs} = await res.json()
-    dispatch(getAllSongsAction2(songs))
+
+  if (res.ok) {
+    const { songs } = await res.json();
+    dispatch(getAllSongsAction2(songs));
   } else {
-    return console.log("get current user songs: res not ok")
+    return console.log("get current user songs: res not ok");
+  }
+};
+
+export const deleteOneSongThunk = (songId) => async (dispatch) => {
+  console.log("deleting a song by id THUNK")
+  const res = await fetch(`/api/songs/delete/${songId}`, {
+    method: "DELETE",
+  });
+  if (res.ok) {
+    dispatch(deleteOneSongAction(songId));
+    
+  } else {
+    console.log("Song couldnt be deleted")
+  }
+};
+
+const initState = {};
+function songReducer(state = initState, action) {
+  let newState;
+  switch (action.type) {
+    case GET_SONG:
+      newState = { ...state };
+      newState[action.song.id] = action.song;
+      return newState;
+    case GET_USERS_SONGS:
+      newState = { ...state };
+      console.log("action, action", action.songs);
+      action.songs.forEach((song) => {
+        newState[song.id] = song;
+      });
+      return newState;
+    case GET_ALL_SONGS:
+      newState = { ...state };
+      console.log("action, action", action.songs);
+      action.songs.forEach((song) => {
+        newState[song.id] = song;
+      });
+      return newState;
+    case DELETE_SONG:
+      newState = {...state}
+      delete newState.song[action.songId]
+      return newState
+    default:
+      return state;
   }
 }
 
-const initState = {};
-function songReducer(state = initState, action){
-    let newState;
-    switch(action.type){
-        case GET_SONG:
-          newState = {...state}
-          newState[action.song.id] = action.song
-          return newState
-        case GET_USERS_SONGS:
-          newState = {...state}
-          console.log('action, action', action.songs)
-          action.songs.forEach(song => {
-              newState[song.id] = song
-          });
-          return newState
-        case GET_ALL_SONGS:
-            newState = {...state}
-            console.log('action, action', action.songs)
-            action.songs.forEach(song => {
-                newState[song.id] = song
-            });
-            return newState
-        default:
-            return state
-    }
-}
-
-
-export default songReducer
+export default songReducer;

@@ -1,36 +1,61 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import { useEffect } from "react";
-import { getAllSongsThunk, getOneSongThunk } from "../../store/songs";
+import { getCurrentUsersSongsThunk, getOneSongThunk, deleteOneSongThunk } from "../../store/songs";
 
 function SongPageSingle() {
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const sessionUser = useSelector((state) => state.session.user);
+  const { songId } = useParams();
+  const song = useSelector((state) => state.songs[songId]);
+  //   const songLength = useSelector((state)=> Object.values(state.songs).length)
 
-    const { songId } = useParams();
+  console.log("this is the length of the users songs", song);
+  useEffect(() => {
+    dispatch(getOneSongThunk(songId));
+  }, [songId, dispatch]);
 
-    useEffect(() => {
-        dispatch(getOneSongThunk(songId));
-    }, [songId, dispatch]);
+  console.log("this is the users id", sessionUser);
 
-    const song = useSelector((state) => state.songs[songId]);
+  let buttonClass = "hidden";
 
-    if (!song) {
-        return ( <h1>song not found</h1>)
-    }
+  if (song && song.ownerId === sessionUser.id) {
+    buttonClass = "show";
+  }
 
-    return (
-        <div id="singSongPage">
-            <h1>single song page</h1>
-            <div className="playlogo"></div>
-            <div>{song.name}</div>
-            <div>user name ? (owner id):{song.ownerId} , style: {song.styleId}</div>
-            <div>album name? album id: {song.albumId}</div>
-            <div>wav thing</div>
-            <div>{song.coverImage}</div>
-        </div>
-    )
+  const deleteSong = (e) => {
+    e.preventDefault();
+    dispatch(deleteOneSongThunk(songId));
+    // dispatch(getCurrentUsersSongsThunk())
+    history.push("/songs/current");
+  };
+
+  if (!song) {
+    return null;
+  }
+
+  return (
+    <div id="singSongPage">
+      <h1>single song page</h1>
+      <div className="playlogo"></div>
+      <div>{song?.name}</div>
+      <div>
+        user name ? (owner id):{song?.ownerId} , style: {song?.styleId}
+      </div>
+      <div>album name? album id: {song?.albumId}</div>
+      <div>wav thing</div>
+      <div>{song?.coverImage}</div>
+      <form onSubmit={deleteSong}>
+        <button className={buttonClass} type="submit">
+          {" "}
+          <h1>delete a song</h1>
+        </button>
+      </form>
+    </div>
+  );
 }
 
 export default SongPageSingle;
