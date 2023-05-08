@@ -1,5 +1,5 @@
 from flask import Blueprint
-from ..models import Album
+from ..models import Album, User
 
 
 album_routes = Blueprint('albums', __name__)
@@ -18,3 +18,10 @@ def get_album_by_id(id):
     """
     album = Album.query.get(id)
     return album.to_dict()
+
+@album_routes.route('/current')
+def user_albums():
+    """Query for albums owned by the current user"""
+    # songs = Song.query.filter(Song.owner_id.like(User.id)).all()
+    albums = Album.query.join(User, User.id == Album.owner_id).all()
+    return {'Albums': [album.to_dict() for album in albums]}
