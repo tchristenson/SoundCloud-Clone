@@ -1,6 +1,7 @@
 // ACTIONS
 const GET_ALL_ALBUMS = 'albums/GET_ALL_ALBUMS'
 const GET_ONE_ALBUM = 'albums/GET_ONE_ALBUM'
+const GET_USER_ALBUMS = 'albums/GET_USER_ALBUMS'
 
 const getAllAlbumsAction = (albums) => {
   return {
@@ -13,6 +14,13 @@ const getOneAlbumAction = (album) => {
   return {
     type: GET_ONE_ALBUM,
     album
+  }
+}
+
+const getUserAlbumsAction = (albums) => {
+  return {
+    type: GET_USER_ALBUMS,
+    albums
   }
 }
 
@@ -29,12 +37,24 @@ export const getAllAlbumsThunk = () => async (dispatch) => {
 
 export const getOneAlbumThunk = (albumId) => async (dispatch) => {
   const response = await fetch(`/api/albums/${albumId}`)
-  console.log('response ', response)
+  console.log('checking inside of getOneAlbumThunk')
 
   if (response.ok) {
     const album = await response.json()
     dispatch(getOneAlbumAction(album))
     return album
+  }
+}
+
+export const getCurrentUsersAlbumsThunk = () => async (dispatch) => {
+  const response = await fetch('/api/albums/current');
+
+  if (response.ok) {
+    const userAlbums = await response.json();
+    console.log('userAlbums inside of getCurrentUsersAlbumsThunk ---->', userAlbums)
+    dispatch(getUserAlbumsAction(userAlbums));
+  } else {
+    return console.log("Get current user's albums: bad response")
   }
 }
 
@@ -50,6 +70,10 @@ const albumReducer = (state = {}, action) => {
     case GET_ONE_ALBUM:
       newState = {...state}
       newState[action.album.id] = action.album
+      return newState
+    case GET_USER_ALBUMS:
+      newState = {...state}
+      action.albums.Albums.forEach(album => newState[album.id] = album)
       return newState
     default:
       return state
