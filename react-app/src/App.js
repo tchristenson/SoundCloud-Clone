@@ -41,6 +41,9 @@ function App() {
           <Route exact path="/songs/current">
             <UsersSongsPage />
           </Route>
+          <Route exact path="/songs/new">
+            <SongFormPage />
+          </Route>
           <Route exact path="/songs/:songId">
             <SongPageSingle />
           </Route>
@@ -52,9 +55,6 @@ function App() {
           </Route>
           <Route exact path="/albums/:albumId">
             <AlbumPage />
-          </Route>
-          <Route exact path="/songs/new">
-            <SongFormPage />
           </Route>
         </Switch>
       )}

@@ -12,6 +12,7 @@ function SongFormPage() {
     const [content, setContent] = useState("");
     const [albumId, setAlbumId] = useState(0); // Placeholder as an integer until we refactor it into a drop down
     const [style, setStyle] = useState("");
+    const [coverImage, setCoverImage] = useState("")
 
     const [validationErrors, setValidationErrors] = useState([]);
     const [hasSubmitted, setHasSubmitted] = useState(false);
@@ -22,21 +23,50 @@ function SongFormPage() {
         setHasSubmitted(true)
         if (validationErrors.length) return alert('Your Post has errors, cannot submit!')
 
-        const formData = new FormData()
-        formData.append('name', name)
-        formData.append('runtime', runtime)
-        formData.append('content', content)
-        formData.append('albumId', albumId) // Placeholder as an integer until we refactor it into a drop down
-        formData.append('style', style)
-        console.log('formData inside of SongFormPage ------>', formData)
+        const payload = {
+            'name': name,
+            'runtime': runtime,
+            'content': content,
+            'album_id': albumId,
+            'style': style,
+            'cover_image': coverImage
+        }
 
-        await dispatch(createSongThunk(formData)) // Thunk is not yet created - still on the to do list
+        await dispatch(createSongThunk(payload))
+
+        // const formData = new FormData()
+        // formData.append('name', name)
+        // formData.append('runtime', runtime)
+        // formData.append('content', content)
+        // formData.append('album_id', albumId) // Placeholder as an integer until we refactor it into a drop down
+        // formData.append('cover_image', coverImage)
+        // formData.append('style', style)
+
+        // console.log('Object.values(formData)', Object.values(formData))
+
+        // console.log('formData.has(name)', formData.has('name'))
+        // console.log('formData.has(runtime)', formData.has('runtime'))
+        // console.log('formData.has(content)', formData.has('content'))
+        // console.log('formData.has(album_id)', formData.has('album_id')) // Placeholder as an integer until we refactor it into a drop down
+        // console.log('formData.has(cover_image)', formData.has('cover_image'))
+        // console.log('formData.has(style)', formData.has('style'))
+
+        // console.log('name inside of SongFormPage ------>', name)
+        // console.log('runtime inside of SongFormPage ------>', runtime)
+        // console.log('content inside of SongFormPage ------>', content)
+        // console.log('albumId inside of SongFormPage ------>', albumId)
+        // console.log('coverImage inside of SongFormPage ------>', coverImage)
+        // console.log('style inside of SongFormPage ------>', style)
+        // console.log('formData inside of SongFormPage ------>', formData)
+
+        // await dispatch(createSongThunk(formData))
 
         setName('')
         setRuntime('')
         setContent('')
         setAlbumId(0) // Placeholder as an integer until we refactor it into a drop down
         setStyle('')
+        setCoverImage('')
         setValidationErrors([])
         setHasSubmitted(false)
         // history.push() // Placeholder - will eventually redirect to the Song's ID page
@@ -85,6 +115,16 @@ function SongFormPage() {
                         type="text"
                         onChange={(e) => setRuntime(e.target.value)}
                         value={runtime}
+                        >
+                    </input>
+                </div>
+
+                <div className="form-input-box">
+                    <label>Cover Image:</label>
+                    <input
+                        type="text"
+                        onChange={(e) => setCoverImage(e.target.value)}
+                        value={coverImage}
                         >
                     </input>
                 </div>

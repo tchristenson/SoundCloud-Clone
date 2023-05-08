@@ -66,13 +66,15 @@ export const getCurrentUsersSongsThunk = () => async (dispatch) => {
 }
 
 export const createSongThunk = (song) => async (dispatch) => {
+  console.log('song inside of createSongThunk', song)
   const res = await fetch('/api/songs/new', {
     method: "POST",
     body: song
   });
-
+  console.log('res inside of createSongThunk', res)
   if (res.ok) {
     const { newSong } = await res.json();
+    console.log('newSong inside of createSongThunk', newSong)
     dispatch(createSongAction(newSong));
     return newSong;
   } else {
@@ -104,6 +106,7 @@ function songReducer(state = initState, action){
             return newState
         case CREATE_SONG:
           newState = {...state}
+          console.log('action.song inside CREATE_SONG Reducer', action.song)
           newState.songs[action.song.id] = action.song
           return newState;
         default:
