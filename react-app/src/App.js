@@ -6,6 +6,12 @@ import LoginFormPage from "./components/LoginFormPage";
 import { authenticate } from "./store/session";
 import Navigation from "./components/Navigation";
 import UserProfilePage from "./components/UserProfilePage";
+import SongPage from "./components/SongPage";
+import SongPageSingle from "./components/SongPageSingle";
+import AlbumPage from "./components/AlbumPage";
+import AllAlbums from "./components/AllAlbums";
+import UsersSongsPage from "./components/UsersSongPage";
+import UsersAlbumsPage from "./components/UsersAlbumPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -19,14 +25,32 @@ function App() {
       <Navigation isLoaded={isLoaded} />
       {isLoaded && (
         <Switch>
-          <Route path="/login" >
+          <Route path="/login">
             <LoginFormPage />
           </Route>
           <Route path="/signup">
             <SignupFormPage />
           </Route>
-          <Route exact path = "/users/:userId">
+          <Route exact path="/users/:userId">
             <UserProfilePage />
+          </Route>
+          <Route exact path="/songs">
+            <SongPage />
+          </Route>
+          <Route exact path="/songs/current">
+            <UsersSongsPage />
+          </Route>
+          <Route exact path="/songs/:songId">
+            <SongPageSingle />
+          </Route>
+          <Route exact path="/albums">
+            <AllAlbums />
+          </Route>
+          <Route exact path="/albums/current">
+            <UsersAlbumsPage />
+          </Route>
+          <Route exact path="/albums/:albumId">
+            <AlbumPage />
           </Route>
         </Switch>
       )}
