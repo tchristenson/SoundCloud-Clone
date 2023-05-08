@@ -1,6 +1,7 @@
 const GET_ALL_SONGS = "/GET_SONGS";
 const GET_USERS_SONGS = "/GET_USERS_SONGS";
 const GET_SONG = "/GET_SONG";
+const CREATE_SONG = "/CREATE_SONG";
 
 const getAllSongsAction = (songs) => {
   return {
@@ -18,6 +19,13 @@ const getAllSongsAction2 = (songs) => {
 const getOneSongAction = (song) => {
   return {
     type: GET_SONG,
+    song
+  }
+}
+
+const createSongAction = (song) => {
+  return {
+    type: CREATE_SONG,
     song
   }
 }
@@ -57,6 +65,21 @@ export const getCurrentUsersSongsThunk = () => async (dispatch) => {
   }
 }
 
+export const createSongThunk = (song) => async (dispatch) => {
+  const res = await fetch('/api/songs/new', {
+    method: "POST",
+    body: song
+  });
+
+  if (res.ok) {
+    const { newSong } = await res.json();
+    dispatch(createSongAction(newSong));
+    return newSong;
+  } else {
+    return console.log("create songs: res not ok");
+  }
+}
+
 const initState = {};
 function songReducer(state = initState, action){
     let newState;
@@ -79,6 +102,10 @@ function songReducer(state = initState, action){
                 newState[song.id] = song
             });
             return newState
+        case CREATE_SONG:
+          newState = {...state}
+          newState.songs[action.song.id] = action.song
+          return newState;
         default:
             return state
     }

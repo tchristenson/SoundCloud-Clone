@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect, useHistory } from "react-router-dom";
+import { createSongThunk } from "../../store/songs";
 
 function SongFormPage() {
     const dispatch = useDispatch();
@@ -37,18 +38,18 @@ function SongFormPage() {
         setAlbumId(0) // Placeholder as an integer until we refactor it into a drop down
         setStyle('')
         setValidationErrors([])
-        setHasSubmitted(False)
+        setHasSubmitted(false)
         // history.push() // Placeholder - will eventually redirect to the Song's ID page
 
-        useEffect(() => {
-            const errors = [];
-            // Only adding to the validation errors for fields that are nullable=False in the Song model
-            if (!name) errors.push('Please enter a name!')
-            if (!content) errors.push('Please provide an audio file!')
-            setValidationErrors(errors)
-        }, [name, content])
-
     }
+
+    useEffect(() => {
+        const errors = [];
+        // Only adding to the validation errors for fields that are nullable=False in the Song model
+        if (!name) errors.push('Please enter a name!')
+        if (!content) errors.push('Please provide an audio file!')
+        setValidationErrors(errors)
+    }, [name, content])
 
     return (
         <div>

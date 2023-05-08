@@ -12,6 +12,7 @@ import AlbumPage from "./components/AlbumPage";
 import AllAlbums from "./components/AllAlbums";
 import UsersSongsPage from "./components/UsersSongPage";
 import UsersAlbumsPage from "./components/UsersAlbumPage";
+import SongFormPage from "./components/SongFormPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -51,6 +52,9 @@ function App() {
           </Route>
           <Route exact path="/albums/:albumId">
             <AlbumPage />
+          </Route>
+          <Route exact path="/songs/new">
+            <SongFormPage />
           </Route>
         </Switch>
       )}
