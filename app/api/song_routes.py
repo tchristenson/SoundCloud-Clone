@@ -41,7 +41,9 @@ def add_song():
     # form.author.choices = [(user.id, user.username) for user in User.query.all()]
 
     form = NewSong()
+    print('PRINTING form inside new Song route -------------->', form)
     form['csrf_token'].data = request.cookies['csrf_token']
+    print('PRINTING form inside new Song route with csrf token added -------------->', form)
 
     if form.validate_on_submit():
         print('form.data -------->', form.data)

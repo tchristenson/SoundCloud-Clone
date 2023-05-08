@@ -45,7 +45,7 @@ export const getAllSongsThunk = () => async (dispatch) => {
 
 export const getOneSongThunk = (songId) => async (dispatch) => {
   const response = await fetch(`/api/songs/${songId}`);
-  console.log("getOneSongThunk Hit ##")
+  console.log("getOneSongThunk Hit ##") // We are hitting this thunk instead of createSongThunk
 
   if (response.ok) {
     const song = await response.json();
