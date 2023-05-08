@@ -22,6 +22,5 @@ def get_album_by_id(id):
 @album_routes.route('/current')
 def user_albums():
     """Query for albums owned by the current user"""
-    # songs = Song.query.filter(Song.owner_id.like(User.id)).all()
     albums = Album.query.join(User, User.id == Album.owner_id).all()
     return {'Albums': [album.to_dict() for album in albums]}

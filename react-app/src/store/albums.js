@@ -37,7 +37,7 @@ export const getAllAlbumsThunk = () => async (dispatch) => {
 
 export const getOneAlbumThunk = (albumId) => async (dispatch) => {
   const response = await fetch(`/api/albums/${albumId}`)
-  console.log('response ', response)
+  console.log('checking inside of getOneAlbumThunk')
 
   if (response.ok) {
     const album = await response.json()
@@ -48,6 +48,7 @@ export const getOneAlbumThunk = (albumId) => async (dispatch) => {
 
 export const getCurrentUsersAlbumsThunk = () => async (dispatch) => {
   const res = await fetch('/api/albums/current');
+  console.log('response inside of getCurrentUsersAlbumsThunk', res)
 
   if (res.ok) {
     const userAlbums = await res.json();
