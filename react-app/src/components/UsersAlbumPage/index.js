@@ -1,7 +1,5 @@
-import React, { useState } from "react";
+import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { Redirect } from "react-router-dom";
-import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { getCurrentUsersAlbumsThunk } from "../../store/albums";
 
@@ -13,7 +11,7 @@ function UsersAlbumsPage() {
     }, [dispatch])
 
     const albums = useSelector((state) => state.albums);
-    console.log('user albums ', albums)
+    console.log('user albums inside UsersAlbumsPage', albums)
 
     if (!albums) return null;
 
@@ -21,7 +19,7 @@ function UsersAlbumsPage() {
 
     const albumList = albumsArr.map(album => (
         <NavLink to={`/albums/${album.id}`}>
-        <div>{album.name}</div>
+            <div>{album.name}</div>
         </NavLink>
     ))
 
