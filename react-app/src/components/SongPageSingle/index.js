@@ -26,11 +26,13 @@ function SongPageSingle() {
     buttonClass = "show";
   }
 
-  const deleteSong = (e) => {
+  const deleteSong = async (e) => {
     e.preventDefault();
-    dispatch(deleteOneSongThunk(songId));
-    // dispatch(getCurrentUsersSongsThunk())
-    history.push("/songs/current");
+    const deletedSong = await dispatch(deleteOneSongThunk(songId));
+    
+    if (deletedSong.message === "Delete Successful") {
+        history.push("/songs/current");
+    } 
   };
 
   if (!song) {
