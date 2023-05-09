@@ -2,6 +2,7 @@
 const GET_ALL_ALBUMS = 'albums/GET_ALL_ALBUMS'
 const GET_ONE_ALBUM = 'albums/GET_ONE_ALBUM'
 const GET_USER_ALBUMS = 'albums/GET_USER_ALBUMS'
+const DELETE_ALBUM = 'albums/DELETE_ALBUM'
 
 const getAllAlbumsAction = (albums) => {
   return {
@@ -21,6 +22,13 @@ const getUserAlbumsAction = (albums) => {
   return {
     type: GET_USER_ALBUMS,
     albums
+  }
+}
+
+const deleteAlbumAction = (album) => {
+  return {
+    type: DELETE_ALBUM,
+    album
   }
 }
 
@@ -59,6 +67,19 @@ export const getCurrentUsersAlbumsThunk = () => async (dispatch) => {
   }
 }
 
+export const deleteAlbumThunk = (albumId) => async (dispatch) => {
+  const response = await fetch(`/api/albums/delete/${albumId}`, {
+    method: "DELETE"
+  });
+
+  if (response.ok) {
+    const delAlbum = response.json();
+    dispatch(deleteAlbumAction(delAlbum));
+  } else {
+    return console.log("Delete current user's album: bad response");
+  }
+}
+
 
 // REDUCER
 const albumReducer = (state = {}, action) => {
@@ -76,6 +97,10 @@ const albumReducer = (state = {}, action) => {
       newState = {...state}
       action.albums.Albums.forEach(album => newState[album.id] = album)
       return newState
+    case DELETE_ALBUM:
+      newState = {...state};
+      delete newState[action.album.id];
+      return newState;
     default:
       return state
   }
