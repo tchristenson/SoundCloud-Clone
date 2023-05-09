@@ -11,6 +11,7 @@ const EditSongStarter = () => {
   const [song, setSong] = useState('')
   // const [album, setAlbum] = useState('')
 
+  // Andrew's idea to wrap the dispatch in a setSong
   useEffect(() => {
     dispatch(getOneSongThunk(songId))
     .then(data => setSong(data))
