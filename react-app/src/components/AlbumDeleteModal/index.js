@@ -17,8 +17,8 @@ function AlbumDeleteModal({albumId}) {
         if (deletedAlbum.message === 'delete successful') {
             console.log('if deletedAlbum running')
             console.log('deletedAlbum', deletedAlbum)
-            closeModal();
             history.push("/albums/current");
+            closeModal();
         }
     }
 
@@ -27,7 +27,7 @@ function AlbumDeleteModal({albumId}) {
             <h1>Delete Album?</h1>
             <form onSubmit={handleDelete}>
                 <button type="submit">Yes, delete the album</button>
-                <button onClick={closeModal()}>No, keep this album</button>
+                <button onClick={closeModal}>No, keep this album</button>
             </form>
         </div>
     )
