@@ -1,5 +1,5 @@
 from flask import Blueprint, request
-from app.models import Song
+from app.models import Song, Style
 from flask_login import current_user, login_required
 from ..forms.song_form import NewSong
 from ..models import db
@@ -47,13 +47,15 @@ def add_song():
 
     if form.validate_on_submit():
         print('form.data -------->', form.data)
+        style_name = form.data['style']
+        style_instance = (Style.query.filter(Style.genre.like(style_name)).first()).to_dict()
         song= Song(name = form.data['name'],
                         owner_id = current_user.id,
                         runtime = form.data['runtime'],
                         cover_image = form.data['cover_image'],
                         content = form.data['content'],
                         album_id = form.data['album_id'], # placeholder until we can make this a dropdown
-                        style_id = 1) # placeholder
+                        style_id = style_instance['id']) # placeholder
         print('new_song -------->', song)
         db.session.add(song)
         db.session.commit()

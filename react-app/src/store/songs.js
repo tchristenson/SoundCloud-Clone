@@ -55,30 +55,30 @@ export const getOneSongThunk = (songId) => async (dispatch) => {
 }
 
 export const getCurrentUsersSongsThunk = () => async (dispatch) => {
-  const res = await fetch(`/api/songs/current`)
+  const response = await fetch(`/api/songs/current`)
 
-  if(res.ok) {
-    const {songs} = await res.json()
+  if(response.ok) {
+    const {songs} = await response.json()
     dispatch(getAllSongsAction2(songs))
   } else {
-    return console.log("get current user songs: res not ok")
+    return console.log("get current user songs: response not ok")
   }
 }
 
 export const createSongThunk = (song) => async (dispatch) => {
   console.log('song inside of createSongThunk', song)
-  const res = await fetch('/api/songs/new', {
+  const response = await fetch('/api/songs/new', {
     method: "POST",
     body: song
   });
-  console.log('res inside of createSongThunk', res)
-  if (res.ok) {
-    const song = await res.json();
+  console.log('response inside of createSongThunk', response)
+  if (response.ok) {
+    const song = await response.json();
     console.log('newSong inside of createSongThunk',song)
     dispatch(createSongAction(song));
     return song;
   } else {
-    return console.log("create songs: res not ok");
+    return console.log("create songs: response not ok");
   }
 }
 
