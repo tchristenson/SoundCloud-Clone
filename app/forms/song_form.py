@@ -4,6 +4,7 @@ from wtforms import StringField, IntegerField, SelectField, SubmitField
 from wtforms.validators import DataRequired, ValidationError
 from app.models import User, Song
 from app.api.aws_song_helpers import ALLOWED_SONG_EXTENSIONS
+from app.api.aws_image_helpers import ALLOWED_IMAGE_EXTENSIONS
 
 
 # def user_doesnt_exist(form, field):
@@ -21,14 +22,14 @@ def song_exists(form, field):
 class NewSong(FlaskForm):
     name = StringField("Song Name", validators=[DataRequired()])
     runtime = StringField("Run Time")
-    cover_image = StringField("Cover Image")
+    # cover_image = StringField("Cover Image")
+    cover_image = FileField("Cover Image", validators=[FileRequired(), FileAllowed(list(ALLOWED_IMAGE_EXTENSIONS))])
     # content = StringField("Content")
     content = FileField("Content", validators=[FileRequired(), FileAllowed(list(ALLOWED_SONG_EXTENSIONS))])
-    album_id = SelectField("Album", choices=[])
+    album_id = SelectField("Album", choices=[], validate_choice=False)
     style = SelectField("Style", choices=[('reggae', "Reggae"), ('classic_rock', "Classic Rock"),
                                           ('punk', "Punk"), ('pop', "Pop"), ('hip_hop', "Hip Hop"),
                                           ('electronic', "Electronic"), ('jazz', "Jazz"), ('blues', "Blues"),
                                           ('country', "Country"), ('metal', "Metal"), ('folk', "Folk"),
                                           ('funk', "Funk"), ('soul', "Soul"), ('rnb', "R&B"),
                                           ('classical', "Classical")])
-    submit = SubmitField("Submit Song")

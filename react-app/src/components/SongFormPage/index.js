@@ -57,6 +57,7 @@ function SongFormPage({song, formType}) {
             // history.push(`/songs/${editedSong.id}`)
         } else {
             const newSong = await dispatch(createSongThunk(formData))
+            console.log("new song song song ===> :", newSong)
             history.push(`/songs/${newSong.id}`)
         }
 
@@ -132,7 +133,7 @@ function SongFormPage({song, formType}) {
                     <label>Content:</label>
                     <input
                         type="file"
-                        accept="image/*"
+                        accept="audio/*"
                         onChange={(e) => setContent(e.target.files[0])}
                         >
                     </input>
