@@ -10,7 +10,7 @@ function SongFormPage({song, formType}) {
     const sessionUser = useSelector(state => state.session.user)
 
     // console.log('sessionUser inside SongFormPage', sessionUser)
-    // console.log('song inside SongFormPage', song)
+    console.log('song inside SongFormPage', song)
 
     if (formType === 'Edit Song') {
         if (!sessionUser || sessionUser.id != song.ownerId) {
@@ -32,7 +32,7 @@ function SongFormPage({song, formType}) {
     const [content, setContent] = useState(song ? song.content : "");
     const [albums, setAlbums] = useState([]);
     const [selectedAlbumId, setSelectedAlbumId] = useState(song ? song.albumId : "") // Need to find a way to set this to the album name via redux or prop threading/context
-    const [style, setStyle] = useState(""); // Need to find a way to set this to the style name via redux or prop threading/context
+    const [style, setStyle] = useState(song? song.style.genre.toLowerCase() : ""); // Need to find a way to set this to the style name via redux or prop threading/context
     const [coverImage, setCoverImage] = useState(song ? song.coverImage : "")
 
     const [validationErrors, setValidationErrors] = useState([]);
