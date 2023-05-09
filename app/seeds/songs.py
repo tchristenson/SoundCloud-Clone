@@ -5,18 +5,18 @@ def seed_songs():
     song_one = Song(
         owner_id = 1,
         album_id = 1,
-        name = 'Album One',
+        name = 'Song One',
         runtime = '00:03:34',
         style_id = 2,
         cover_image = 'random.png',
-        content = 'randomsong.jpeg'
+        content = 'https://www.wavsource.com/snds_2020-10-01_3728627494378403/movies/pulp_fiction/royale_with_cheese.wav'
 
     )
 
     song_two = Song(
         owner_id = 1,
         album_id = 2,
-        name = 'Album Two',
+        name = 'Song Two',
         runtime = '00:04:34',
         style_id = 2,
         cover_image = 'random2.png',
@@ -27,7 +27,7 @@ def seed_songs():
     song_three = Song(
         owner_id = 1,
         album_id = 3,
-        name = 'Album Three',
+        name = 'Song Three',
         runtime = '00:05:34',
         style_id = 3,
         cover_image = 'random3.png',
@@ -38,7 +38,7 @@ def seed_songs():
     song_four = Song(
         owner_id = 2,
         album_id = 4,
-        name = 'Album Four',
+        name = 'Song Four',
         runtime = '00:06:34',
         style_id = 4,
         cover_image = 'random4.png',
@@ -49,7 +49,7 @@ def seed_songs():
     song_five = Song(
         owner_id = 3,
         album_id = 5,
-        name = 'Album Five',
+        name = 'Song Five',
         runtime = '00:07:34',
         style_id = 7,
         cover_image = 'random5.png',
@@ -57,7 +57,53 @@ def seed_songs():
 
     )
 
-    db.session.add_all([song_one, song_two, song_three, song_four, song_five])
+    song_seven = Song(
+        owner_id = 1,
+        album_id = 5,
+        name = 'Song Seven',
+        runtime = '00:07:34',
+        style_id = 7,
+        cover_image = 'random5.png',
+        content = 'randomsong5.jpeg'
+
+    )
+
+    song_eight = Song(
+        owner_id = 1,
+        album_id = 5,
+        name = 'Song Eight',
+        runtime = '00:07:34',
+        style_id = 7,
+        cover_image = 'random5.png',
+        content = 'randomsong5.jpeg'
+
+    )
+
+    song_nine = Song(
+        owner_id = 1,
+        album_id = 5,
+        name = 'Song Nine',
+        runtime = '00:07:34',
+        style_id = 7,
+        cover_image = 'random5.png',
+        content = 'randomsong5.jpeg'
+
+    )
+
+    song_ten = Song(
+        owner_id = 1,
+        album_id = 5,
+        name = 'Song Ten',
+        runtime = '00:07:34',
+        style_id = 7,
+        cover_image = 'random5.png',
+        content = 'randomsong5.jpeg'
+
+    )
+
+
+
+    db.session.add_all([song_one, song_two, song_three, song_four, song_five, song_seven, song_eight, song_nine, song_ten])
     db.session.commit()
 
 
