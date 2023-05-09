@@ -8,7 +8,7 @@ from app.models import User, Song
 #     user = User.query.filter(User.username != username).first()
 #     if user:
 #         raise ValidationError('Must be signed in to create a song!')
-    
+
 def song_exists(form, field):
     new_song_name = field.data
     song = Song.query.filter(Song.name == new_song_name).first()
@@ -20,12 +20,11 @@ class NewSong(FlaskForm):
     runtime = StringField("Run Time")
     cover_image = StringField("Cover Image")
     content = StringField("Content")
-    album_id = IntegerField("Album") #placeholder for an album option if an album already exists
-    style = SelectField("Style", choices=[('reggae', "Reggae"), ('classic_rock', "Classic Rock"), 
+    album_id = SelectField("Album", choices=[])
+    style = SelectField("Style", choices=[('reggae', "Reggae"), ('classic_rock', "Classic Rock"),
                                           ('punk', "Punk"), ('pop', "Pop"), ('hip_hop', "Hip Hop"),
                                           ('electronic', "Electronic"), ('jazz', "Jazz"), ('blues', "Blues"),
                                           ('country', "Country"), ('metal', "Metal"), ('folk', "Folk"),
                                           ('funk', "Funk"), ('soul', "Soul"), ('rnb', "R&B"),
                                           ('classical', "Classical")])
     submit = SubmitField("Submit Song")
-    
