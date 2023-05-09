@@ -9,7 +9,7 @@ def seed_songs():
         runtime = '00:03:34',
         style_id = 2,
         cover_image = 'random.png',
-        content = 'randomsong.jpeg'
+        content = 'https://www.wavsource.com/snds_2020-10-01_3728627494378403/movies/pulp_fiction/royale_with_cheese.wav'
 
     )
 
