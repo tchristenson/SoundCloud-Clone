@@ -3,6 +3,7 @@ from app.models import Song, Style
 from flask_login import current_user, login_required, current_user
 from ..forms.song_form import NewSong
 from ..models import db
+from ..api.aws_song_helpers import get_unique_song_filename, upload_song_file_to_s3
 
 
 
@@ -46,11 +47,18 @@ def add_song():
     if form.validate_on_submit():
         style_name = form.data['style']
         style_instance = (Style.query.filter(Style.genre.like(style_name)).first()).to_dict()
+        content = form.data["content"]
+        content.filename = get_unique_song_filename(content.filename)
+        upload = upload_song_file_to_s3(content)
+
+        if "url" not in upload:
+            return { "errors": form.errors}
+
         song= Song(name = form.data['name'],
                         owner_id = current_user.id,
                         runtime = form.data['runtime'],
                         cover_image = form.data['cover_image'],
-                        content = form.data['content'],
+                        content = upload["url"],
                         album_id = form.data['album_id'], # placeholder until we can make this a dropdown
                         style_id = style_instance['id']) # placeholder
         db.session.add(song)
