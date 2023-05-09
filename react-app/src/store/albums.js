@@ -25,10 +25,10 @@ const getUserAlbumsAction = (albums) => {
   }
 }
 
-const deleteAlbumAction = (album) => {
+const deleteAlbumAction = (albumId) => {
   return {
     type: DELETE_ALBUM,
-    album
+    albumId
   }
 }
 
@@ -49,6 +49,7 @@ export const getOneAlbumThunk = (albumId) => async (dispatch) => {
 
   if (response.ok) {
     const album = await response.json()
+    console.log('album inside of getOneAlbumThunk', album)
     dispatch(getOneAlbumAction(album))
     return album
   }
@@ -68,13 +69,16 @@ export const getCurrentUsersAlbumsThunk = () => async (dispatch) => {
 }
 
 export const deleteAlbumThunk = (albumId) => async (dispatch) => {
+  console.log('albumId inside deleteAlbumThunk', albumId)
   const response = await fetch(`/api/albums/delete/${albumId}`, {
     method: "DELETE"
   });
 
   if (response.ok) {
-    const delAlbum = response.json();
-    dispatch(deleteAlbumAction(delAlbum));
+    console.log('response inside of deleteAlbumThunk', response)
+    // const delAlbum = response.json();
+    dispatch(deleteAlbumAction(albumId));
+    return {'message': 'delete successful'}
   } else {
     return console.log("Delete current user's album: bad response");
   }
@@ -99,7 +103,10 @@ const albumReducer = (state = {}, action) => {
       return newState
     case DELETE_ALBUM:
       newState = {...state};
-      delete newState[action.album.id];
+      console.log('newState inside Reducer', newState)
+      console.log('newState.album inside Reducer', newState.album)
+      console.log('action inside Reducer', action)
+      delete newState[action.albumId];
       return newState;
     default:
       return state

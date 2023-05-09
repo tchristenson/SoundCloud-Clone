@@ -26,6 +26,7 @@ def get_album_by_id(id):
     Query for an album by id and returns that album in a dictionary
     """
     album = Album.query.get(id)
+    print('album inside of Get Album by ID route', album)
     return album.to_dict()
 
 @album_routes.route('/delete/<int:id>', methods=["DELETE"])
@@ -36,7 +37,8 @@ def delete_album(id):
     """
     album = Album.query.get(id)
     if album.owner_id == current_user.id:
-        db.session.delete(album) 
+        db.session.delete(album)
         db.session.commit()
+        return 'Delete Successful'
     else:
         return "Must be album owner to delete this album."

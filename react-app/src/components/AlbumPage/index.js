@@ -18,10 +18,16 @@ function AlbumPage() {
 
   const album = useSelector(state => state.albums[albumId]);
 
-  const deleteAlbum = (e) => {
+  const deleteAlbum = async (e) => {
+    console.log('deleteAlbum running')
     e.preventDefault();
-    dispatch(deleteAlbumThunk(album));
-    history.push("/albums/current");
+
+    const deletedAlbum = await dispatch(deleteAlbumThunk(albumId));
+    if (deletedAlbum.message === 'delete successful') {
+      console.log('if deletedAlbum running')
+      console.log('deletedAlbum', deletedAlbum)
+      history.push("/albums/current");
+    }
   }
 
   if (!album) return null;
