@@ -7,7 +7,6 @@ function AlbumDeleteModal({albumId}) {
     const dispatch = useDispatch();
     const history = useHistory();
 
-
     const { closeModal } = useModal();
 
     const handleDelete = async (e) => {

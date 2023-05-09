@@ -1,43 +1,29 @@
-import React, { useState } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Redirect } from "react-router-dom";
 import { useParams, useHistory } from "react-router-dom";
 import { useEffect } from "react";
-import { getCurrentUsersSongsThunk, getOneSongThunk, deleteOneSongThunk } from "../../store/songs";
+import { getOneSongThunk} from "../../store/songs";
+import SongDeleteModal from "../SongDeleteModal";
+import OpenModalButton from "../OpenModalButton";
 
 function SongPageSingle() {
   const dispatch = useDispatch();
-  const history = useHistory();
   const sessionUser = useSelector((state) => state.session.user);
   const { songId } = useParams();
-  const song = useSelector((state) => state.songs[songId]);
   //   const songLength = useSelector((state)=> Object.values(state.songs).length)
 
-  console.log("this is the length of the users songs", song);
+  // console.log("this is the length of the users songs", song);
   useEffect(() => {
     dispatch(getOneSongThunk(songId));
   }, [songId, dispatch]);
 
-  console.log("this is the users id", sessionUser);
-
-  let buttonClass = "hidden";
-
-  if (song && song.ownerId === sessionUser.id) {
-    buttonClass = "show";
-  }
-
-  const deleteSong = async (e) => {
-    e.preventDefault();
-    const deletedSong = await dispatch(deleteOneSongThunk(songId));
-    
-    if (deletedSong.message === "Delete Successful") {
-        history.push("/songs/current");
-    } 
-  };
+  const song = useSelector((state) => state.songs[songId]);
 
   if (!song) {
     return null;
   }
+
+  console.log('song inside SongPageSingle', song)
 
   return (
     <div id="singSongPage">
@@ -50,12 +36,11 @@ function SongPageSingle() {
       <div>album name? album id: {song?.albumId}</div>
       <div>wav thing</div>
       <div>{song?.coverImage}</div>
-      <form onSubmit={deleteSong}>
-        <button className={buttonClass} type="submit">
-          {" "}
-          <h1>delete a song</h1>
-        </button>
-      </form>
+
+      {sessionUser && sessionUser.id === song.ownerId && (
+        <OpenModalButton buttonText="Delete Song" modalComponent={<SongDeleteModal songId = {songId}/>} />
+      )}
+
     </div>
   );
 }

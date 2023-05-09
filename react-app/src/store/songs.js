@@ -96,7 +96,7 @@ export const deleteOneSongThunk = (songId) => async (dispatch) => {
   });
   if (res.ok) {
     dispatch(deleteOneSongAction(songId));
-    return {'message': 'Delete Successful'};
+    return {'message': 'delete successful'};
 
   } else {
     console.log("Song couldnt be deleted")
