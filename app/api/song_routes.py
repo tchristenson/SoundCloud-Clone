@@ -70,5 +70,6 @@ def delete_song(id):
     if song.owner_id == current_user.id:
         db.session.delete(song)
         db.session.commit()
+        return "Delete Successful"
     else:
         return 'Must be song owner to delete song.'
