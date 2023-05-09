@@ -41,12 +41,9 @@ def add_song():
     # form.author.choices = [(user.id, user.username) for user in User.query.all()]
 
     form = NewSong()
-    # print('PRINTING form inside new Song route -------------->', form)
     form['csrf_token'].data = request.cookies['csrf_token']
-    # print('PRINTING form inside new Song route with csrf token added -------------->', form)
 
     if form.validate_on_submit():
-        print('form.data -------->', form.data)
         style_name = form.data['style']
         style_instance = (Style.query.filter(Style.genre.like(style_name)).first()).to_dict()
         song= Song(name = form.data['name'],
@@ -56,7 +53,6 @@ def add_song():
                         content = form.data['content'],
                         album_id = form.data['album_id'], # placeholder until we can make this a dropdown
                         style_id = style_instance['id']) # placeholder
-        print('new_song -------->', song)
         db.session.add(song)
         db.session.commit()
         return song.to_dict()

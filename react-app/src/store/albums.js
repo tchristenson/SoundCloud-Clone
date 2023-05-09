@@ -53,6 +53,7 @@ export const getCurrentUsersAlbumsThunk = () => async (dispatch) => {
     const userAlbums = await response.json();
     console.log('userAlbums inside of getCurrentUsersAlbumsThunk ---->', userAlbums)
     dispatch(getUserAlbumsAction(userAlbums));
+    return userAlbums
   } else {
     return console.log("Get current user's albums: bad response")
   }

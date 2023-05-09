@@ -2,15 +2,24 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect, useHistory } from "react-router-dom";
 import { createSongThunk } from "../../store/songs";
+import { getCurrentUsersAlbumsThunk } from "../../store/albums"
 
 function SongFormPage() {
     const dispatch = useDispatch();
     const history = useHistory()
 
+    useEffect(() => {
+        dispatch(getCurrentUsersAlbumsThunk())
+        .then((data) => setAlbums(data))
+        console.log('albums inside of SongFormPage', albums)
+    }, [dispatch])
+
+
     const [name, setName] = useState("");
     const [runtime, setRuntime] = useState("");
     const [content, setContent] = useState("");
-    const [albumId, setAlbumId] = useState(0); // Placeholder as an integer until we refactor it into a drop down
+    const [albums, setAlbums] = useState([]);
+    const [selectedAlbumId, setSelectedAlbumId] = useState('')
     const [style, setStyle] = useState("");
     const [coverImage, setCoverImage] = useState("")
 
@@ -27,7 +36,7 @@ function SongFormPage() {
         formData.append('name', name)
         formData.append('runtime', runtime)
         formData.append('content', content)
-        formData.append('album_id', albumId) // Placeholder as an integer until we refactor it into a drop down
+        formData.append('album_id', selectedAlbumId)
         formData.append('cover_image', coverImage)
         formData.append('style', style)
 
@@ -36,12 +45,13 @@ function SongFormPage() {
         setName('')
         setRuntime('')
         setContent('')
-        setAlbumId(0) // Placeholder as an integer until we refactor it into a drop down
+        setAlbums([])
+        setSelectedAlbumId('')
         setStyle('')
         setCoverImage('')
         setValidationErrors([])
         setHasSubmitted(false)
-        history.push(`/songs/${newSong.id}`) // Placeholder - will eventually redirect to the Song's ID page
+        history.push(`/songs/${newSong.id}`)
 
     }
 
@@ -114,13 +124,15 @@ function SongFormPage() {
                 </div>
 
                 <div className="form-input-box">
-                    <label>Album Id:</label>
-                    <input
-                        type="number" // Placeholder until we change this to a dropdown of the user's albums
-                        onChange={(e) => setAlbumId(e.target.value)}
-                        value={albumId}
-                        >
-                    </input>
+                    <label>Album:</label>
+                    <select value={selectedAlbumId} onChange={(e) => setSelectedAlbumId(e.target.value)}>
+                        {/* {console.log('typeof albums', typeof albums)}
+                        {console.log('albums right before we map', albums)}
+                        {console.log('albums.Albums right before we map', albums.Albums)} */}
+                        {albums && albums.Albums && (albums.Albums.map(album => (
+                            <option key={album.id} value={album.id}>{album.name}</option>
+                        )))}
+                    </select>
                 </div>
 
                 <div className="form-input-box">
