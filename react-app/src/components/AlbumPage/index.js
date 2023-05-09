@@ -2,6 +2,8 @@ import { useDispatch, useSelector } from "react-redux"
 import { useParams, useHistory } from "react-router-dom"
 import { useEffect } from "react"
 import { getOneAlbumThunk, deleteAlbumThunk } from "../../store/albums";
+import AlbumDeleteModal from "../AlbumDeleteModal";
+import OpenModalButton from "../OpenModalButton";
 
 // '/users/albums/:albumId'
 function AlbumPage() {
@@ -37,11 +39,13 @@ function AlbumPage() {
       <h1>This is the AlbumPage Component</h1>
       <div>{album.name}</div>
 
-      <form onSubmit={deleteAlbum}>
+      {/* <form onSubmit={deleteAlbum}>
         <button type="submit">
           <h1>Delete an album</h1>
         </button>
-      </form>
+      </form> */}
+
+      <OpenModalButton buttonText="Delete Album" modalComponent={<AlbumDeleteModal albumId = {albumId}/>} />
     </div>
   )
 }
