@@ -1,5 +1,5 @@
 from flask import Blueprint, request
-from app.models import Song, Style
+from app.models import Song, Style, Album
 from flask_login import current_user, login_required, current_user
 from ..forms.song_form import NewSong
 from ..models import db
@@ -27,7 +27,11 @@ def song(id):
     """
     Query for a song by id and returns that song in a dictionary
     """
-    song = Song.query.get(id)
+    song = Song.query.options(
+        db.joinedload(Song.album),
+        db.joinedload(Song.style)
+    ).get(id)
+
     return song.to_dict()
 
 @song_routes.route('/new', methods = ['POST'])
