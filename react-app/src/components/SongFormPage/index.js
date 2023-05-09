@@ -4,9 +4,21 @@ import { Redirect, useHistory } from "react-router-dom";
 import { createSongThunk } from "../../store/songs";
 import { getCurrentUsersAlbumsThunk } from "../../store/albums"
 
-function SongFormPage() {
-    const dispatch = useDispatch();
+function SongFormPage({song, formType}) {
+
     const history = useHistory()
+    const sessionUser = useSelector(state => state.session.user)
+
+    // console.log('sessionUser inside SongFormPage', sessionUser)
+    // console.log('song inside SongFormPage', song)
+
+    if (formType === 'Edit Song') {
+        if (!sessionUser || sessionUser.id != song.ownerId) {
+            history.push('/')
+        }
+    }
+
+    const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(getCurrentUsersAlbumsThunk())
@@ -15,13 +27,13 @@ function SongFormPage() {
     }, [dispatch])
 
 
-    const [name, setName] = useState("");
-    const [runtime, setRuntime] = useState("");
-    const [content, setContent] = useState("");
+    const [name, setName] = useState(song ? song.name : "");
+    const [runtime, setRuntime] = useState(song ? song.runtime : "");
+    const [content, setContent] = useState(song ? song.content : "");
     const [albums, setAlbums] = useState([]);
-    const [selectedAlbumId, setSelectedAlbumId] = useState('')
-    const [style, setStyle] = useState("");
-    const [coverImage, setCoverImage] = useState("")
+    const [selectedAlbumId, setSelectedAlbumId] = useState(song ? song.albumId : "") // Need to find a way to set this to the album name via redux or prop threading/context
+    const [style, setStyle] = useState(""); // Need to find a way to set this to the style name via redux or prop threading/context
+    const [coverImage, setCoverImage] = useState(song ? song.coverImage : "")
 
     const [validationErrors, setValidationErrors] = useState([]);
     const [hasSubmitted, setHasSubmitted] = useState(false);
@@ -40,7 +52,13 @@ function SongFormPage() {
         formData.append('cover_image', coverImage)
         formData.append('style', style)
 
-        const newSong = await dispatch(createSongThunk(formData))
+        if (formType === 'Edit Song') { // Must still create backend route and frontend action/thunk/reducer
+            // const editedSong = await dispatch(editSongThunk(formData))
+            // history.push(`/songs/${editedSong.id}`)
+        } else {
+            const newSong = await dispatch(createSongThunk(formData))
+            history.push(`/songs/${newSong.id}`)
+        }
 
         setName('')
         setRuntime('')
@@ -51,7 +69,6 @@ function SongFormPage() {
         setCoverImage('')
         setValidationErrors([])
         setHasSubmitted(false)
-        history.push(`/songs/${newSong.id}`)
 
     }
 
@@ -104,9 +121,9 @@ function SongFormPage() {
                 <div className="form-input-box">
                     <label>Cover Image:</label>
                     <input
-                        type="text"
-                        onChange={(e) => setCoverImage(e.target.value)}
-                        value={coverImage}
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) => setCoverImage(e.target.files[0])}
                         >
                     </input>
                 </div>
@@ -114,11 +131,9 @@ function SongFormPage() {
                 <div className="form-input-box">
                     <label>Content:</label>
                     <input
-                        type="text" // Placeholder - will need to change this a 'file' type
-                        // accept="" // Placeholder - will need to accept only certain types of audio files
-                        onChange={(e) => setContent(e.target.value)} // Placeholder - will eventually change to {(e) => setContent(e.target.files[0])}
-                        value={content}
-                        required={true}
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) => setContent(e.target.files[0])}
                         >
                     </input>
                 </div>
@@ -158,7 +173,7 @@ function SongFormPage() {
                     </select>
                 </div>
 
-                <button>Create Song</button>
+                <button type="submit">{formType === 'Edit Song' ? 'Update Song' : 'Create Song' }</button>
             </form>
         </div>
     )
