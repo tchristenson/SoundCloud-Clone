@@ -4,6 +4,7 @@ import { Redirect } from "react-router-dom";
 import { useParams, useHistory } from "react-router-dom";
 import { useEffect } from "react";
 import { getCurrentUsersSongsThunk, getOneSongThunk, deleteOneSongThunk } from "../../store/songs";
+import AudioPlayer from "../ReactAudioPlayer/AudioPlayer";
 
 function SongPageSingle() {
   const dispatch = useDispatch();
@@ -40,6 +41,7 @@ function SongPageSingle() {
   return (
     <div id="singSongPage">
       <h1>single song page</h1>
+      <AudioPlayer song={song} sessionUser={sessionUser}/>
       <div className="playlogo"></div>
       <div>{song?.name}</div>
       <div>
