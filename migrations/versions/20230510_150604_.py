@@ -9,6 +9,11 @@ from alembic import op
 import sqlalchemy as sa
 
 
+import os
+environment = os.getenv("FLASK_ENV")
+SCHEMA = os.environ.get("SCHEMA")
+
+
 # revision identifiers, used by Alembic.
 revision = 'be5280d6884b'
 down_revision = '9f55274ad2f1'
@@ -25,6 +30,10 @@ def upgrade():
                existing_type=sa.INTEGER(),
                nullable=True)
     # ### end Alembic commands ###
+
+
+    if environment == "production":
+        op.execute(f"ALTER TABLE likes SET SCHEMA {SCHEMA};")
 
 
 def downgrade():
