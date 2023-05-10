@@ -1,36 +1,50 @@
-import React, { useState } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Redirect } from "react-router-dom";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import { useEffect } from "react";
-import { getAllSongsThunk, getOneSongThunk } from "../../store/songs";
+import { getOneSongThunk} from "../../store/songs";
+import SongDeleteModal from "../SongDeleteModal";
+import OpenModalButton from "../OpenModalButton";
+import AudioPlayer from "../ReactAudioPlayer/AudioPlayer";
 
 function SongPageSingle() {
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
+  const sessionUser = useSelector((state) => state.session.user);
+  const { songId } = useParams();
+  //   const songLength = useSelector((state)=> Object.values(state.songs).length)
 
-    const { songId } = useParams();
+  // console.log("this is the length of the users songs", song);
+  useEffect(() => {
+    dispatch(getOneSongThunk(songId));
+  }, [songId, dispatch]);
 
-    useEffect(() => {
-        dispatch(getOneSongThunk(songId));
-    }, [songId, dispatch]);
+  const song = useSelector((state) => state.songs[songId]);
 
-    const song = useSelector((state) => state.songs[songId]);
+  if (!song) {
+    return null;
+  }
 
-    if (!song) {
-        return ( <h1>song not found</h1>)
-    }
+  console.log('song inside SongPageSingle', song)
 
-    return (
-        <div id="singSongPage">
-            <h1>single song page</h1>
-            <div className="playlogo"></div>
-            <div>{song.name}</div>
-            <div>user name ? (owner id):{song.ownerId} , style: {song.styleId}</div>
-            <div>album name? album id: {song.albumId}</div>
-            <div>wav thing</div>
-            <div>{song.coverImage}</div>
-        </div>
-    )
+  return (
+    <div id="singSongPage">
+      <h1>single song page</h1>
+      <AudioPlayer song={song} sessionUser={sessionUser}/>
+      <div className="playlogo"></div>
+      <div>{song?.name}</div>
+      <div>
+        user name ? (owner id):{song?.ownerId} , style: {song?.styleId}
+      </div>
+      <div>album name? album id: {song?.albumId}</div>
+      <div>wav thing</div>
+      <div>{song?.coverImage}</div>
+
+      {sessionUser && sessionUser.id === song.ownerId && (
+        <OpenModalButton buttonText="Delete Song" modalComponent={<SongDeleteModal songId = {songId}/>} />
+      )}
+
+    </div>
+  );
 }
 
 export default SongPageSingle;

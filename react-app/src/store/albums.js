@@ -2,6 +2,7 @@
 const GET_ALL_ALBUMS = 'albums/GET_ALL_ALBUMS'
 const GET_ONE_ALBUM = 'albums/GET_ONE_ALBUM'
 const GET_USER_ALBUMS = 'albums/GET_USER_ALBUMS'
+const DELETE_ALBUM = 'albums/DELETE_ALBUM'
 
 const getAllAlbumsAction = (albums) => {
   return {
@@ -24,6 +25,13 @@ const getUserAlbumsAction = (albums) => {
   }
 }
 
+const deleteAlbumAction = (albumId) => {
+  return {
+    type: DELETE_ALBUM,
+    albumId
+  }
+}
+
 
 // THUNKS
 export const getAllAlbumsThunk = () => async (dispatch) => {
@@ -41,6 +49,7 @@ export const getOneAlbumThunk = (albumId) => async (dispatch) => {
 
   if (response.ok) {
     const album = await response.json()
+    console.log('album inside of getOneAlbumThunk', album)
     dispatch(getOneAlbumAction(album))
     return album
   }
@@ -53,8 +62,25 @@ export const getCurrentUsersAlbumsThunk = () => async (dispatch) => {
     const userAlbums = await response.json();
     console.log('userAlbums inside of getCurrentUsersAlbumsThunk ---->', userAlbums)
     dispatch(getUserAlbumsAction(userAlbums));
+    return userAlbums
   } else {
     return console.log("Get current user's albums: bad response")
+  }
+}
+
+export const deleteAlbumThunk = (albumId) => async (dispatch) => {
+  console.log('albumId inside deleteAlbumThunk', albumId)
+  const response = await fetch(`/api/albums/delete/${albumId}`, {
+    method: "DELETE"
+  });
+
+  if (response.ok) {
+    console.log('response inside of deleteAlbumThunk', response)
+    // const delAlbum = response.json();
+    dispatch(deleteAlbumAction(albumId));
+    return {'message': 'delete successful'}
+  } else {
+    return console.log("Delete current user's album: bad response");
   }
 }
 
@@ -75,6 +101,13 @@ const albumReducer = (state = {}, action) => {
       newState = {...state}
       action.albums.Albums.forEach(album => newState[album.id] = album)
       return newState
+    case DELETE_ALBUM:
+      newState = {...state};
+      console.log('newState inside Reducer', newState)
+      console.log('newState.album inside Reducer', newState.album)
+      console.log('action inside Reducer', action)
+      delete newState[action.albumId];
+      return newState;
     default:
       return state
   }
