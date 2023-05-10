@@ -48,7 +48,7 @@ function SongFormPage({song, formType}) {
         formData.append('album_id', +selectedAlbumId)
         formData.append('cover_image', coverImage)
         formData.append('style', style)
-        formData.append('id', song ? song.id : undefined)
+        formData.append('id', song ? song.id : undefined) // remove this for Create Song
 
         console.log(formData.get('id'))
         console.log(formData.get('name'))
@@ -59,7 +59,7 @@ function SongFormPage({song, formType}) {
             console.log(key[0] + '----->' + key[1]);
         }
 
-        if (formType === 'Edit Song') { // Must still create backend route
+        if (formType === 'Edit Song') { // Remove this once edit song component complete
             const editedSong = await dispatch(editSongThunk(formData))
             history.push(`/songs/${editedSong.id}`)
         } else {

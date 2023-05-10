@@ -2,6 +2,7 @@ from flask import Blueprint, request
 from app.models import Song, Style
 from flask_login import current_user, login_required, current_user
 from ..forms.song_form import NewSong
+from ..forms.edit_song_form import EditSong
 from ..models import db
 from ..api.aws_song_helpers import get_unique_song_filename, upload_song_file_to_s3
 from ..api.aws_image_helpers import get_unique_image_filename, upload_image_file_to_s3
@@ -104,8 +105,9 @@ def edit_song(id):
     song = Song.query.get(id)
     if not song:
         return {"error": "Song not found."}
+    print('song printing insdie of edit route ------->', song.to_dict())
 
-    form = NewSong()
+    form = EditSong()
     form['csrf_token'].data = request.cookies['csrf_token']
 
 
@@ -120,11 +122,11 @@ def edit_song(id):
         image_upload = upload_image_file_to_s3(cover_image)
 
         print("=========> upload data here get y IMAGE :", image_upload)
-        content = form.data["content"]
-        content.filename = get_unique_song_filename(content.filename)
-        audio_upload = upload_song_file_to_s3(content)
+        # content = form.data["content"]
+        # content.filename = get_unique_song_filename(content.filename)
+        # audio_upload = upload_song_file_to_s3(content)
 
-        print("=========> upload data here get y AUDIO :", audio_upload["url"])
+        # print("=========> upload data here get y AUDIO :", audio_upload["url"])
 
         # if "url" not in audio_upload:
         #     return { "errors": form.errors}
@@ -133,7 +135,7 @@ def edit_song(id):
 
         song.name = form.data['name']
         song.cover_image = image_upload["url"]
-        song.content = audio_upload["url"]
+        # song.content = audio_upload["url"]
         song.album_id = form.data['album_id']
         song.style_id = style_instance['id']
         print("song here look belive me ===> :", song)
