@@ -50,13 +50,6 @@ function SongFormPage({song, formType}) {
         formData.append('cover_image', coverImage)
         formData.append('style', style)
 
-        console.log('formData inside handleSubmit on Song Form', formData)
-        console.log('formData.name inside handleSubmit on Song Form', formData.name)
-        console.log('formData.content inside handleSubmit on Song Form', formData.content)
-        console.log('formData.album_id inside handleSubmit on Song Form', formData.album_id)
-        console.log('formData.cover_image inside handleSubmit on Song Form', formData.cover_image)
-        console.log('formData.style inside handleSubmit on Song Form', formData.style)
-
         if (formType === 'Edit Song') { // Must still create backend route
             const editedSong = await dispatch(editSongThunk(formData))
             history.push(`/songs/${editedSong.id}`)
