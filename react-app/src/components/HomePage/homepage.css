@@ -1,17 +1,19 @@
 #homePageStyle{
-
+    display: inline-block;
     max-width: 100%;
     margin: 50px;
     padding: 10px;
 }
 
-#mainPage{
-    /* display: flex;
+#songContainer{
+    display: flex;
     justify-content: center;
     align-items: center;
     align-content: space-around;
     flex-flow: row;
-    width: 100%; */
+    top: 0;
+    bottom: 0;
+
 
 }
 

@@ -43,7 +43,7 @@ function HomePage() {
         <OpenModalButton buttonText="Upload your Song" onItemClick="" modalComponent={<LoginFormModal />} />
       </div>
       <h2>Hear what's trending for free in the Vibillow community</h2>
-      <div id="mainPage">
+      <div id="songContainer">
         {songs?.map(({ name, albumId, styleId, ownerId, runtime, coverImage, content, id }) => (
           <div className="songDiv" key={id}>
             <div>
