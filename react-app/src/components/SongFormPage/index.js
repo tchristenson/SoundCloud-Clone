@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Redirect, useHistory } from "react-router-dom";
 import { createSongThunk } from "../../store/songs";
 import { getCurrentUsersAlbumsThunk } from "../../store/albums"
+import { editSongThunk } from "../../store/songs";
 
 function SongFormPage({song, formType}) {
 
@@ -26,9 +27,7 @@ function SongFormPage({song, formType}) {
         console.log('albums inside of SongFormPage', albums)
     }, [dispatch])
 
-
     const [name, setName] = useState(song ? song.name : "");
-    const [runtime, setRuntime] = useState(song ? song.runtime : "");
     const [content, setContent] = useState(song ? song.content : "");
     const [albums, setAlbums] = useState([]);
     const [selectedAlbumId, setSelectedAlbumId] = useState(song ? song.albumId : "") // Need to find a way to set this to the album name via redux or prop threading/context
@@ -46,15 +45,21 @@ function SongFormPage({song, formType}) {
 
         const formData = new FormData()
         formData.append('name', name)
-        formData.append('runtime', runtime)
         formData.append('content', content)
         formData.append('album_id', selectedAlbumId)
         formData.append('cover_image', coverImage)
         formData.append('style', style)
 
-        if (formType === 'Edit Song') { // Must still create backend route and frontend action/thunk/reducer
-            // const editedSong = await dispatch(editSongThunk(formData))
-            // history.push(`/songs/${editedSong.id}`)
+        console.log('formData inside handleSubmit on Song Form', formData)
+        console.log('formData.name inside handleSubmit on Song Form', formData.name)
+        console.log('formData.content inside handleSubmit on Song Form', formData.content)
+        console.log('formData.album_id inside handleSubmit on Song Form', formData.album_id)
+        console.log('formData.cover_image inside handleSubmit on Song Form', formData.cover_image)
+        console.log('formData.style inside handleSubmit on Song Form', formData.style)
+
+        if (formType === 'Edit Song') { // Must still create backend route
+            const editedSong = await dispatch(editSongThunk(formData))
+            history.push(`/songs/${editedSong.id}`)
         } else {
             const newSong = await dispatch(createSongThunk(formData))
             console.log("new song song song ===> :", newSong)
@@ -62,7 +67,6 @@ function SongFormPage({song, formType}) {
         }
 
         setName('')
-        setRuntime('')
         setContent('')
         setAlbums([])
         setSelectedAlbumId('')
@@ -83,7 +87,7 @@ function SongFormPage({song, formType}) {
 
     return (
         <div>
-            <h1>Create a New Song</h1>
+            {formType === 'Edit Song' ? <h1>Update your Song</h1> : <h1>Create a New Song</h1> }
             {hasSubmitted && validationErrors.length > 0 && (
                 <div>
                     <h2>The following errors were found:</h2>
@@ -105,16 +109,6 @@ function SongFormPage({song, formType}) {
                         onChange={(e) => setName(e.target.value)}
                         value={name}
                         required={true}
-                        >
-                    </input>
-                </div>
-
-                <div className="form-input-box">
-                    <label>Runtime:</label>
-                    <input
-                        type="text"
-                        onChange={(e) => setRuntime(e.target.value)}
-                        value={runtime}
                         >
                     </input>
                 </div>

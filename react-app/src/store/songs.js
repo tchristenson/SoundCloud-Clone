@@ -3,6 +3,7 @@ const GET_USERS_SONGS = "/GET_USERS_SONGS";
 const GET_SONG = "/GET_SONG";
 const CREATE_SONG = "/CREATE_SONG";
 const DELETE_SONG = "/DELETE_SONG";
+const EDIT_SONG = "/EDIT_SONG"
 
 const getAllSongsAction = (songs) => {
   return {
@@ -38,6 +39,13 @@ const createSongAction = (song) => {
   }
 }
 
+const editSongAction = (song) => {
+  return {
+    type: EDIT_SONG,
+    song
+  }
+}
+
 export const getAllSongsThunk = () => async (dispatch) => {
   const response = await fetch("/api/songs");
   console.log("response", response);
@@ -46,7 +54,7 @@ export const getAllSongsThunk = () => async (dispatch) => {
     console.log("songsTHUNK", songs);
     dispatch(getAllSongsAction(songs));
   } else {
-    console.log("Response not ok");
+    return ("getAllSongs Response not ok");
   }
 };
 
@@ -58,6 +66,8 @@ export const getOneSongThunk = (songId) => async (dispatch) => {
     const song = await response.json();
     dispatch(getOneSongAction(song));
     return song;
+  } else {
+    return ("getOneSong Response not ok");
   }
 };
 
@@ -68,7 +78,7 @@ export const getCurrentUsersSongsThunk = () => async (dispatch) => {
     const {songs} = await response.json()
     dispatch(getAllSongsAction2(songs))
   } else {
-    return console.log("get current user songs: response not ok")
+    return ("get current user songs: response not ok")
   }
 }
 
@@ -85,7 +95,7 @@ export const createSongThunk = (song) => async (dispatch) => {
     dispatch(createSongAction(song));
     return song;
   } else {
-    return console.log("create songs: response not ok");
+    return ("create songs: response not ok");
   }
 };
 
@@ -97,11 +107,24 @@ export const deleteOneSongThunk = (songId) => async (dispatch) => {
   if (res.ok) {
     dispatch(deleteOneSongAction(songId));
     return {'message': 'delete successful'};
-
   } else {
-    console.log("Song couldnt be deleted")
+    return ("Song couldnt be deleted")
   }
 };
+
+export const editSongThunk = (song) => async (dispatch) => {
+  const response = await fetch(`/api/songs/edit/${song.id}`, {
+    method: 'PUT',
+    body: song
+  })
+  if (response.ok) {
+    const song = await response.json()
+    dispatch(editSongAction(song))
+    return song
+  } else {
+    return ('edit songs: response not ok')
+  }
+}
 
 const initState = {};
 function songReducer(state = initState, action) {
@@ -134,6 +157,10 @@ function songReducer(state = initState, action) {
       console.log('action.song inside CREATE_SONG Reducer', action.song)
       newState[action.song.id] = action.song
       return newState;
+    case EDIT_SONG:
+      newState = {...state}
+      console.log('action.song inside EDIT_SONG Reducer', action.song)
+      newState[action.song.id] = action.song
     default:
       return state;
   }
