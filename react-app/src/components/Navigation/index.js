@@ -9,8 +9,8 @@ function Navigation({ isLoaded }){
 
 	return (
 		<ul className='nav-bar'>
-			<li>
-				<NavLink exact to="/">Home</NavLink>
+			<li className='website-title'>
+				<NavLink exact to="/">Vibillow</NavLink>
 			</li>
 			{isLoaded && (
 				<li>
