@@ -48,7 +48,7 @@ function SongFormPage({song, formType}) {
         formData.append('name', name)
         formData.append('runtime', runtime)
         formData.append('content', content)
-        formData.append('album_id', selectedAlbumId)
+        formData.append('album_id', +selectedAlbumId)
         formData.append('cover_image', coverImage)
         formData.append('style', style)
 
@@ -109,7 +109,7 @@ function SongFormPage({song, formType}) {
                     </input>
                 </div>
 
-                <div className="form-input-box">
+                {/* <div className="form-input-box">
                     <label>Runtime:</label>
                     <input
                         type="text"
@@ -117,7 +117,7 @@ function SongFormPage({song, formType}) {
                         value={runtime}
                         >
                     </input>
-                </div>
+                </div> */}
 
                 <div className="form-input-box">
                     <label>Cover Image:</label>
@@ -130,7 +130,7 @@ function SongFormPage({song, formType}) {
                 </div>
 
                 <div className="form-input-box">
-                    <label>Content:</label>
+                    <label>Audio File:</label>
                     <input
                         type="file"
                         accept="audio/*"
