@@ -1,5 +1,8 @@
+import { bindActionCreators } from "redux"
+
 //consts
 const GET_USER = "/GET_USER"
+const GET_ALL_USERS = '/GET_ALL_USERS'
 
 const getOneUserAction = (user) => {
     return {
@@ -7,6 +10,14 @@ const getOneUserAction = (user) => {
         user
     }
 }
+
+const getAllUsersAction = (users) => {
+    return {
+        type: GET_ALL_USERS,
+        users
+    }
+}
+
 
 export const getOneUserThunk = (userId) => async (dispatch) => {
     const response = await fetch(`/api/users/${userId}`);
@@ -20,6 +31,22 @@ export const getOneUserThunk = (userId) => async (dispatch) => {
     }
 };
 
+export const getAllUsersThunk = () => async (dispatch) => {
+    const response = await fetch(`/api/users/`);
+    console.log("response ", response);
+
+    if (response.ok) {
+        const {users} = await response.json();
+        console.log("this is the users THUNK", users)
+        dispatch(getAllUsersAction(users))
+        return users
+    }
+};
+
+
+
+
+
 const initState = {};
 function userReducer(state = initState, action) {
     let newState;
@@ -28,6 +55,13 @@ function userReducer(state = initState, action) {
             newState = {...state}
             console.log("user ", action.user)
             newState[action.user.id] = action.user
+            return newState
+        case GET_ALL_USERS:
+            newState = {...state}
+            console.log('aciton.users.users.users', action.users)
+            action.users.forEach(user=>{
+                newState[user.id] = user
+            })
             return newState
         default:
             return state
