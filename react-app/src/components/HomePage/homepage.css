@@ -1,0 +1,7 @@
+#homeContainer{
+    display: flex;
+    border: 2px solid black;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}

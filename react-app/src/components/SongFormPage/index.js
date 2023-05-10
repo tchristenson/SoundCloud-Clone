@@ -48,7 +48,7 @@ function SongFormPage({song, formType}) {
         formData.append('name', name)
         formData.append('runtime', runtime)
         formData.append('content', content)
-        formData.append('album_id', selectedAlbumId)
+        formData.append('album_id', +selectedAlbumId)
         formData.append('cover_image', coverImage)
         formData.append('style', style)
 
