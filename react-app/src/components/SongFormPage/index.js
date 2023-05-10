@@ -1,25 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Redirect, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { createSongThunk } from "../../store/songs";
 import { getCurrentUsersAlbumsThunk } from "../../store/albums"
-import { editSongThunk } from "../../store/songs";
 
-function SongFormPage({song, formType}) {
-
-    const history = useHistory()
-    const sessionUser = useSelector(state => state.session.user)
-
-    // console.log('sessionUser inside SongFormPage', sessionUser)
-    // console.log('song inside SongFormPage', song)
-
-    if (formType === 'Edit Song') {
-        if (!sessionUser || sessionUser.id != song.ownerId) {
-            history.push('/')
-        }
-    }
+function SongFormPage() {
 
     const dispatch = useDispatch();
+    const history = useHistory()
+    const sessionUser = useSelector(state => state.session.user)
 
     useEffect(() => {
         dispatch(getCurrentUsersAlbumsThunk())
@@ -27,12 +16,12 @@ function SongFormPage({song, formType}) {
         console.log('albums inside of SongFormPage', albums)
     }, [dispatch])
 
-    const [name, setName] = useState(song ? song.name : "");
-    const [content, setContent] = useState(song ? song.content : "");
+    const [name, setName] = useState("");
+    const [content, setContent] = useState("");
     const [albums, setAlbums] = useState([]);
-    const [selectedAlbumId, setSelectedAlbumId] = useState(song ? song.albumId : "") // Need to find a way to set this to the album name via redux or prop threading/context
+    const [selectedAlbumId, setSelectedAlbumId] = useState("") // Need to find a way to set this to the album name via redux or prop threading/context
     const [style, setStyle] = useState(""); // Need to find a way to set this to the style name via redux or prop threading/context
-    const [coverImage, setCoverImage] = useState(song ? song.coverImage : "")
+    const [coverImage, setCoverImage] = useState("")
     const [validationErrors, setValidationErrors] = useState([]);
     const [hasSubmitted, setHasSubmitted] = useState(false);
 
@@ -48,24 +37,13 @@ function SongFormPage({song, formType}) {
         formData.append('album_id', +selectedAlbumId)
         formData.append('cover_image', coverImage)
         formData.append('style', style)
-        formData.append('id', song ? song.id : undefined) // remove this for Create Song
-
-        console.log(formData.get('id'))
-        console.log(formData.get('name'))
-        console.log(formData.keys())
-        console.log(formData.values())
 
         for (let key of formData.entries()) {
             console.log(key[0] + '----->' + key[1]);
         }
 
-        if (formType === 'Edit Song') { // Remove this once edit song component complete
-            const editedSong = await dispatch(editSongThunk(formData))
-            history.push(`/songs/${editedSong.id}`)
-        } else {
-            const newSong = await dispatch(createSongThunk(formData))
-            history.push(`/songs/${newSong.id}`)
-        }
+        const newSong = await dispatch(createSongThunk(formData))
+        history.push(`/songs/${newSong.id}`)
 
         setName('')
         setContent('')
@@ -75,7 +53,6 @@ function SongFormPage({song, formType}) {
         setCoverImage('')
         setValidationErrors([])
         setHasSubmitted(false)
-
     }
 
     useEffect(() => {
@@ -88,7 +65,7 @@ function SongFormPage({song, formType}) {
 
     return (
         <div>
-            {formType === 'Edit Song' ? <h1>Update your Song</h1> : <h1>Create a New Song</h1> }
+            <h1>Create a New Song</h1>
             {hasSubmitted && validationErrors.length > 0 && (
                 <div>
                     <h2>The following errors were found:</h2>
@@ -166,7 +143,7 @@ function SongFormPage({song, formType}) {
                     </select>
                 </div>
 
-                <button type="submit">{formType === 'Edit Song' ? 'Update Song' : 'Create Song' }</button>
+                <button type="submit">Create Song</button>
             </form>
         </div>
     )
