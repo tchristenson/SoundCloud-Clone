@@ -3,6 +3,8 @@ body {
 }
 
 .profile-dropdown {
+  display: flex;
+  flex-flow: column;
   list-style-type: none;
   position: fixed;
   right: 0px;
@@ -14,7 +16,7 @@ body {
   font-size: 16px;
   border-radius: 8px;
   text-align: center;
-  min-height: 100px;
+  min-height: 75px;
   min-width: 116px;
   margin-right: 24px;
   margin-top: 2px;
@@ -65,7 +67,7 @@ body {
   transition: .5s;
 }
 
-.logout-btn {
+.logout-btn, .login-btn, .signup-btn {
   background-color: rgb(112, 112, 112);
   
   border: none;
@@ -80,11 +82,22 @@ body {
   bottom: 0px;
 }
 
-.logout-btn:hover {
+.logout-btn:hover, .signup-btn:hover, .login-btn:hover {
   text-decoration: underline;
 }
 
 .username-li, .email-li {
   margin: 6px 0px;
   font-weight: bold;
+}
+
+.login-btn, .signup-btn {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  border: none;
+}
+
+.signup-btn {
+  border-top: 1px solid rgb(153, 153, 153);
 }
