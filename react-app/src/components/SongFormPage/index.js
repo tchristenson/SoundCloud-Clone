@@ -50,12 +50,15 @@ function SongFormPage({song, formType}) {
         formData.append('cover_image', coverImage)
         formData.append('style', style)
 
+        for (let key of formData.entries()) {
+            console.log(key[0] + '----->' + key[1]);
+        }
+
         if (formType === 'Edit Song') { // Must still create backend route
             const editedSong = await dispatch(editSongThunk(formData))
             history.push(`/songs/${editedSong.id}`)
         } else {
             const newSong = await dispatch(createSongThunk(formData))
-            console.log("new song song song ===> :", newSong)
             history.push(`/songs/${newSong.id}`)
         }
 
