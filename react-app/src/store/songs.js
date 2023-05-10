@@ -113,9 +113,9 @@ export const deleteOneSongThunk = (songId) => async (dispatch) => {
 };
 
 export const editSongThunk = (song) => async (dispatch) => {
-  console.log('Checking if im inside the editSongThunk')
-  console.log('song immediately after entering editSongThunk', song)
-  const response = await fetch(`/api/songs/edit/${song.id}`, {
+  const songId = parseInt(song.get('id'))
+  console.log('songId inside editSongThunk', songId)
+  const response = await fetch(`/api/songs/edit/${songId}`, {
     method: 'PUT',
     body: song
   })

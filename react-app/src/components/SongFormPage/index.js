@@ -49,6 +49,12 @@ function SongFormPage({song, formType}) {
         formData.append('album_id', +selectedAlbumId)
         formData.append('cover_image', coverImage)
         formData.append('style', style)
+        formData.append('id', song ? song.id : undefined)
+
+        console.log(formData.get('id'))
+        console.log(formData.get('name'))
+        console.log(formData.keys())
+        console.log(formData.values())
 
         for (let key of formData.entries()) {
             console.log(key[0] + '----->' + key[1]);
@@ -132,9 +138,6 @@ function SongFormPage({song, formType}) {
                 <div className="form-input-box">
                     <label>Album:</label>
                     <select value={selectedAlbumId} onChange={(e) => setSelectedAlbumId(e.target.value)}>
-                        {/* {console.log('typeof albums', typeof albums)}
-                        {console.log('albums right before we map', albums)}
-                        {console.log('albums.Albums right before we map', albums.Albums)} */}
                         {albums && albums.Albums && (albums.Albums.map(album => (
                             <option key={album.id} value={album.id}>{album.name}</option>
                         )))}
