@@ -33,7 +33,6 @@ function SongFormPage({song, formType}) {
     const [selectedAlbumId, setSelectedAlbumId] = useState(song ? song.albumId : "") // Need to find a way to set this to the album name via redux or prop threading/context
     const [style, setStyle] = useState(""); // Need to find a way to set this to the style name via redux or prop threading/context
     const [coverImage, setCoverImage] = useState(song ? song.coverImage : "")
-
     const [validationErrors, setValidationErrors] = useState([]);
     const [hasSubmitted, setHasSubmitted] = useState(false);
 
