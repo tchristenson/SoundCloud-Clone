@@ -96,6 +96,7 @@ export const deleteOneSongThunk = (songId) => async (dispatch) => {
   });
   if (res.ok) {
     dispatch(deleteOneSongAction(songId));
+    return {'message': 'delete successful'};
 
   } else {
     console.log("Song couldnt be deleted")
@@ -126,7 +127,7 @@ function songReducer(state = initState, action) {
       return newState;
     case DELETE_SONG:
       newState = {...state}
-      delete newState.song[action.songId]
+      delete newState[action.songId]
       return newState
     case CREATE_SONG:
       newState = {...state}
