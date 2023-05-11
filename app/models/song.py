@@ -16,7 +16,7 @@ class Song(db.Model):
     owner_id = db.Column(db.Integer, ForeignKey(add_prefix_for_prod('users.id')))
     album_id = db.Column(db.Integer, ForeignKey(add_prefix_for_prod('albums.id')))
     name = db.Column(db.String(50), nullable=False)
-    runtime = db.Column(db.String) # Undecided on datatype. Date, datetime, or integer?
+    # runtime = db.Column(db.String) # Undecided on datatype. Date, datetime, or integer?
     style_id = db.Column(db.Integer, ForeignKey(add_prefix_for_prod('styles.id')))
     cover_image = db.Column(db.String)
     content = db.Column(db.String, nullable=False) # Keeping as a string for now. TBD based on AWS
@@ -34,7 +34,7 @@ class Song(db.Model):
             'albumId': self.album_id,
             'styleId': self.style_id,
             'name': self.name,
-            'runtime': self.runtime,
+            # 'runtime': self.runtime,
             'coverImage': self.cover_image,
             'content': self.content,
             'likes': len(self.user_likes)

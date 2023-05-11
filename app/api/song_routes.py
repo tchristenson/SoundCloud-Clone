@@ -105,7 +105,7 @@ def edit_song(id):
     song = Song.query.get(id)
     if not song:
         return {"error": "Song not found."}
-    print('song printing insdie of edit route ------->', song.to_dict())
+    print('song printing inside of edit route ------->', song.to_dict())
 
     form = EditSong()
     form['csrf_token'].data = request.cookies['csrf_token']
