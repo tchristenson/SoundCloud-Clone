@@ -79,7 +79,7 @@ function SongFormPage() {
                 </div>
             )}
             <div className="loadingArea">
-                {hasSubmitted && (
+                {hasSubmitted &&  validationErrors.length === 0 &&(
                     <BarLoader color="#36d7b7" className="loadingBar" />
                 )}
             </div>
@@ -115,6 +115,7 @@ function SongFormPage() {
                         type="file"
                         accept="audio/*"
                         onChange={(e) => setContent(e.target.files[0])}
+                        required={true}
                         >
                     </input>
                 </div>
