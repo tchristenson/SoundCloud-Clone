@@ -6,7 +6,6 @@ def seed_songs():
         owner_id = 1,
         album_id = 1,
         name = 'Song One',
-        runtime = '00:03:34',
         style_id = 2,
         cover_image = 'http://vibillow-images.s3.amazonaws.com/024c21e29efb4c6eb090d057a29eac79.jpg',
         content = 'http://vibillow-songs.s3.amazonaws.com/0ae94e4ea5e34441b032038b63dbc95d.wav'
@@ -17,7 +16,6 @@ def seed_songs():
         owner_id = 1,
         album_id = 2,
         name = 'Song Two',
-        runtime = '00:04:34',
         style_id = 2,
         cover_image = 'http://vibillow-images.s3.amazonaws.com/486dcfce2d944abe98f997322d7a5d89.jpg',
         content = 'https://vibillow-songs.s3.amazonaws.com/0da8b2074d06482a9f4b6af8066d86ae.wav'
@@ -28,7 +26,6 @@ def seed_songs():
         owner_id = 1,
         album_id = 3,
         name = 'Song Three',
-        runtime = '00:05:34',
         style_id = 3,
         cover_image = 'http://vibillow-images.s3.amazonaws.com/65c6f472a54f4d0c91f95273157da559.jpg',
         content = 'https://vibillow-songs.s3.amazonaws.com/2212ed545aff49ac9f69ebd364dc3673.wav'
@@ -39,7 +36,6 @@ def seed_songs():
         owner_id = 2,
         album_id = 4,
         name = 'Song Four',
-        runtime = '00:06:34',
         style_id = 4,
         cover_image = 'http://vibillow-images.s3.amazonaws.com/941d308d780b4c14bd49cba0fb95f48f.jpg',
         content = 'https://vibillow-songs.s3.amazonaws.com/3226d1015c2d4032b7a244cac7fb8b70.wav'
@@ -50,7 +46,6 @@ def seed_songs():
         owner_id = 3,
         album_id = 5,
         name = 'Song Five',
-        runtime = '00:07:34',
         style_id = 7,
         cover_image = 'http://vibillow-images.s3.amazonaws.com/b85e700b34474831a926e8f7709823d4.jpg',
         content = 'https://vibillow-songs.s3.amazonaws.com/b92e4bbb980541c598a8ba5c0b4b3963.wav'
@@ -61,7 +56,6 @@ def seed_songs():
         owner_id = 1,
         album_id = 5,
         name = 'Song Seven',
-        runtime = '00:07:34',
         style_id = 7,
         cover_image = 'http://vibillow-images.s3.amazonaws.com/bc76c0b175bc46abad3bfdf479fa7cab.jpg',
         content = 'https://vibillow-songs.s3.amazonaws.com/c2f43bee2623462a9932737b33d7dad8.wav'
@@ -72,7 +66,6 @@ def seed_songs():
         owner_id = 1,
         album_id = 5,
         name = 'Song Eight',
-        runtime = '00:07:34',
         style_id = 7,
         cover_image = 'http://vibillow-images.s3.amazonaws.com/c7a31abf4bb448b1a5ab0ab0dc2c31a9.jpg',
         content = 'https://vibillow-songs.s3.amazonaws.com/d981e8da966b432ea303f85a03422de3.wav'
@@ -83,7 +76,6 @@ def seed_songs():
         owner_id = 1,
         album_id = 5,
         name = 'Song Nine',
-        runtime = '00:07:34',
         style_id = 7,
         cover_image = 'http://vibillow-images.s3.amazonaws.com/d4659de1fafc427bbbc256c06eaf9a7b.jpg',
         content = 'https://vibillow-songs.s3.amazonaws.com/daf90ec7342b45c6bcd6e6dac1f5a64d.wav'
@@ -94,7 +86,6 @@ def seed_songs():
         owner_id = 1,
         album_id = 5,
         name = 'Song Ten',
-        runtime = '00:07:34',
         style_id = 7,
         cover_image = 'http://vibillow-images.s3.amazonaws.com/fe8731f738c9466b872a735273865642.png',
         content = 'https://vibillow-songs.s3.amazonaws.com/dcaa80a1d7434b349a50ec64c06ef59f.wav'
