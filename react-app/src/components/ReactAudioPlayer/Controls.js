@@ -16,12 +16,17 @@ const Controls = ({ audioRef, progressBarRef, duration, setTimeProgress }) => {
   const playAnimationRef = useRef();
 
   const repeat = useCallback(() => {
-    const currentTime = audioRef.current.currentTime;
-    setTimeProgress(currentTime);
-    progressBarRef.current.value = currentTime;
-    progressBarRef.current.style.setProperty("--range-progress", `${(progressBarRef.current.value / duration) * 100}%`);
+    if (audioRef.current) {
+      console.log('audioRef', audioRef)
+      console.log('audioRef.current', audioRef.current)
+      console.log('audioRef.current.currentTime', audioRef.current.currentTime)
+      const currentTime = audioRef.current.currentTime;
+      setTimeProgress(currentTime);
+      progressBarRef.current.value = currentTime;
+      progressBarRef.current.style.setProperty("--range-progress", `${(progressBarRef.current.value / duration) * 100}%`);
 
-    playAnimationRef.current = requestAnimationFrame(repeat);
+      playAnimationRef.current = requestAnimationFrame(repeat);
+    }
   }, [audioRef, duration, progressBarRef, setTimeProgress]);
 
   useEffect(() => {
@@ -46,7 +51,7 @@ const Controls = ({ audioRef, progressBarRef, duration, setTimeProgress }) => {
   };
 
   useEffect(() => {
-    if (audioRef) {
+    if (audioRef && audioRef.current) {
       audioRef.current.volume = volume / 100;
       audioRef.current.muted = muteVolume;
     }
