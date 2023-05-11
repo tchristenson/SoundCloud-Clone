@@ -5,7 +5,6 @@ import { useEffect } from "react";
 import { getOneSongThunk} from "../../store/songs";
 import SongDeleteModal from "../SongDeleteModal";
 import OpenModalButton from "../OpenModalButton";
-import { getCurrentUsersSongsThunk, deleteOneSongThunk } from "../../store/songs";
 import AudioPlayer from "../ReactAudioPlayer/AudioPlayer";
 
 function SongPageSingle() {

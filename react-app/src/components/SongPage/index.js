@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Redirect } from "react-router-dom";
+import { NavLink, Redirect } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { getAllSongsThunk } from "../../store/songs";
@@ -21,14 +21,14 @@ function SongPage() {
   return (
     <div id="songPage">
       {songs?.map(({name,albumId, styleId, ownerId, runtime, coverImage, content, id})=>(
-        <div key={id}>
+        <NavLink to={`/songs/${id}`} key={id}>
           <div className="playlogo"></div>
           <div>{name}</div>
           <div>user name ? (owner id):{ownerId} , style: {styleId}</div>
           <div>album name? album id: {albumId}</div>
           <div>wav thing</div>
           <div>{coverImage}</div>
-        </div>
+        </NavLink>
       ))}
     </div>
   );
