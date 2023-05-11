@@ -16,9 +16,14 @@
 }
 
 .song-picture-div {
-    width: 100px;
-    height: 100px;
+    width: 150px;
+    height: 150px;
     border: 2px solid rgb(87, 207, 87);
     margin-left: 8px;
     margin-right: 16px;
+}
+
+.song-picture {
+    width: fit-content;
+    height: fit-content;
 }

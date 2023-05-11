@@ -33,13 +33,13 @@ function UsersSongsPage() {
         {songs?.map(({name,albumId, styleId, ownerId, runtime, coverImage, content, id})=>(
           <div className="song-div" key={id}>
             <div className="song-picture-div">
-              <img src={coverImage}/>
+              <img className="song-picture" src={coverImage}/>
             </div>
             
             <div>
               <div className="playlogo"></div>
-              <div>{name}</div>
-              <div>user name ? (owner id):{ownerId} , style: {styleId}</div>
+              <div className="song-name">{name}</div>
+              <div>By {sessionUser.username} (owner id):{ownerId} , style: {styleId}</div>
               <div>album name? album id: {albumId}</div>
               <div>wav thing</div>
             </div>
