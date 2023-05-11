@@ -1,22 +1,28 @@
 #homePageStyle{
-    display: inline-block;
+    display: grid;
     max-width: 100%;
-    margin: 50px;
-    padding: 10px;
+    margin: 0;
+    padding: 0;
 }
 
 #songContainer{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    align-content: space-around;
-    flex-flow: row;
-    top: 0;
-    bottom: 0;
+    display: grid;
+   grid-gap: 5rem;
+   grid-template-columns: 200px 200px 200px;
 
 
 }
 
 
 #homePageStyle{
+    background-color: red;
+}
+
+.songDiv{
+    background-color: green;
+}
+
+
+.mainImage{
+    justify-content: center;
 }

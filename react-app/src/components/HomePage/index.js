@@ -6,7 +6,7 @@ import { getAllUsersThunk } from "../../store/users";
 import AudioPlayer from "../ReactAudioPlayer/AudioPlayer";
 import LoginFormModal from "../LoginFormModal";
 import OpenModalButton from "../OpenModalButton";
-import './homepage.css'
+import "./homepage.css";
 
 import { useEffect } from "react";
 import { faker } from "@faker-js/faker";
@@ -21,10 +21,12 @@ function HomePage() {
   const songs = useSelector((state) => Object.values(state.songs));
   const users = useSelector((state) => Object.values(state.users));
 
-  const usersSong = users.filter((user) => user.id === songs.ownerId);
-  console.log(usersSong);
+  const newSong = songs.map((song) => {
+    return song.ownerId;
+  });
 
-  console.log("songs", songs);
+  console.log("these are the song owner ids", newSong);
+  console.log("these are the users", users);
 
   if (!songs) {
     return <h1>testerrrrr</h1>;
@@ -32,35 +34,30 @@ function HomePage() {
 
   return (
     <>
-    <main id='homePageStyle'>
-
-   <div>
-        <img alt="placeholder" src={faker.image.nightlife()} />
-        <button>Sign up</button>
-      </div>
-      <div>
-        <input type="search" placeholder="Search for artists, bands, tracks, and podcasts"></input> or
-        <OpenModalButton buttonText="Upload your Song" onItemClick="" modalComponent={<LoginFormModal />} />
-      </div>
-      <h2>Hear what's trending for free in the Vibillow community</h2>
-      <div id="songContainer">
-        {songs?.map(({ name, albumId, styleId, ownerId, runtime, coverImage, content, id }) => (
-          <div className="songDiv" key={id}>
-            <div>
-              <img alt="" src={coverImage} />
+      <main id="homePageStyle">
+        <div>
+          <img alt="placeholder" src={faker.image.nightlife()} className="mainImage" />
+        </div>
+        <div>
+          <input type="search" placeholder="Search for artists, bands, tracks, and podcasts" size={"50"}></input> or
+          <OpenModalButton buttonText="Upload your Song" onItemClick="" modalComponent={<LoginFormModal />} />
+        </div>
+        <h2>Hear what's trending for free in the Vibillow community</h2>
+        <div id="songContainer">
+          {songs?.map(({ name, coverImage, id }) => (
+            <div className="songDiv" key={id}>
+              <div>
+                <a href={`/songs/${id}`}>
+                  <img className="songImage" alt="" src={coverImage} />
+                </a>
+              </div>
+              <div>{name}</div>
             </div>
-            <div>{name}</div>
-
-          </div>
-        ))} <OpenModalButton buttonText="Explore trending playlists" onItemClick="" modalComponent={<LoginFormModal />} />
-      </div>
-      <section>
-
-
-      </section>
-    </main>
-
-
+          ))}{" "}
+          <OpenModalButton buttonText="Explore trending playlists" onItemClick="" modalComponent={<LoginFormModal />} />
+        </div>
+        <section></section>
+      </main>
     </>
   );
 }
