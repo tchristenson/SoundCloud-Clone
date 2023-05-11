@@ -58,6 +58,8 @@ def add_album():
 
     if form.validate_on_submit():
         style_name = form.data['style']
+        print("style_name =========>  :", style_name)
+        print("Style.genre =========>  :", Style.genre)
         style_instance = (Style.query.filter(Style.genre == style_name)).first().to_dict()
 
         cover_image = form.data["cover_image"]

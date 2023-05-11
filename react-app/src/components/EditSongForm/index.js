@@ -141,10 +141,9 @@ const EditSongFormPage = () => {
                 <select required={true} onChange={(e) => setStyle(e.target.value)}>
                     <option value="">{'(select one)'}</option>
                     <option value='reggae'>Reggae</option>
-                    <option value='classic_rock'>Classic Rock</option>
+                    <option value='rock'>Rock</option>
                     <option value='punk'>Punk</option>
                     <option value='pop'>Pop</option>
-                    <option value='hip_hop'>Hip Hop</option>
                     <option value='electronic'>Electronic</option>
                     <option value='jazz'>Jazz</option>
                     <option value='blues'>Blues</option>
@@ -153,7 +152,6 @@ const EditSongFormPage = () => {
                     <option value='folk'>Folk</option>
                     <option value='funk'>Funk</option>
                     <option value='soul'>Soul</option>
-                    <option value='rnb'>R&B</option>
                     <option value='classical'>Classical</option>
                 </select>
             </div>
