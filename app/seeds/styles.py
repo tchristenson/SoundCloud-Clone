@@ -2,23 +2,21 @@ from app.models import db, Style, environment, SCHEMA
 from sqlalchemy.sql import text
 
 def seed_styles():
-    reggae = Style(genre='Reggae')
-    classic_rock = Style(genre='Classic Rock')
-    punk = Style(genre='Punk')
-    pop = Style(genre='Pop')
-    hip_hop = Style(genre='Hip Hop')
-    electronic = Style(genre='Electronic')
-    jazz = Style(genre='Jazz')
-    blues = Style(genre='Blues')
-    country = Style(genre='Country')
-    metal = Style(genre='Metal')
-    folk = Style(genre='Folk')
-    funk = Style(genre='Funk')
-    soul = Style(genre='Soul')
-    rnb = Style(genre='R&B')
-    classical = Style(genre='Classical')
+    reggae = Style(genre='reggae')
+    rock = Style(genre='rock')
+    punk = Style(genre='punk')
+    pop = Style(genre='pop')
+    electronic = Style(genre='electronic')
+    jazz = Style(genre='jazz')
+    blues = Style(genre='blues')
+    country = Style(genre='country')
+    metal = Style(genre='metal')
+    folk = Style(genre='folk')
+    funk = Style(genre='funk')
+    soul = Style(genre='soul')
+    classical = Style(genre='classical')
 
-    styles_list = [reggae, classic_rock, punk, pop, hip_hop, electronic, jazz, blues, country, metal, folk, funk, soul, rnb, classical]
+    styles_list = [reggae, rock, punk, pop, electronic, jazz, blues, country, metal, folk, funk, soul, classical]
 
     for style in styles_list:
         db.session.add(style)
