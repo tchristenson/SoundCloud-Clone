@@ -10,7 +10,6 @@ function SongFormPage() {
 
     const dispatch = useDispatch();
     const history = useHistory()
-    const sessionUser = useSelector(state => state.session.user)
 
     useEffect(() => {
         dispatch(getCurrentUsersAlbumsThunk())
@@ -45,7 +44,6 @@ function SongFormPage() {
         }
 
         const newSong = await dispatch(createSongThunk(formData))
-        history.push(`/songs/${newSong.id}`)
 
         setName('')
         setContent('')
@@ -55,6 +53,8 @@ function SongFormPage() {
         setCoverImage('')
         setValidationErrors([])
         setHasSubmitted(false)
+
+        history.push(`/songs/${newSong.id}`)
     }
 
     useEffect(() => {
@@ -62,8 +62,10 @@ function SongFormPage() {
         // Only adding to the validation errors for fields that are nullable=False in the Song model
         if (!name) errors.push('Please enter a name!')
         if (!content) errors.push('Please provide an audio file!')
+        if (!coverImage) errors.push('Please provide an image file!')
+        if (!style) errors.push('Please enter a style!')
         setValidationErrors(errors)
-    }, [name, content])
+    }, [name, content, style, coverImage])
 
     return (
         <div className="newSongForm">
@@ -105,6 +107,7 @@ function SongFormPage() {
                         type="file"
                         accept="image/*"
                         onChange={(e) => setCoverImage(e.target.files[0])}
+                        required={true}
                         >
                     </input>
                 </div>
@@ -131,7 +134,7 @@ function SongFormPage() {
 
                 <div className="form-input-box">
                     <label>Song Style:</label>
-                    <select onChange={(e) => setStyle(e.target.value)}>
+                    <select required={true} onChange={(e) => setStyle(e.target.value)}>
                         <option value="">{'(select one)'}</option>
                         <option value='reggae'>Reggae</option>
                         <option value='classic_rock'>Classic Rock</option>

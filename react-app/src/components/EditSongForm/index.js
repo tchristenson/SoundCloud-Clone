@@ -24,7 +24,7 @@ const EditSongFormPage = () => {
   const [albums, setAlbums] = useState([]);
   const [selectedAlbumId, setSelectedAlbumId] = useState('') // Need this to prefill the album dropdown with the current album
   const [style, setStyle] = useState(''); //Need this to prefill the style dropdown with the current album
-  const [coverImage, setCoverImage] = useState('')
+//   const [coverImage, setCoverImage] = useState('')
   const [validationErrors, setValidationErrors] = useState([]);
   const [hasSubmitted, setHasSubmitted] = useState(false);
 
@@ -44,8 +44,8 @@ const EditSongFormPage = () => {
     if (song) {
       setName(song.name)
       setSelectedAlbumId(song.albumId)
-      setStyle(song.styleId)
-      setCoverImage(song.coverImage)
+      setStyle(song.styleId) // This isn't correctly filling in. Return album model with song from backend route?
+    //   setCoverImage(song.coverImage)
     }
   }, [song])
 
@@ -53,8 +53,9 @@ const EditSongFormPage = () => {
     const errors = [];
     // Only adding to the validation errors for fields that are nullable=False in the Song model
     if (!name) errors.push('Please enter a name!')
+    if (!style) errors.push('Please enter a style!')
     setValidationErrors(errors)
-}, [name])
+}, [name, style])
 
   if (!song) return null
 
@@ -67,7 +68,7 @@ const EditSongFormPage = () => {
     const formData = new FormData()
     formData.append('name', name)
     formData.append('album_id', +selectedAlbumId)
-    formData.append('cover_image', coverImage)
+    // formData.append('cover_image', coverImage)
     formData.append('style', style)
     formData.append('id', song.id)
     // formData.append('content', song.content)
@@ -77,15 +78,16 @@ const EditSongFormPage = () => {
   }
 
     const editedSong = await dispatch(editSongThunk(formData))
-    history.push(`/songs/${editedSong.id}`)
-
     setName('')
     setAlbums([])
     setSelectedAlbumId('')
     setStyle('')
-    setCoverImage('')
+    // setCoverImage('')
     setValidationErrors([])
     setHasSubmitted(false)
+
+    history.push(`/songs/${editedSong.id}`)
+
   }
 
   return (
@@ -116,7 +118,7 @@ const EditSongFormPage = () => {
                 </input>
             </div>
 
-            <div className="form-input-box">
+            {/* <div className="form-input-box">
                 <label>Cover Image:</label>
                 <input
                     type="file"
@@ -124,7 +126,7 @@ const EditSongFormPage = () => {
                     onChange={(e) => setCoverImage(e.target.files[0])}
                     >
                 </input>
-            </div>
+            </div> */}
 
             <div className="form-input-box">
                 <label>Album:</label>
@@ -137,7 +139,7 @@ const EditSongFormPage = () => {
 
             <div className="form-input-box">
                 <label>Song Style:</label>
-                <select onChange={(e) => setStyle(e.target.value)}>
+                <select required={true} onChange={(e) => setStyle(e.target.value)}>
                     <option value="">{'(select one)'}</option>
                     <option value='reggae'>Reggae</option>
                     <option value='classic_rock'>Classic Rock</option>

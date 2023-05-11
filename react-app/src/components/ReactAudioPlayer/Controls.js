@@ -22,9 +22,9 @@ const Controls = ({ audioRef, progressBarRef, duration, setTimeProgress }) => {
     // console.log('audio REFERENCE: ===>', audioRef.current.currentTime)
   const repeat = useCallback(() => {
     if (audioRef.current) {
-      console.log('audioRef', audioRef)
-      console.log('audioRef.current', audioRef.current)
-      console.log('audioRef.current.currentTime', audioRef.current.currentTime)
+      // console.log('audioRef', audioRef)
+      // console.log('audioRef.current', audioRef.current)
+      // console.log('audioRef.current.currentTime', audioRef.current.currentTime)
       const currentTime = audioRef.current.currentTime;
       setTimeProgress(currentTime);
       progressBarRef.current.value = currentTime;
