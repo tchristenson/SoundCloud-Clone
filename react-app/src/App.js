@@ -15,6 +15,7 @@ import UsersAlbumsPage from "./components/UsersAlbumPage";
 import SongFormPage from "./components/SongFormPage";
 import EditSongFormPage from "./components/EditSongForm";
 import AlbumFormPage from "./components/AlbumFormPage";
+import HomePage from "./components/HomePage";
 
 function App() {
   const dispatch = useDispatch();

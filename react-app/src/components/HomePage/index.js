@@ -13,6 +13,7 @@ import { faker } from "@faker-js/faker";
 
 function HomePage() {
   const dispatch = useDispatch();
+  const [query, setQuery] = useState('')
 
   useEffect(() => {
     dispatch(getAllSongsThunk());
@@ -20,13 +21,22 @@ function HomePage() {
   }, [dispatch]);
   const songs = useSelector((state) => Object.values(state.songs));
   const users = useSelector((state) => Object.values(state.users));
+  const sessionUser = useSelector(state => state.session.user)
 
   const newSong = songs.map((song) => {
     return song.ownerId;
   });
 
-  console.log("these are the song owner ids", newSong);
-  console.log("these are the users", users);
+  const searchSongs = e =>{
+    e.preventDefault()
+    setQuery(e.target.value)
+  }
+
+  if(query.length){
+    songs.filter(song =>{
+      return song.name === (query)
+    })
+  }
 
   if (!songs) {
     return <h1>testerrrrr</h1>;
@@ -36,10 +46,10 @@ function HomePage() {
     <>
       <main id="homePage">
         <div>
-          <img alt="placeholder" src={faker.image.nightlife()} className="mainImage" />
+          <img alt="placeholder" src={faker.image.nightlife(500, 250)} className="mainImage" />
         </div>
         <div className='inputDiv'>
-          <input type="search" placeholder="Search for artists, bands, tracks, and podcasts" size={"50"}></input> or
+          <input type="search" placeholder="Search for artists, bands, tracks, and podcasts" size={"50"} onChange={searchSongs} value={query}></input> or
           <OpenModalButton buttonText="Upload your Song" onItemClick="" modalComponent={<LoginFormModal />} />
         </div>
         <h2>Hear what's trending for free in the Vibillow community</h2>
@@ -54,7 +64,7 @@ function HomePage() {
               <div>{name}</div>
             </div>
           ))}{" "}
-          <OpenModalButton buttonText="Explore trending playlists" onItemClick="" modalComponent={<LoginFormModal />} />
+          { sessionUser && <OpenModalButton buttonText="Explore trending playlists" onItemClick="" modalComponent={<LoginFormModal />} />}
         </div>
         <section></section>
       </main>
