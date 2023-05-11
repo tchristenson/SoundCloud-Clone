@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { createAlbumThunk } from "../../store/albums"
 
 
 function AlbumFormPage() {
@@ -85,15 +86,7 @@ function AlbumFormPage() {
                 </input>
             </div>
 
-            {/* <div className="form-input-box">
-                <label>Audio File:</label>
-                <input
-                    type="file"
-                    accept="audio/*"
-                    onChange={(e) => setContent(e.target.files[0])}
-                    >
-                </input>
-            </div> */}
+            <p>PLACEHOLDER: We need to add bulk upload of songs functionality here</p>
 
             <div className="form-input-box">
                 <label>Album Style:</label>
