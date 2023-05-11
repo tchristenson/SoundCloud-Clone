@@ -15,6 +15,11 @@ const Controls = ({ audioRef, progressBarRef, duration, setTimeProgress }) => {
   const [muteVolume, setMuteVolume] = useState(false);
   const playAnimationRef = useRef();
 
+  // if(audioRef === null) {
+    //   audioRef.current = <audio src="http://vibillow-songs.s3.amazonaws.com/0ae94e4ea5e34441b032038b63dbc95d.wav"></audio>
+    // }
+
+    // console.log('audio REFERENCE: ===>', audioRef.current.currentTime)
   const repeat = useCallback(() => {
     if (audioRef.current) {
       console.log('audioRef', audioRef)
