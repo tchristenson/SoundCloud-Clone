@@ -3,6 +3,7 @@ const GET_ALL_ALBUMS = 'albums/GET_ALL_ALBUMS'
 const GET_ONE_ALBUM = 'albums/GET_ONE_ALBUM'
 const GET_USER_ALBUMS = 'albums/GET_USER_ALBUMS'
 const DELETE_ALBUM = 'albums/DELETE_ALBUM'
+const CREATE_ALBUM = 'albums/CREATE_ALBUM'
 
 const getAllAlbumsAction = (albums) => {
   return {
@@ -29,6 +30,13 @@ const deleteAlbumAction = (albumId) => {
   return {
     type: DELETE_ALBUM,
     albumId
+  }
+}
+
+const createAlbumAction = (album) => {
+  return {
+    type: CREATE_ALBUM,
+    album
   }
 }
 
@@ -84,6 +92,23 @@ export const deleteAlbumThunk = (albumId) => async (dispatch) => {
   }
 }
 
+export const createAlbumThunk = (album) => async (dispatch) => {
+  console.log('album inside of createAlbumThunk', album)
+  const response = await fetch('/api/albums/new', {
+    method: "POST",
+    body: album
+  });
+  console.log('response inside of createAlbumThunk', response)
+  if (response.ok) {
+    const album = await response.json();
+    console.log('newAlbum inside of createAlbumThunk', album)
+    dispatch(createAlbumAction(album));
+    return album;
+  } else {
+    return ("create album: response not ok");
+  }
+};
+
 
 // REDUCER
 const albumReducer = (state = {}, action) => {
@@ -103,10 +128,11 @@ const albumReducer = (state = {}, action) => {
       return newState
     case DELETE_ALBUM:
       newState = {...state};
-      console.log('newState inside Reducer', newState)
-      console.log('newState.album inside Reducer', newState.album)
-      console.log('action inside Reducer', action)
       delete newState[action.albumId];
+      return newState;
+    case CREATE_ALBUM:
+      newState = {...state}
+      newState[action.album.id] = action.album
       return newState;
     default:
       return state
