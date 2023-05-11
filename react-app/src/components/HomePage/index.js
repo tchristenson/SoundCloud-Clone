@@ -46,11 +46,11 @@ function HomePage() {
     <>
       <main id="homePage">
         <div>
-          <img alt="placeholder" src={faker.image.nightlife(500, 250)} className="mainImage" />
+          <img alt="placeholder" src={faker.image.nightlife()} className="mainImage" />
         </div>
         <div className='inputDiv'>
           <input type="search" placeholder="Search for artists, bands, tracks, and podcasts" size={"50"} onChange={searchSongs} value={query}></input> or
-          <OpenModalButton buttonText="Upload your Song" onItemClick="" modalComponent={<LoginFormModal />} />
+         { <OpenModalButton buttonText="Upload your Song" onItemClick="" modalComponent={<LoginFormModal />} />}
         </div>
         <h2>Hear what's trending for free in the Vibillow community</h2>
         <div id="songContainer">
