@@ -1,4 +1,4 @@
-from flask import Blueprint
+from flask import Blueprint, request
 from ..models import Album, Style, db
 from flask_login import current_user, login_required
 from ..forms.album_form import NewAlbum
