@@ -3,6 +3,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { Redirect, useHistory } from "react-router-dom";
 import { createSongThunk } from "../../store/songs";
 import { getCurrentUsersAlbumsThunk } from "../../store/albums"
+import { Container, Row, Col, Form, Button, ProgressBar } from "react-bootstrap"
+import axiosInstance from "../../utils/axios";
+import {BarLoader} from "react-spinners"
+import './songFormPage.css'
 
 function SongFormPage({song, formType}) {
 
@@ -34,6 +38,8 @@ function SongFormPage({song, formType}) {
     const [selectedAlbumId, setSelectedAlbumId] = useState(song ? song.albumId : "") // Need to find a way to set this to the album name via redux or prop threading/context
     const [style, setStyle] = useState(""); // Need to find a way to set this to the style name via redux or prop threading/context
     const [coverImage, setCoverImage] = useState(song ? song.coverImage : "")
+    const [selectedFiles, setSelectedFiles] = useState([])
+    const [progress, setProgress] = useState()
 
     const [validationErrors, setValidationErrors] = useState([]);
     const [hasSubmitted, setHasSubmitted] = useState(false);
@@ -51,6 +57,16 @@ function SongFormPage({song, formType}) {
         formData.append('album_id', +selectedAlbumId)
         formData.append('cover_image', coverImage)
         formData.append('style', style)
+        formData.append("file", selectedFiles[0])
+        axiosInstance.post("/upload_file", formData, {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+            onUploadProgress: data => {
+              //Set the progress value to show the progress bar
+              setProgress(Math.round((100 * data.loaded) / data.total))
+            },
+        })
 
         if (formType === 'Edit Song') { // Must still create backend route and frontend action/thunk/reducer
             // const editedSong = await dispatch(editSongThunk(formData))
@@ -82,7 +98,7 @@ function SongFormPage({song, formType}) {
     }, [name, content])
 
     return (
-        <div>
+        <div className="newSongForm">
             <h1>Create a New Song</h1>
             {hasSubmitted && validationErrors.length > 0 && (
                 <div>
@@ -94,9 +110,15 @@ function SongFormPage({song, formType}) {
                     </ul>
                 </div>
             )}
+            <div className="loadingArea">
+                {hasSubmitted && (
+                    <BarLoader color="#36d7b7" className="loadingBar" />
+                )}
+            </div>
             <form
                 onSubmit={(e) => handleSubmit(e)}
                 encType="multipart/form-data"
+                className="newSongFormDetails"
             >
                 <div className="form-input-box">
                     <label>Song Name:</label>
@@ -175,6 +197,7 @@ function SongFormPage({song, formType}) {
                 </div>
 
                 <button type="submit">{formType === 'Edit Song' ? 'Update Song' : 'Create Song' }</button>
+                {progress && <ProgressBar now={progress} label={`${progress}%`} />}
             </form>
         </div>
     )
