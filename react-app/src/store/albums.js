@@ -33,10 +33,10 @@ const deleteAlbumAction = (albumId) => {
   }
 }
 
-const createAlbumAction = (song) => {
+const createAlbumAction = (album) => {
   return {
     type: CREATE_ALBUM,
-    song
+    album
   }
 }
 
@@ -100,12 +100,12 @@ export const createAlbumThunk = (album) => async (dispatch) => {
   });
   console.log('response inside of createAlbumThunk', response)
   if (response.ok) {
-    const song = await response.json();
-    console.log('newSong inside of createSongThunk',song)
-    dispatch(createSongAction(song));
-    return song;
+    const album = await response.json();
+    console.log('newAlbum inside of createAlbumThunk', album)
+    dispatch(createAlbumAction(album));
+    return album;
   } else {
-    return ("create songs: response not ok");
+    return ("create album: response not ok");
   }
 };
 
@@ -128,10 +128,11 @@ const albumReducer = (state = {}, action) => {
       return newState
     case DELETE_ALBUM:
       newState = {...state};
-      console.log('newState inside Reducer', newState)
-      console.log('newState.album inside Reducer', newState.album)
-      console.log('action inside Reducer', action)
       delete newState[action.albumId];
+      return newState;
+    case CREATE_ALBUM:
+      newState = {...state}
+      newState[action.album.id] = action.album
       return newState;
     default:
       return state
