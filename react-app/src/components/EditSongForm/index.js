@@ -43,8 +43,8 @@ const EditSongFormPage = () => {
   useEffect(() => {
     if (song) {
       setName(song.name)
-      setSelectedAlbumId(song.albumId)
       setStyle(song.styleId) // This isn't correctly filling in. Return album model with song from backend route?
+    //   setSelectedAlbumId(song.albumId)
     //   setCoverImage(song.coverImage)
     }
   }, [song])
