@@ -4,6 +4,7 @@ import { Redirect } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { getCurrentUsersSongsThunk } from "../../store/songs";
+import './UsersSongPage.css';
 
 
 function UsersSongsPage() {
@@ -14,6 +15,8 @@ function UsersSongsPage() {
     }, [dispatch]);
 
     const songs = useSelector((state) => Object.values(state.songs));
+    const sessionUser = useSelector(state => state.session.user);
+    console.log(sessionUser)
 
     if(!songs) {
         return <h1>no current users songs found</h1>
@@ -26,14 +29,20 @@ function UsersSongsPage() {
         //     <h4>song name above?</h4>
         // </div>
         <div id="usersSongPage">
+          <h1 className="user-songs-title">{sessionUser.username}'s Songs</h1>
         {songs?.map(({name,albumId, styleId, ownerId, runtime, coverImage, content, id})=>(
-          <div key={id}>
-            <div className="playlogo"></div>
-            <div>{name}</div>
-            <div>user name ? (owner id):{ownerId} , style: {styleId}</div>
-            <div>album name? album id: {albumId}</div>
-            <div>wav thing</div>
-            <div>{coverImage}</div>
+          <div className="song-div" key={id}>
+            <div className="song-picture-div">
+              <img src={coverImage}/>
+            </div>
+            
+            <div>
+              <div className="playlogo"></div>
+              <div>{name}</div>
+              <div>user name ? (owner id):{ownerId} , style: {styleId}</div>
+              <div>album name? album id: {albumId}</div>
+              <div>wav thing</div>
+            </div>
           </div>
         ))}
       </div>
