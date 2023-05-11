@@ -22,7 +22,6 @@ def seed_likes():
         owner_id = 3,
         album_id = 5,
         name = 'Song Six',
-        runtime = '00:07:34',
         style_id = 7,
         cover_image = 'http://vibillow-images.s3.amazonaws.com/d4659de1fafc427bbbc256c06eaf9a7b.jpg',
         content = 'https://vibillow-songs.s3.amazonaws.com/daf90ec7342b45c6bcd6e6dac1f5a64d.wav'
