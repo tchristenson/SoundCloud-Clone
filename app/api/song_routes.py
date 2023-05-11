@@ -2,6 +2,7 @@ from flask import Blueprint, request
 from app.models import Song, Style
 from flask_login import current_user, login_required, current_user
 from ..forms.song_form import NewSong
+from ..forms.edit_song_form import EditSong
 from ..models import db
 from ..api.aws_song_helpers import get_unique_song_filename, upload_song_file_to_s3
 from ..api.aws_image_helpers import get_unique_image_filename, upload_image_file_to_s3
@@ -46,7 +47,7 @@ def add_song():
     form['csrf_token'].data = request.cookies['csrf_token']
 
 
-    print("======>> errors", form.data)
+    print("form.data ======>>", form.data)
 
     if form.validate_on_submit():
         style_name = form.data['style']
@@ -70,11 +71,10 @@ def add_song():
 
         song= Song(name = form.data['name'],
                         owner_id = current_user.id,
-                        runtime = form.data['runtime'],
                         cover_image = image_upload["url"],
                         content = audio_upload["url"],
-                        album_id = form.data['album_id'], # placeholder until we can make this a dropdown
-                        style_id = style_instance['id']) # placeholder
+                        album_id = form.data['album_id'],
+                        style_id = style_instance['id'])
         print("song here look belive me ===> :", song)
         db.session.add(song)
         db.session.commit()
@@ -96,3 +96,52 @@ def delete_song(id):
         return "Delete Successful"
     else:
         return 'Must be song owner to delete song.'
+
+@song_routes.route("/edit/<int:id>", methods=['PUT'])
+@login_required
+def edit_song(id):
+    """Handles editing a song's details if the song owner is the logged in user"""
+
+    song = Song.query.get(id)
+    if not song:
+        return {"error": "Song not found."}
+    print('song printing inside of edit route ------->', song.to_dict())
+
+    form = EditSong()
+    form['csrf_token'].data = request.cookies['csrf_token']
+
+
+    print("form.data ======>>", form.data)
+
+    if form.validate_on_submit():
+        style_name = form.data['style']
+        style_instance = (Style.query.filter(Style.genre.like(style_name)).first()).to_dict()
+
+        cover_image = form.data["cover_image"]
+        cover_image.filename = get_unique_image_filename(cover_image.filename)
+        image_upload = upload_image_file_to_s3(cover_image)
+
+        print("=========> upload data here get y IMAGE :", image_upload)
+        # content = form.data["content"]
+        # content.filename = get_unique_song_filename(content.filename)
+        # audio_upload = upload_song_file_to_s3(content)
+
+        # print("=========> upload data here get y AUDIO :", audio_upload["url"])
+
+        # if "url" not in audio_upload:
+        #     return { "errors": form.errors}
+        # if "url" not in image_upload:
+        #     return { "errors": form.errors}
+
+        song.name = form.data['name']
+        song.cover_image = image_upload["url"]
+        # song.content = audio_upload["url"]
+        song.album_id = form.data['album_id']
+        song.style_id = style_instance['id']
+        print("song here look belive me ===> :", song)
+        # db.session.add(song)
+        db.session.commit()
+        return song.to_dict()
+
+
+    return { "errors": form.errors}
