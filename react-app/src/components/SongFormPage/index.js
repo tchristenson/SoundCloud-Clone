@@ -4,7 +4,6 @@ import { useHistory } from "react-router-dom";
 import { createSongThunk } from "../../store/songs";
 import { getCurrentUsersAlbumsThunk } from "../../store/albums"
 import { Container, Row, Col, Form, Button, ProgressBar } from "react-bootstrap"
-import axiosInstance from "../../utils/axios";
 import {BarLoader} from "react-spinners"
 import './songFormPage.css'
 
@@ -41,16 +40,6 @@ function SongFormPage() {
         formData.append('album_id', +selectedAlbumId)
         formData.append('cover_image', coverImage)
         formData.append('style', style)
-        formData.append("file", selectedFiles[0])
-        axiosInstance.post("/upload_file", formData, {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-            onUploadProgress: data => {
-              //Set the progress value to show the progress bar
-              setProgress(Math.round((100 * data.loaded) / data.total))
-            },
-        })
 
         for (let key of formData.entries()) {
             console.log(key[0] + '----->' + key[1]);
