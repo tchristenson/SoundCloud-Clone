@@ -3,6 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { createSongThunk } from "../../store/songs";
 import { getCurrentUsersAlbumsThunk } from "../../store/albums"
+import { Container, Row, Col, Form, Button, ProgressBar } from "react-bootstrap"
+import {BarLoader} from "react-spinners"
+import './songFormPage.css'
 
 function SongFormPage() {
 
@@ -64,7 +67,7 @@ function SongFormPage() {
     }, [name, content])
 
     return (
-        <div>
+        <div className="newSongForm">
             <h1>Create a New Song</h1>
             {hasSubmitted && validationErrors.length > 0 && (
                 <div>
@@ -76,9 +79,15 @@ function SongFormPage() {
                     </ul>
                 </div>
             )}
+            <div className="loadingArea">
+                {hasSubmitted && (
+                    <BarLoader color="#36d7b7" className="loadingBar" />
+                )}
+            </div>
             <form
                 onSubmit={(e) => handleSubmit(e)}
                 encType="multipart/form-data"
+                className="newSongFormDetails"
             >
                 <div className="form-input-box">
                     <label>Song Name:</label>
