@@ -105,42 +105,25 @@ def edit_song(id):
     song = Song.query.get(id)
     if not song:
         return {"error": "Song not found."}
-    print('song printing inside of edit route ------->', song.to_dict())
 
     form = EditSong()
     form['csrf_token'].data = request.cookies['csrf_token']
 
-
+    print('song printing inside of edit route ======>>', song.to_dict())
     print("form.data ======>>", form.data)
 
     if form.validate_on_submit():
         style_name = form.data['style']
         style_instance = (Style.query.filter(Style.genre.like(style_name)).first()).to_dict()
 
-        cover_image = form.data["cover_image"]
-        cover_image.filename = get_unique_image_filename(cover_image.filename)
-        image_upload = upload_image_file_to_s3(cover_image)
-
-        print("=========> upload data here get y IMAGE :", image_upload)
-        # content = form.data["content"]
-        # content.filename = get_unique_song_filename(content.filename)
-        # audio_upload = upload_song_file_to_s3(content)
-
-        # print("=========> upload data here get y AUDIO :", audio_upload["url"])
-
-        # if "url" not in audio_upload:
-        #     return { "errors": form.errors}
-        # if "url" not in image_upload:
-        #     return { "errors": form.errors}
-
         song.name = form.data['name']
-        song.cover_image = image_upload["url"]
-        # song.content = audio_upload["url"]
         song.album_id = form.data['album_id']
         song.style_id = style_instance['id']
-        print("song here look belive me ===> :", song)
+        # song.cover_image = image_upload["url"]
+        # song.content = audio_upload["url"]
         # db.session.add(song)
         db.session.commit()
+        print('song printing inside of validate on submit route ======>>', song.to_dict())
         return song.to_dict()
 
 

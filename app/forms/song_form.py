@@ -21,13 +21,11 @@ def song_exists(form, field):
 
 class NewSong(FlaskForm):
     name = StringField("Song Name", validators=[DataRequired()])
-    runtime = StringField("Run Time")
-    # cover_image = StringField("Cover Image")
+    # runtime = StringField("Run Time")
     cover_image = FileField("Cover Image", validators=[FileRequired(), FileAllowed(list(ALLOWED_IMAGE_EXTENSIONS))])
-    # content = StringField("Content")
     content = FileField("Content", validators=[FileRequired(), FileAllowed(list(ALLOWED_SONG_EXTENSIONS))])
     album_id = SelectField("Album", choices=[], validate_choice=False)
-    style = SelectField("Style", choices=[('reggae', "Reggae"), ('classic_rock', "Classic Rock"),
+    style = SelectField("Style", validators=[DataRequired()], choices=[('reggae', "Reggae"), ('classic_rock', "Classic Rock"),
                                           ('punk', "Punk"), ('pop', "Pop"), ('hip_hop', "Hip Hop"),
                                           ('electronic', "Electronic"), ('jazz', "Jazz"), ('blues', "Blues"),
                                           ('country', "Country"), ('metal', "Metal"), ('folk', "Folk"),
