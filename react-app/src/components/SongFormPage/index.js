@@ -12,9 +12,10 @@ function SongFormPage() {
     const history = useHistory()
 
     useEffect(() => {
+        console.log('useEffect running in SongFormPage to get current users albums')
         dispatch(getCurrentUsersAlbumsThunk())
         .then((data) => setAlbums(data))
-        console.log('albums inside of SongFormPage', albums)
+        console.log('useEffect complete. Here are the users albums ======>', albums)
     }, [dispatch])
 
     const [name, setName] = useState("");
