@@ -34,11 +34,10 @@ const EditSongFormPage = () => {
     dispatch(getCurrentUsersAlbumsThunk())
     .then((data) => setAlbums(data))
     console.log('albums inside of SongFormPage', albums)
-}, [dispatch])
 
-  useEffect(() => {
     dispatch(getOneSongThunk(songId))
-  }, [dispatch])
+
+}, [dispatch])
 
   useEffect(() => {
     if (song) {

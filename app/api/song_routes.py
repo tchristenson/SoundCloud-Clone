@@ -121,9 +121,9 @@ def edit_song(id):
         song.style_id = style_instance['id']
         # song.cover_image = image_upload["url"]
         # song.content = audio_upload["url"]
-        print("song here look belive me ===> :", song)
         # db.session.add(song)
         db.session.commit()
+        print('song printing inside of validate on submit route ======>>', song.to_dict())
         return song.to_dict()
 
 
