@@ -13,8 +13,8 @@ import AllAlbums from "./components/AllAlbums";
 import UsersSongsPage from "./components/UsersSongPage";
 import UsersAlbumsPage from "./components/UsersAlbumPage";
 import SongFormPage from "./components/SongFormPage";
-import EditSongStarter from "./components/EditSongStarter";
-import HomePage from "./components/HomePage";
+import EditSongFormPage from "./components/EditSongForm";
+import AlbumFormPage from "./components/AlbumFormPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -50,13 +50,16 @@ function App() {
             <SongPageSingle />
           </Route>
           <Route exact path="/songs/:songId/edit">
-            <EditSongStarter />
+            <EditSongFormPage />
           </Route>
           <Route exact path="/albums">
             <AllAlbums />
           </Route>
           <Route exact path="/albums/current">
             <UsersAlbumsPage />
+          </Route>
+          <Route exact path="/albums/new">
+            <AlbumFormPage />
           </Route>
           <Route exact path="/albums/:albumId">
             <AlbumPage />

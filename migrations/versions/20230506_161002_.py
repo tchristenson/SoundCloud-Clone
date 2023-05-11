@@ -1,13 +1,16 @@
 """empty message
 
 Revision ID: 9f55274ad2f1
-Revises: 
+Revises:
 Create Date: 2023-05-06 16:10:02.029512
 
 """
 from alembic import op
 import sqlalchemy as sa
 
+import os
+environment = os.getenv("FLASK_ENV")
+SCHEMA = os.environ.get("SCHEMA")
 
 # revision identifiers, used by Alembic.
 revision = '9f55274ad2f1'
@@ -23,6 +26,8 @@ def upgrade():
     sa.Column('genre', sa.String(length=30), nullable=False),
     sa.PrimaryKeyConstraint('id')
     )
+    if environment == "production":
+        op.execute(f"ALTER TABLE styles SET SCHEMA {SCHEMA};")
     op.create_table('users',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('username', sa.String(length=40), nullable=False),
@@ -39,6 +44,8 @@ def upgrade():
     sa.UniqueConstraint('email'),
     sa.UniqueConstraint('username')
     )
+    if environment == "production":
+        op.execute(f"ALTER TABLE users SET SCHEMA {SCHEMA};")
     op.create_table('albums',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('owner_id', sa.Integer(), nullable=True),
@@ -50,6 +57,8 @@ def upgrade():
     sa.ForeignKeyConstraint(['style_id'], ['styles.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
+    if environment == "production":
+        op.execute(f"ALTER TABLE albums SET SCHEMA {SCHEMA};")
     op.create_table('songs',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('owner_id', sa.Integer(), nullable=True),
@@ -64,6 +73,8 @@ def upgrade():
     sa.ForeignKeyConstraint(['style_id'], ['styles.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
+    if environment == "production":
+        op.execute(f"ALTER TABLE songs SET SCHEMA {SCHEMA};")
     op.create_table('likes',
     sa.Column('owner_id', sa.Integer(), nullable=False),
     sa.Column('song_id', sa.Integer(), nullable=False),
@@ -71,7 +82,10 @@ def upgrade():
     sa.ForeignKeyConstraint(['song_id'], ['songs.id'], ),
     sa.PrimaryKeyConstraint('owner_id', 'song_id')
     )
+    if environment == "production":
+        op.execute(f"ALTER TABLE likes SET SCHEMA {SCHEMA};")
     # ### end Alembic commands ###
+
 
 
 def downgrade():

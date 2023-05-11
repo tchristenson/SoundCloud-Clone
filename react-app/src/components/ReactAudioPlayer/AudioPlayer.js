@@ -8,7 +8,10 @@ const AudioPlayer = ({song, sessionUser}) => {
   const [timeProgress, setTimeProgress] = useState(0);
   const [duration, setDuration] = useState(0);
 
-
+  console.log("song info",  song)
+  // if(!song) {
+  //   song =
+  // }
 
 
 

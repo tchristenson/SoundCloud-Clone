@@ -1,6 +1,8 @@
-from flask import Blueprint
-from ..models import Album, User, db
+from flask import Blueprint, request
+from ..models import Album, Style, db
 from flask_login import current_user, login_required
+from ..forms.album_form import NewAlbum
+from ..api.aws_image_helpers import get_unique_image_filename, upload_image_file_to_s3
 
 
 album_routes = Blueprint('albums', __name__)
@@ -42,3 +44,35 @@ def delete_album(id):
         return 'Delete Successful'
     else:
         return "Must be album owner to delete this album."
+
+
+@album_routes.route('/new', methods = ['POST'])
+@login_required
+def add_album():
+    """Handles validating submitted data for new posted albums"""
+
+    form = NewAlbum()
+    form['csrf_token'].data = request.cookies['csrf_token']
+
+    print("form.data ======>>", form.data)
+
+    if form.validate_on_submit():
+        style_name = form.data['style']
+        style_instance = (Style.query.filter(Style.genre.like(style_name)).first()).to_dict()
+
+        cover_image = form.data["cover_image"]
+        cover_image.filename = get_unique_image_filename(cover_image.filename)
+        image_upload = upload_image_file_to_s3(cover_image)
+
+        print("IMAGE UPLOAD DATA HERE =========>  :", image_upload)
+
+        album = Album(name = form.data['name'],
+                      owner_id = current_user.id,
+                      cover_image = image_upload["url"],
+                      style_id = style_instance['id'])
+
+        db.session.add(album)
+        db.session.commit()
+        return album.to_dict()
+
+    return { "errors": form.errors}
