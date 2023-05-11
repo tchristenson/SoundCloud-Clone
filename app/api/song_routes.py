@@ -22,7 +22,7 @@ def songs():
 @login_required
 def user_songs():
     """Query for songs owned by the current user"""
-    songs = Song.query.filter(Song.owner_id.like(current_user.id)).all()
+    songs = Song.query.filter(Song.owner_id == current_user.id).all()
     return {'songs': [song.to_dict() for song in songs]}
 
 @song_routes.route('/<int:id>')

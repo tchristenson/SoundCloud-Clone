@@ -18,7 +18,7 @@ def get_all_albums():
 @login_required
 def user_albums():
     """Query for albums owned by the current user"""
-    albums = Album.query.filter(Album.owner_id.like(current_user.id)).all()
+    albums = Album.query.filter(Album.owner_id == current_user.id).all()
     return {'Albums': [album.to_dict() for album in albums]}
 
 
