@@ -38,7 +38,7 @@ body {
   height: 76px;
 }
 
-.website-title, .active {
+.website-title, .website-title:active {
   font-size: 36px;
   text-decoration: none;
   font-family: Arial, Helvetica, sans-serif;
