@@ -78,9 +78,13 @@ def upgrade():
 
     if environment == "production":
         op.execute(f"ALTER TABLE styles SET SCHEMA {SCHEMA};")
+    if environment == "production":
         op.execute(f"ALTER TABLE users SET SCHEMA {SCHEMA};")
+    if environment == "production":
         op.execute(f"ALTER TABLE albums SET SCHEMA {SCHEMA};")
+    if environment == "production":
         op.execute(f"ALTER TABLE songs SET SCHEMA {SCHEMA};")
+    if environment == "production":
         op.execute(f"ALTER TABLE likes SET SCHEMA {SCHEMA};")
 
 
