@@ -14,7 +14,7 @@ class Album(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     owner_id = db.Column(db.Integer, ForeignKey(add_prefix_for_prod('users.id')))
     name = db.Column(db.String(50), nullable=False)
-    total_runtime = db.Column(db.String)  #Undecided on datatype. Date, datetime, integer?
+    # total_runtime = db.Column(db.String)  #Undecided on datatype. Date, datetime, integer?
     style_id = db.Column(db.Integer, ForeignKey(add_prefix_for_prod('styles.id')))
     cover_image = db.Column(db.String)
 
@@ -30,7 +30,7 @@ class Album(db.Model):
             'id': self.id,
             'ownerId': self.owner_id,
             'name': self.name,
-            'totalRuntime': self.total_runtime,
+            # 'totalRuntime': self.total_runtime,
             'styleId': self.style_id,
             'coverImage': self.cover_image
 

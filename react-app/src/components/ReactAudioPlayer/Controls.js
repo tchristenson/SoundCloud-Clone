@@ -15,13 +15,23 @@ const Controls = ({ audioRef, progressBarRef, duration, setTimeProgress }) => {
   const [muteVolume, setMuteVolume] = useState(false);
   const playAnimationRef = useRef();
 
-  const repeat = useCallback(() => {
-    const currentTime = audioRef.current.currentTime;
-    setTimeProgress(currentTime);
-    progressBarRef.current.value = currentTime;
-    progressBarRef.current.style.setProperty("--range-progress", `${(progressBarRef.current.value / duration) * 100}%`);
+  // if(audioRef === null) {
+    //   audioRef.current = <audio src="http://vibillow-songs.s3.amazonaws.com/0ae94e4ea5e34441b032038b63dbc95d.wav"></audio>
+    // }
 
-    playAnimationRef.current = requestAnimationFrame(repeat);
+    // console.log('audio REFERENCE: ===>', audioRef.current.currentTime)
+  const repeat = useCallback(() => {
+    if (audioRef.current) {
+      console.log('audioRef', audioRef)
+      console.log('audioRef.current', audioRef.current)
+      console.log('audioRef.current.currentTime', audioRef.current.currentTime)
+      const currentTime = audioRef.current.currentTime;
+      setTimeProgress(currentTime);
+      progressBarRef.current.value = currentTime;
+      progressBarRef.current.style.setProperty("--range-progress", `${(progressBarRef.current.value / duration) * 100}%`);
+
+      playAnimationRef.current = requestAnimationFrame(repeat);
+    }
   }, [audioRef, duration, progressBarRef, setTimeProgress]);
 
   useEffect(() => {
@@ -46,7 +56,7 @@ const Controls = ({ audioRef, progressBarRef, duration, setTimeProgress }) => {
   };
 
   useEffect(() => {
-    if (audioRef) {
+    if (audioRef && audioRef.current) {
       audioRef.current.volume = volume / 100;
       audioRef.current.muted = muteVolume;
     }

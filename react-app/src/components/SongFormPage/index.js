@@ -1,24 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Redirect, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { createSongThunk } from "../../store/songs";
 import { getCurrentUsersAlbumsThunk } from "../../store/albums"
+import {BarLoader} from "react-spinners"
+import './songFormPage.css'
 
-function SongFormPage({song, formType}) {
-
-    const history = useHistory()
-    const sessionUser = useSelector(state => state.session.user)
-
-    // console.log('sessionUser inside SongFormPage', sessionUser)
-    // console.log('song inside SongFormPage', song)
-
-    if (formType === 'Edit Song') {
-        if (!sessionUser || sessionUser.id != song.ownerId) {
-            history.push('/')
-        }
-    }
+function SongFormPage() {
 
     const dispatch = useDispatch();
+    const history = useHistory()
+    const sessionUser = useSelector(state => state.session.user)
 
     useEffect(() => {
         dispatch(getCurrentUsersAlbumsThunk())
@@ -26,15 +18,12 @@ function SongFormPage({song, formType}) {
         console.log('albums inside of SongFormPage', albums)
     }, [dispatch])
 
-
-    const [name, setName] = useState(song ? song.name : "");
-    const [runtime, setRuntime] = useState(song ? song.runtime : "");
-    const [content, setContent] = useState(song ? song.content : "");
+    const [name, setName] = useState("");
+    const [content, setContent] = useState("");
     const [albums, setAlbums] = useState([]);
-    const [selectedAlbumId, setSelectedAlbumId] = useState(song ? song.albumId : "") // Need to find a way to set this to the album name via redux or prop threading/context
+    const [selectedAlbumId, setSelectedAlbumId] = useState("") // Need to find a way to set this to the album name via redux or prop threading/context
     const [style, setStyle] = useState(""); // Need to find a way to set this to the style name via redux or prop threading/context
-    const [coverImage, setCoverImage] = useState(song ? song.coverImage : "")
-
+    const [coverImage, setCoverImage] = useState("")
     const [validationErrors, setValidationErrors] = useState([]);
     const [hasSubmitted, setHasSubmitted] = useState(false);
 
@@ -46,23 +35,19 @@ function SongFormPage({song, formType}) {
 
         const formData = new FormData()
         formData.append('name', name)
-        formData.append('runtime', runtime)
         formData.append('content', content)
         formData.append('album_id', +selectedAlbumId)
         formData.append('cover_image', coverImage)
         formData.append('style', style)
 
-        if (formType === 'Edit Song') { // Must still create backend route and frontend action/thunk/reducer
-            // const editedSong = await dispatch(editSongThunk(formData))
-            // history.push(`/songs/${editedSong.id}`)
-        } else {
-            const newSong = await dispatch(createSongThunk(formData))
-            console.log("new song song song ===> :", newSong)
-            history.push(`/songs/${newSong.id}`)
+        for (let key of formData.entries()) {
+            console.log(key[0] + '----->' + key[1]);
         }
 
+        const newSong = await dispatch(createSongThunk(formData))
+        history.push(`/songs/${newSong.id}`)
+
         setName('')
-        setRuntime('')
         setContent('')
         setAlbums([])
         setSelectedAlbumId('')
@@ -70,7 +55,6 @@ function SongFormPage({song, formType}) {
         setCoverImage('')
         setValidationErrors([])
         setHasSubmitted(false)
-
     }
 
     useEffect(() => {
@@ -82,7 +66,7 @@ function SongFormPage({song, formType}) {
     }, [name, content])
 
     return (
-        <div>
+        <div className="newSongForm">
             <h1>Create a New Song</h1>
             {hasSubmitted && validationErrors.length > 0 && (
                 <div>
@@ -94,9 +78,15 @@ function SongFormPage({song, formType}) {
                     </ul>
                 </div>
             )}
+            <div className="loadingArea">
+                {hasSubmitted && (
+                    <BarLoader color="#36d7b7" className="loadingBar" />
+                )}
+            </div>
             <form
                 onSubmit={(e) => handleSubmit(e)}
                 encType="multipart/form-data"
+                className="newSongFormDetails"
             >
                 <div className="form-input-box">
                     <label>Song Name:</label>
@@ -108,16 +98,6 @@ function SongFormPage({song, formType}) {
                         >
                     </input>
                 </div>
-
-                {/* <div className="form-input-box">
-                    <label>Runtime:</label>
-                    <input
-                        type="text"
-                        onChange={(e) => setRuntime(e.target.value)}
-                        value={runtime}
-                        >
-                    </input>
-                </div> */}
 
                 <div className="form-input-box">
                     <label>Cover Image:</label>
@@ -142,9 +122,6 @@ function SongFormPage({song, formType}) {
                 <div className="form-input-box">
                     <label>Album:</label>
                     <select value={selectedAlbumId} onChange={(e) => setSelectedAlbumId(e.target.value)}>
-                        {/* {console.log('typeof albums', typeof albums)}
-                        {console.log('albums right before we map', albums)}
-                        {console.log('albums.Albums right before we map', albums.Albums)} */}
                         {albums && albums.Albums && (albums.Albums.map(album => (
                             <option key={album.id} value={album.id}>{album.name}</option>
                         )))}
@@ -174,7 +151,7 @@ function SongFormPage({song, formType}) {
                     </select>
                 </div>
 
-                <button type="submit">{formType === 'Edit Song' ? 'Update Song' : 'Create Song' }</button>
+                <button type="submit">Create Song</button>
             </form>
         </div>
     )
