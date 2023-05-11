@@ -30,7 +30,7 @@ class Album(db.Model):
             'id': self.id,
             'ownerId': self.owner_id,
             'name': self.name,
-            'totalRuntime': self.total_runtime,
+            # 'totalRuntime': self.total_runtime,
             'styleId': self.style_id,
             'coverImage': self.cover_image
 
