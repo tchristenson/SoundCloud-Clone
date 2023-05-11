@@ -51,7 +51,7 @@ def add_song():
 
     if form.validate_on_submit():
         style_name = form.data['style']
-        style_instance = (Style.query.filter(Style.genre.like(style_name)).first()).to_dict()
+        style_instance = (Style.query.filter(Style.genre == style_name)).first().to_dict()
 
         cover_image = form.data["cover_image"]
         cover_image.filename = get_unique_image_filename(cover_image.filename)
@@ -114,7 +114,7 @@ def edit_song(id):
 
     if form.validate_on_submit():
         style_name = form.data['style']
-        style_instance = (Style.query.filter(Style.genre.like(style_name)).first()).to_dict()
+        style_instance = (Style.query.filter(Style.genre == style_name)).first().to_dict()
 
         song.name = form.data['name']
         song.album_id = form.data['album_id']
