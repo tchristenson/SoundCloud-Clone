@@ -3,6 +3,7 @@ const GET_ALL_ALBUMS = 'albums/GET_ALL_ALBUMS'
 const GET_ONE_ALBUM = 'albums/GET_ONE_ALBUM'
 const GET_USER_ALBUMS = 'albums/GET_USER_ALBUMS'
 const DELETE_ALBUM = 'albums/DELETE_ALBUM'
+const CREATE_ALBUM = 'albums/CREATE_ALBUM'
 
 const getAllAlbumsAction = (albums) => {
   return {
@@ -29,6 +30,13 @@ const deleteAlbumAction = (albumId) => {
   return {
     type: DELETE_ALBUM,
     albumId
+  }
+}
+
+const createAlbumAction = (song) => {
+  return {
+    type: CREATE_ALBUM,
+    song
   }
 }
 
@@ -83,6 +91,23 @@ export const deleteAlbumThunk = (albumId) => async (dispatch) => {
     return console.log("Delete current user's album: bad response");
   }
 }
+
+export const createAlbumThunk = (album) => async (dispatch) => {
+  console.log('album inside of createAlbumThunk', album)
+  const response = await fetch('/api/albums/new', {
+    method: "POST",
+    body: album
+  });
+  console.log('response inside of createAlbumThunk', response)
+  if (response.ok) {
+    const song = await response.json();
+    console.log('newSong inside of createSongThunk',song)
+    dispatch(createSongAction(song));
+    return song;
+  } else {
+    return ("create songs: response not ok");
+  }
+};
 
 
 // REDUCER
