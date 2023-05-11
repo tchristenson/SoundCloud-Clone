@@ -29,7 +29,7 @@ function UsersSongsPage() {
         //     <h4>song name above?</h4>
         // </div>
         <div id="usersSongPage">
-          <h1 className="user-songs-title">{sessionUser.username}'s Songs</h1>
+          {/* <h1 className="user-songs-title">{sessionUser.username}'s Songs</h1> */}
         {songs?.map(({name,albumId, styleId, ownerId, runtime, coverImage, content, id})=>(
           <div className="song-div" key={id}>
             <div className="song-picture-div">
