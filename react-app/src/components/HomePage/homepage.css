@@ -1,5 +1,7 @@
-#homePageStyle{
+#homePage{
     display: grid;
+    justify-content: center;
+    align-items: center;
     max-width: 100%;
     margin: 0;
     padding: 0;
@@ -7,22 +9,30 @@
 
 #songContainer{
     display: grid;
-   grid-gap: 5rem;
-   grid-template-columns: 200px 200px 200px;
+    grid-template-columns:1fr 1fr 1fr 1fr;
+    width: 50%;
+    gap: 20px
+
+
 
 
 }
 
 
 #homePageStyle{
-    background-color: red;
+    background-color:grey;
 }
 
 .songDiv{
-    background-color: green;
+    
 }
 
 
 .mainImage{
     justify-content: center;
+    width: 100%;
+}
+
+.inputDiv{
+    right: 0;
 }

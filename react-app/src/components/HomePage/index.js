@@ -34,11 +34,11 @@ function HomePage() {
 
   return (
     <>
-      <main id="homePageStyle">
+      <main id="homePage">
         <div>
           <img alt="placeholder" src={faker.image.nightlife()} className="mainImage" />
         </div>
-        <div>
+        <div className='inputDiv'>
           <input type="search" placeholder="Search for artists, bands, tracks, and podcasts" size={"50"}></input> or
           <OpenModalButton buttonText="Upload your Song" onItemClick="" modalComponent={<LoginFormModal />} />
         </div>
