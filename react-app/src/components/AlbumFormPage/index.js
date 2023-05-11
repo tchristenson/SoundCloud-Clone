@@ -46,8 +46,10 @@ function AlbumFormPage() {
     const errors = [];
     // Only adding to the validation errors for fields that are nullable=False in the Song model
     if (!name) errors.push('Please enter a name!')
+    if (!style) errors.push('Please enter a style!')
+    if (!coverImage) errors.push('Please enter a coverImage!')
     setValidationErrors(errors)
-  }, [name])
+  }, [name, style, coverImage])
 
   return (
     <div>
@@ -83,6 +85,7 @@ function AlbumFormPage() {
                     type="file"
                     accept="image/*"
                     onChange={(e) => setCoverImage(e.target.files[0])}
+                    required={true}
                     >
                 </input>
             </div>
@@ -93,7 +96,7 @@ function AlbumFormPage() {
 
             <div className="form-input-box">
                 <label>Album Style:</label>
-                <select onChange={(e) => setStyle(e.target.value)}>
+                <select required={true} onChange={(e) => setStyle(e.target.value)}>
                     <option value="">{'(select one)'}</option>
                     <option value='reggae'>Reggae</option>
                     <option value='classic_rock'>Classic Rock</option>
