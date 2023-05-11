@@ -21,15 +21,18 @@ const DragDropFiles = () => {
   };
 
   if (files) return (
-    <div className="uploads">
-      <ul>
-        {Array.from(files).map((file, idx) =>
-          <li key={idx}>
-            {file.name}
-            <button onClick={() => handleCancel(file)}>Cancel</button>
-          </li>)}
-      </ul>
-    </div>
+    <>
+      <div className="uploads">
+        <ul>
+          {Array.from(files).map((file, idx) =>
+            <li key={idx}>
+              {file.name}
+              <button onClick={() => handleCancel(file)}>Cancel</button>
+            </li>)}
+        </ul>
+      </div>
+      <button type="submit">Create Album</button>
+    </>
   )
 
   return (
@@ -56,6 +59,7 @@ const DragDropFiles = () => {
         </div>
 
       )}
+      <button type="submit">Create Album</button>
     </>
   )
 }

@@ -91,10 +91,6 @@ function AlbumFormPage() {
             </div>
 
             <div className="form-input-box">
-                <DragDropFiles />
-            </div>
-
-            <div className="form-input-box">
                 <label>Album Style:</label>
                 <select required={true} onChange={(e) => setStyle(e.target.value)}>
                     <option value="">{'(select one)'}</option>
@@ -117,7 +113,12 @@ function AlbumFormPage() {
                 </select>
             </div>
 
-            <button type="submit">Create Album</button>
+            <div className="form-input-box">
+                <DragDropFiles />
+            </div>
+
+
+
         </form>
     </div>
 )
