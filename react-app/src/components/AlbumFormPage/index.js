@@ -64,12 +64,15 @@ function AlbumFormPage() {
 
     for (let i = 0; i < files.length; i++) {
         console.log('newAlbum.coverImage', newAlbum.coverImage)
-        const currFile = files[0]
+        const currFile = files[i]
         songFormData.append('name', currFile.name)
         songFormData.append('content', currFile)
         songFormData.append('album_id', newAlbum.id)
         songFormData.append('cover_image', newAlbum.coverImage)
         songFormData.append('style_id', newAlbum.styleId)
+        for (let key of songFormData.entries()) {
+            console.log(key[0] + '----->' + key[1]);
+          }
 
         const newSong = await dispatch(createSongThunk(songFormData))
         console.log('newly created song ------>', newSong)
