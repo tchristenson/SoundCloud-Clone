@@ -17,7 +17,7 @@ def seed_likes():
     #     db.session.commit()
 
     testUser = User(
-        username='Test', email='test@aa.io', password='password', bio='demo makes music', alias='TestTest', profile_image="asdfgasddfg", first_name='Test', last_name='TestTest', style_id=1)
+        username='Test', email='test@aa.io', password='password', bio='demo makes music', alias='TestTest', profile_image="asdfgasddfg", first_name='Test', last_name='TestTest', style_id=1 )
     song_six = Song(
         owner_id = 3,
         album_id = 5,

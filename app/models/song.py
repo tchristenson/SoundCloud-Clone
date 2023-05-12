@@ -18,7 +18,7 @@ class Song(db.Model):
     name = db.Column(db.String(50), nullable=False)
     # runtime = db.Column(db.String) # Undecided on datatype. Date, datetime, or integer?
     style_id = db.Column(db.Integer, ForeignKey(add_prefix_for_prod('styles.id')))
-    cover_image = db.Column(db.String)
+    cover_image = db.Column(db.String, nullable=False)
     content = db.Column(db.String, nullable=False) # Keeping as a string for now. TBD based on AWS
 
     owner = db.relationship('User', back_populates='songs')
@@ -28,14 +28,20 @@ class Song(db.Model):
     user_likes = db.relationship('User', secondary=likes)
 
     def to_dict(self):
-        return {
+        data = {
             'id': self.id,
             'ownerId': self.owner_id,
-            'albumId': self.album_id,
-            'styleId': self.style_id,
             'name': self.name,
+            'styleId': self.style_id,
             # 'runtime': self.runtime,
             'coverImage': self.cover_image,
             'content': self.content,
             'likes': len(self.user_likes)
         }
+
+        if self.album_id:
+            data['albumId'] = self.album_id
+        else:
+            data['albumId'] = None
+
+        return data

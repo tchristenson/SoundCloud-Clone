@@ -46,6 +46,19 @@ function SongPage() {
               <div>wav thing</div>
             </div>
           </div>
+          <div className="song-div">
+            <div className="song-picture-div">
+              <img className="song-picture" src={coverImage}/>
+            </div>
+
+            <div>
+              <div className="playlogo"></div>
+              <div className="song-name">Title: {name}</div>
+              <div>user name ? (owner id):{ownerId} , style: {styleId}</div>
+              <div>album name? album id: {albumId}</div>
+              <div>wav thing</div>
+            </div>
+          </div>
         </NavLink>
       ))}
     </div>
