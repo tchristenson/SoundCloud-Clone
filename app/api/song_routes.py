@@ -57,12 +57,12 @@ def add_song():
         cover_image.filename = get_unique_image_filename(cover_image.filename)
         image_upload = upload_image_file_to_s3(cover_image)
 
-        print("=========> upload data here get y IMAGE :", image_upload)
+        # print("=========> upload data here get y IMAGE :", image_upload)
         content = form.data["content"]
         content.filename = get_unique_song_filename(content.filename)
         audio_upload = upload_song_file_to_s3(content)
 
-        print("=========> upload data here get y AUDIO :", audio_upload["url"])
+        # print("=========> upload data here get y AUDIO :", audio_upload["url"])
 
         # if "url" not in audio_upload:
         #     return { "errors": form.errors}
