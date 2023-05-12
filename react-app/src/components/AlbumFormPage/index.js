@@ -65,7 +65,7 @@ function AlbumFormPage() {
         const songFormData = new FormData()
         // console.log('newAlbum.coverImage', newAlbum.coverImage)
         let currFile = files[i]
-        // console.log('gcurrFile ------> ', currFile)
+        // console.log('currFile ------> ', currFile)
         songFormData.append('name', currFile.name)
         songFormData.append('content', currFile)
         songFormData.append('album_id', newAlbum.id)
