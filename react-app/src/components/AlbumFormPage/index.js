@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { createAlbumThunk } from "../../store/albums"
-import DragDropFiles from "../DragDropFiles";
 
 
 function AlbumFormPage() {
@@ -15,9 +14,32 @@ function AlbumFormPage() {
   const [styleId, setStyleId] = useState("");
   const [validationErrors, setValidationErrors] = useState([]);
   const [hasSubmitted, setHasSubmitted] = useState(false);
+  const [files, setFiles] = useState(null)
+  const inputRef = useRef()
+
+  const handleDragOver = (e) => {
+    e.preventDefault()
+  }
+
+  const handleDrop = (e) => {
+    e.preventDefault()
+    console.log('e.dataTransfer.files', e.dataTransfer.files)
+    const filesArr = Object.values(e.dataTransfer.files)
+    console.log('filesArr', filesArr)
+    filesArr.forEach(file => console.log('file.name', file.name))
+    setFiles(filesArr)
+  }
+
+  const handleCancel = (canceledFile) => {
+    setFiles((prevFiles) => {
+      const filteredFiles = Array.from(prevFiles).filter((file) => file !== canceledFile);
+      return filteredFiles.length === 0 ? null : filteredFiles;
+    });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log('files inside handleSubmit', files)
 
     setHasSubmitted(true)
     if (validationErrors.length) return alert('Your Post has errors, cannot submit!')
@@ -112,11 +134,45 @@ function AlbumFormPage() {
             </div>
 
             <div className="form-input-box">
-                <DragDropFiles
-                    name={name}
-                    coverImage={coverImage}
-                    styleId={styleId}
-                />
+                {files && (
+                    <>
+                    <div className="uploads">
+                        <ul>
+                        {Array.from(files).map((file, idx) =>
+                            <li key={idx}>
+                            {file.name}
+                            <button onClick={() => handleCancel(file)}>Cancel</button>
+                            </li>)}
+                        </ul>
+                    </div>
+                    </>
+                )}
+
+                {!files && (
+                    <>
+                    {!files && (
+                        <div
+                        className="dropzone"
+                        onDragOver={handleDragOver}
+                        onDrop={handleDrop}
+                        >
+
+                        <label>Drag and Drop Songs to Upload</label>
+                        <label>Or</label>
+                        <input
+                            type="file"
+                            accept="audio/*"
+                            multiple
+                            onChange={(e) => setFiles(e.target.files)}
+                            hidden
+                            ref={inputRef}
+                        />
+                        <button onClick={() => inputRef.current.click()}>Select Songs</button>
+
+                        </div>
+                    )}
+                    </>
+                )}
             </div>
 
             <button type="submit">Create Album</button>
