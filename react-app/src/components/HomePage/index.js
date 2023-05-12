@@ -24,28 +24,28 @@ function HomePage() {
   const users = useSelector((state) => (state.users));
   const sessionUser = useSelector(state => state.session.user)
 
-  //   const userIds = songs.map((song) => {
-  //     return song.ownerId;
-  //   });
+    const userIds = songs.map((song) => {
+      return song.ownerId;
+    });
 
 
-  //   const songUsers = userIds.map(id =>{
-  //     return (`${users[id].alias}`)
-  //   // return songs.map(song =>{
-  //   // return (users[id].id === song.ownerId ? (<p>{users[id].alias}</p>) : null)
-  //   // })
-  //   })
-  // console.log("songs", songUsers)
-  //   const searchSongs = e => {
-  //     e.preventDefault()
-  //     setQuery(e.target.value)
-  //   }
+    const songUsers = userIds.map(id =>{
+      return (`${users[id].alias}`)
+    // return songs.map(song =>{
+    // return (users[id].id === song.ownerId ? (<p>{users[id].alias}</p>) : null)
+    // })
+    })
+  console.log("songs", songUsers)
+    const searchSongs = e => {
+      e.preventDefault()
+      setQuery(e.target.value)
+    }
 
-  //   if (query.length) {
-  //     songs.filter(song => {
-  //       return console.log(song)
-  //     })
-  //   }
+    if (query.length) {
+      songs.filter(song => {
+        return console.log(song)
+      })
+    }
 
   if (!songs) {
     return <h1>testerrrrr</h1>;

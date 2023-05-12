@@ -1,16 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useHistory } from "react-router-dom";
 import { useEffect } from "react";
-import { getOneSongThunk} from "../../store/songs";
+import { editSongThunk, getOneSongThunk } from "../../store/songs";
 import SongDeleteModal from "../SongDeleteModal";
 import OpenModalButton from "../OpenModalButton";
 import AudioPlayer from "../ReactAudioPlayer/AudioPlayer";
+import { AiFillLike } from "react-icons/ai";
 
 function SongPageSingle() {
   const dispatch = useDispatch();
   const sessionUser = useSelector((state) => state.session.user);
   const { songId } = useParams();
+  const song = useSelector((state) => state.songs[songId]);
   //   const songLength = useSelector((state)=> Object.values(state.songs).length)
 
   // console.log("this is the length of the users songs", song);
@@ -18,18 +20,34 @@ function SongPageSingle() {
     dispatch(getOneSongThunk(songId));
   }, [songId, dispatch]);
 
-  const song = useSelector((state) => state.songs[songId]);
+  const [liked, setLiked] = useState(false)
+  const [likeCount, setLikeCount] = useState((song?.likes))
+  console.log("likeCount", likeCount)
+
+  const addLike = () =>{
+    setLiked(!liked)
+    setLikeCount(likeCount + 1)
+     const newsong = {...song}
+     console.log('this is the newsong', newsong)
+    dispatch(editSongThunk(newsong))
+
+  }
+  const removeLike = () =>{
+    setLiked(!liked)
+    setLikeCount(likeCount - 1)
+  }
 
   if (!song) {
     return null;
   }
+
 
   console.log('song inside SongPageSingle', song)
 
   return (
     <div id="singSongPage">
       <h1>single song page</h1>
-      <AudioPlayer song={song} sessionUser={sessionUser}/>
+      <AudioPlayer song={song} sessionUser={sessionUser} />
       <div className="playlogo"></div>
       <div>{song?.name}</div>
       <div>
@@ -38,9 +56,12 @@ function SongPageSingle() {
       <div>album name? album id: {song?.albumId}</div>
       <div>wav thing</div>
       <div>{song?.coverImage}</div>
+      <AiFillLike style={{ color: 'red' }} onClick={addLike}  />
+      <div>{likeCount} likes</div>
+
 
       {sessionUser && sessionUser.id === song.ownerId && (
-        <OpenModalButton buttonText="Delete Song" modalComponent={<SongDeleteModal songId = {songId}/>} />
+        <OpenModalButton buttonText="Delete Song" modalComponent={<SongDeleteModal songId={songId} />} />
       )}
 
     </div>

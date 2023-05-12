@@ -20,7 +20,7 @@ function SongPage() {
   }
   return (
     <div id="songPage">
-      {songs?.map(({name,albumId, styleId, ownerId, runtime, coverImage, content, id})=>(
+      {songs?.map(({name,albumId, styleId, ownerId, runtime, coverImage, content, id, likes})=>(
         <NavLink to={`/songs/${id}`} key={id}>
           <div className="playlogo"></div>
           <div>Title: {name}</div>
