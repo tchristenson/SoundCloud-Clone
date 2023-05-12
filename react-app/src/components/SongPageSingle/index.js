@@ -10,26 +10,24 @@ import { AiFillLike } from "react-icons/ai";
 
 function SongPageSingle() {
   const dispatch = useDispatch();
-  const sessionUser = useSelector((state) => state.session.user);
   const { songId } = useParams();
+  const sessionUser = useSelector((state) => state.session.user);
   const song = useSelector((state) => state.songs[songId]);
   //   const songLength = useSelector((state)=> Object.values(state.songs).length)
 
   // console.log("this is the length of the users songs", song);
   useEffect(() => {
-    dispatch(getOneSongThunk(songId));
+  dispatch(getOneSongThunk(songId));
   }, [songId, dispatch]);
 
+  console.log('song inside SongPageSingle', song)
   const [liked, setLiked] = useState(false)
-  const [likeCount, setLikeCount] = useState((song?.likes))
-  console.log("likeCount", likeCount)
+  const [likeCount, setLikeCount] = useState(+(song?.likes))
+
 
   const addLike = () =>{
     setLiked(!liked)
     setLikeCount(likeCount + 1)
-     const newsong = {...song}
-     console.log('this is the newsong', newsong)
-    dispatch(editSongThunk(newsong))
 
   }
   const removeLike = () =>{
@@ -37,12 +35,11 @@ function SongPageSingle() {
     setLikeCount(likeCount - 1)
   }
 
+
   if (!song) {
     return null;
   }
 
-
-  console.log('song inside SongPageSingle', song)
 
   return (
     <div id="singSongPage">
@@ -57,7 +54,7 @@ function SongPageSingle() {
       <div>wav thing</div>
       <div>{song?.coverImage}</div>
       <AiFillLike style={{ color: 'red' }} onClick={addLike}  />
-      <div>{likeCount} likes</div>
+      <div>{likeCount}</div>
 
 
       {sessionUser && sessionUser.id === song.ownerId && (
