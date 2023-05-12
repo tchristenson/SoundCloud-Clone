@@ -24,7 +24,7 @@ function SongFormPage() {
     const [content, setContent] = useState("");
     const [albums, setAlbums] = useState([]);
     const [selectedAlbumId, setSelectedAlbumId] = useState("") // Need to find a way to set this to the album name via redux or prop threading/context
-    const [style, setStyle] = useState(""); // Need to find a way to set this to the style name via redux or prop threading/context
+    const [styleId, setStyleId] = useState(""); // Need to find a way to set this to the style name via redux or prop threading/context
     const [coverImage, setCoverImage] = useState("")
     const [validationErrors, setValidationErrors] = useState([]);
     const [hasSubmitted, setHasSubmitted] = useState(false);
@@ -40,7 +40,7 @@ function SongFormPage() {
         formData.append('content', content)
         formData.append('album_id', +selectedAlbumId)
         formData.append('cover_image', coverImage)
-        formData.append('style', style)
+        formData.append('style_id', styleId)
 
         for (let key of formData.entries()) {
             console.log(key[0] + '----->' + key[1]);
@@ -52,7 +52,7 @@ function SongFormPage() {
         setContent('')
         setAlbums([])
         setSelectedAlbumId('')
-        setStyle('')
+        setStyleId('')
         setCoverImage('')
         setValidationErrors([])
         setHasSubmitted(false)
@@ -66,9 +66,9 @@ function SongFormPage() {
         if (!name) errors.push('Please enter a name!')
         if (!content) errors.push('Please provide an audio file!')
         if (!coverImage) errors.push('Please provide an image file!')
-        if (!style) errors.push('Please enter a style!')
+        if (!styleId) errors.push('Please enter a style!')
         setValidationErrors(errors)
-    }, [name, content, style, coverImage])
+    }, [name, content, styleId, coverImage])
 
     return (
         <div className="newSongForm">
@@ -137,21 +137,21 @@ function SongFormPage() {
 
                 <div className="form-input-box">
                     <label>Song Style:</label>
-                    <select required={true} onChange={(e) => setStyle(e.target.value)}>
+                    <select required={true} onChange={(e) => setStyleId(e.target.value)}>
                         <option value="">{'(select one)'}</option>
-                        <option value='reggae'>Reggae</option>
-                        <option value='rock'>Rock</option>
-                        <option value='punk'>Punk</option>
-                        <option value='pop'>Pop</option>
-                        <option value='electronic'>Electronic</option>
-                        <option value='jazz'>Jazz</option>
-                        <option value='blues'>Blues</option>
-                        <option value='country'>Country</option>
-                        <option value='metal'>Metal</option>
-                        <option value='folk'>Folk</option>
-                        <option value='funk'>Funk</option>
-                        <option value='soul'>Soul</option>
-                        <option value='classical'>Classical</option>
+                        <option value={1}>Reggae</option>
+                        <option value={2}>Rock</option>
+                        <option value={3}>Punk</option>
+                        <option value={4}>Pop</option>
+                        <option value={5}>Electronic</option>
+                        <option value={6}>Jazz</option>
+                        <option value={7}>Blues</option>
+                        <option value={8}>Country</option>
+                        <option value={9}>Metal</option>
+                        <option value={10}>Folk</option>
+                        <option value={11}>Funk</option>
+                        <option value={12}>Soul</option>
+                        <option value={13}>Classical</option>
 
                     </select>
                 </div>

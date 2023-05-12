@@ -57,10 +57,10 @@ def add_album():
     print("form.data ======>>", form.data)
 
     if form.validate_on_submit():
-        style_name = form.data['style']
-        print("style_name =========>  :", style_name)
-        print("Style.genre =========>  :", Style.genre)
-        style_instance = (Style.query.filter(Style.genre == style_name)).first().to_dict()
+        # style_name = form.data['style']
+        # print("style_name =========>  :", style_name)
+        # print("Style.genre =========>  :", Style.genre)
+        # style_instance = (Style.query.filter(Style.genre == style_name)).first().to_dict()
 
         cover_image = form.data["cover_image"]
         cover_image.filename = get_unique_image_filename(cover_image.filename)
@@ -71,7 +71,7 @@ def add_album():
         album = Album(name = form.data['name'],
                       owner_id = current_user.id,
                       cover_image = image_upload["url"],
-                      style_id = style_instance['id'])
+                      style_id = form.data['style_id'])
 
         db.session.add(album)
         db.session.commit()
