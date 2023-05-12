@@ -5,6 +5,7 @@
     align-items: center;
     background-color: grey;
     padding: 20px;
+    max-width: 100%;
 
 
 
@@ -13,7 +14,10 @@
 #songContainer{
 display: flex;
 border : 2px solid black;
+
 gap: 20px;
+flex-flow: row wrap;
+flex: 200px;
 
 
 
@@ -29,6 +33,10 @@ gap: 20px;
 
 .songDiv{
 border: 2px solid green;
+display: flex;
+justify-items: space-around;
+width: fit-content;
+height: fit-content;
 
 }
 
@@ -36,7 +44,7 @@ border: 2px solid green;
 
 
 .inputDiv{
-
+padding: 20px;
 
 }
 
@@ -47,4 +55,8 @@ border: 2px solid green;
 .songImage{
 width: 7.5rem;
 height: 7.5rem;
+}
+
+footer{
+    text-align: center;
 }

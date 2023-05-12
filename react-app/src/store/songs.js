@@ -162,9 +162,9 @@ function songReducer(state = initState, action) {
       newState[action.song.id] = action.song
       return newState;
     case EDIT_SONG:
-      newState = {...state}
+      newState = {...state};
       console.log('action.song inside EDIT_SONG Reducer', action.song)
-      newState[action.song.id] = action.song
+      newState[action.song.id] = action.song;
     default:
       return state;
   }
