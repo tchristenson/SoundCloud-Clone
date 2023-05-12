@@ -4,6 +4,7 @@ const GET_ONE_ALBUM = 'albums/GET_ONE_ALBUM'
 const GET_USER_ALBUMS = 'albums/GET_USER_ALBUMS'
 const DELETE_ALBUM = 'albums/DELETE_ALBUM'
 const CREATE_ALBUM = 'albums/CREATE_ALBUM'
+const EDIT_ALBUM = 'album/EDIT_ALBUM'
 
 const getAllAlbumsAction = (albums) => {
   return {
@@ -36,6 +37,13 @@ const deleteAlbumAction = (albumId) => {
 const createAlbumAction = (album) => {
   return {
     type: CREATE_ALBUM,
+    album
+  }
+}
+
+const editAlbumAction = (album) => {
+  return {
+    type: EDIT_ALBUM,
     album
   }
 }
@@ -110,6 +118,24 @@ export const createAlbumThunk = (album) => async (dispatch) => {
   }
 };
 
+export const editAlbumThunk = (album) => async (dispatch) => {
+  const albumId = parseInt(album.get('id'))
+  console.log('albumId inside editAlbumThunk', albumId)
+  const response = await fetch(`/api/albums/edit/${albumId}`, {
+    method: 'PUT',
+    body: album
+  })
+  console.log('response inside editAlbumThunk', response)
+  if (response.ok) {
+    const album = await response.json()
+    console.log('album after response inside editAlbumsThunk', album)
+    dispatch(editAlbumAction(album))
+    return album
+  } else {
+    return ('edit album: response not ok')
+  }
+}
+
 
 // REDUCER
 const albumReducer = (state = {}, action) => {
@@ -132,6 +158,10 @@ const albumReducer = (state = {}, action) => {
       delete newState[action.albumId];
       return newState;
     case CREATE_ALBUM:
+      newState = {...state}
+      newState[action.album.id] = action.album
+      return newState;
+    case EDIT_ALBUM:
       newState = {...state}
       newState[action.album.id] = action.album
       return newState;

@@ -2,6 +2,7 @@ from flask import Blueprint, request
 from ..models import Album, Style, db
 from flask_login import current_user, login_required
 from ..forms.album_form import NewAlbum
+from ..forms.edit_album_form import EditAlbum
 from ..api.aws_image_helpers import get_unique_image_filename, upload_image_file_to_s3
 
 
@@ -74,6 +75,29 @@ def add_album():
                       style_id = form.data['style_id'])
 
         db.session.add(album)
+        db.session.commit()
+        return album.to_dict()
+
+    return { "errors": form.errors}
+
+
+@album_routes.route('/edit/<int:id>', methods=['PUT'])
+@login_required
+def edit_album(id):
+    """Handles editing an album's details if the album owner is the logged in user"""
+    album = Album.query.get(id)
+    if not album:
+        return {"error": "Album not found."}
+
+    form = EditAlbum()
+    form['csrf_token'].data = request.cookies['csrf_token']
+
+    print("form.data ======>>", form.data)
+
+    if form.validate_on_submit():
+        album.name = form.data['name']
+        album.style_id = form.data['style_id']
+
         db.session.commit()
         return album.to_dict()
 
