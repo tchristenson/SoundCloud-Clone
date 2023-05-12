@@ -2,6 +2,7 @@ import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getCurrentUsersAlbumsThunk } from "../../store/albums";
+import './UsersAlbumPage.css';
 
 function UsersAlbumsPage() {
     const dispatch = useDispatch();
