@@ -50,8 +50,8 @@ def add_song():
     print("form.data ======>>", form.data)
 
     if form.validate_on_submit():
-        style_name = form.data['style']
-        style_instance = (Style.query.filter(Style.genre == style_name)).first().to_dict()
+        # style_name = form.data['style']
+        # style_instance = (Style.query.filter(Style.genre == style_name)).first().to_dict()
 
         cover_image = form.data["cover_image"]
         cover_image.filename = get_unique_image_filename(cover_image.filename)
@@ -74,7 +74,7 @@ def add_song():
                         cover_image = image_upload["url"],
                         content = audio_upload["url"],
                         album_id = form.data['album_id'],
-                        style_id = style_instance['id'])
+                        style_id = form.data['style_id'])
         print("song here look belive me ===> :", song)
         db.session.add(song)
         db.session.commit()
@@ -113,14 +113,14 @@ def edit_song(id):
     print("form.data ======>>", form.data)
 
     if form.validate_on_submit():
-        style_name = form.data['style']
-        print("style_name =========>  :", style_name)
-        print("Style.genre =========>  :", Style.genre)
-        style_instance = (Style.query.filter(Style.genre == style_name)).first().to_dict()
+        # style_name = form.data['style']
+        # print("style_name =========>  :", style_name)
+        # print("Style.genre =========>  :", Style.genre)
+        # style_instance = (Style.query.filter(Style.genre == style_name)).first().to_dict()
 
         song.name = form.data['name']
         song.album_id = form.data['album_id']
-        song.style_id = style_instance['id']
+        song.style_id = form.data['style_id']
         # song.cover_image = image_upload["url"]
         # song.content = audio_upload["url"]
         # db.session.add(song)

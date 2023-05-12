@@ -14,9 +14,9 @@ def album_exists(form, field):
 class NewAlbum(FlaskForm):
     name = StringField("Album Name", validators=[DataRequired()])
     cover_image = FileField("Cover Image", validators=[FileRequired(), FileAllowed(list(ALLOWED_IMAGE_EXTENSIONS))])
-    style = SelectField("Style", choices=[('reggae', "Reggae"), ('rock', "Rock"),
-                                      ('punk', "Punk"), ('pop', "Pop"),
-                                      ('electronic', "Electronic"), ('jazz', "Jazz"), ('blues', "Blues"),
-                                      ('country', "Country"), ('metal', "Metal"), ('folk', "Folk"),
-                                      ('funk', "Funk"), ('soul', "Soul"),
-                                      ('classical', "Classical")])
+    style_id = SelectField("Style", choices=[(1, "Reggae"), (2, "Rock"),
+                                          (3, "Punk"), (4, "Pop"),
+                                          (5, "Electronic"), (6, "Jazz"), (7, "Blues"),
+                                          (8, "Country"), (9, "Metal"), (10, "Folk"),
+                                          (11, "Funk"), (12, "Soul"),
+                                          (13, "Classical")])
