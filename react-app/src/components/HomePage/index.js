@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import SongPage from "../SongPage";
 import { getAllSongsThunk } from "../../store/songs";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllUsersThunk } from "../../store/users";
@@ -10,31 +9,41 @@ import "./homepage.css";
 
 import { useEffect } from "react";
 import { faker } from "@faker-js/faker";
+import SongFormPage from "../SongFormPage";
 
 function HomePage() {
   const dispatch = useDispatch();
   const [query, setQuery] = useState('')
+
 
   useEffect(() => {
     dispatch(getAllSongsThunk());
     dispatch(getAllUsersThunk());
   }, [dispatch]);
   const songs = useSelector((state) => Object.values(state.songs));
-  const users = useSelector((state) => Object.values(state.users));
+  const users = useSelector((state) => (state.users));
   const sessionUser = useSelector(state => state.session.user)
 
-  const newSong = songs.map((song) => {
+  const userIds = songs.map((song) => {
     return song.ownerId;
   });
 
-  const searchSongs = e =>{
+
+  const songUsers = userIds.map(id =>{
+    return (`${users[id].alias}`)
+  // return songs.map(song =>{
+  // return (users[id].id === song.ownerId ? (<p>{users[id].alias}</p>) : null)
+  // })
+  })
+console.log("songs", songUsers)
+  const searchSongs = e => {
     e.preventDefault()
     setQuery(e.target.value)
   }
 
-  if(query.length){
-    songs.filter(song =>{
-      return song.name === (query)
+  if (query.length) {
+    songs.filter(song => {
+      return console.log(song)
     })
   }
 
@@ -50,11 +59,11 @@ function HomePage() {
         </div>
         <div className='inputDiv'>
           <input type="search" placeholder="Search for artists, bands, tracks, and podcasts" size={"50"} onChange={searchSongs} value={query}></input> or
-         { <OpenModalButton buttonText="Upload your Song" onItemClick="" modalComponent={<LoginFormModal />} />}
+          {!sessionUser ? (<OpenModalButton buttonText="Upload your Song" onItemClick="" modalComponent={<LoginFormModal />} />) : (<OpenModalButton buttonText="Upload your Song" onItemClick="" modalComponent={<SongFormPage />} />)}
         </div>
         <h2>Hear what's trending for free in the Vibillow community</h2>
         <div id="songContainer">
-          {songs?.map(({ name, coverImage, id }) => (
+          {songs?.map(({ name, coverImage, id, ownerId }) => (
             <div className="songDiv" key={id}>
               <div>
                 <a href={`/songs/${id}`}>
@@ -62,11 +71,14 @@ function HomePage() {
                 </a>
               </div>
               <div>{name}</div>
+              <div></div>
             </div>
           ))}{" "}
-          { sessionUser && <OpenModalButton buttonText="Explore trending playlists" onItemClick="" modalComponent={<LoginFormModal />} />}
+          {sessionUser && <OpenModalButton buttonText="Explore trending playlists" onItemClick="" modalComponent={<LoginFormModal />} />}
         </div>
-        <section></section>
+        <section>
+
+        </section>
       </main>
     </>
   );

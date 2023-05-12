@@ -1,18 +1,21 @@
 #homePage{
-    display: grid;
+    display: flex;
+    flex-flow: column;
     justify-content: center;
     align-items: center;
-    max-width: 100%;
-    margin: 20px;
-    padding: 0;
+    background-color: grey;
+    padding: 20px;
+
+
+
 }
 
 #songContainer{
-    display: grid;
-    grid-template-columns:2fr 2fr 2fr 2fr 2fr 2fr ;
-    width: 40%;
-    gap: 20px;
-    justify-content: space-between;
+display: flex;
+border : 2px solid black;
+gap: 20px;
+
+
 
 
 
@@ -20,35 +23,28 @@
 }
 
 
-#homePageStyle{
-    background-color:grey;
+ #homePageStyle{
+
 }
 
 .songDiv{
-border: 2px solid black;
+border: 2px solid green;
+
 }
 
 
-.mainImage{
-    justify-content: center;
-    width: 70%;
-}
+
 
 .inputDiv{
-   position: relative;
-   display: flex;
-   justify-content: center;
 
 
 }
 
 .inputDiv input{
-    width: 70%;
-    height: 100%;
 
 }
 
 .songImage{
-    height: 200px;
-    width: 200px;
+width: 7.5rem;
+height: 7.5rem;
 }
