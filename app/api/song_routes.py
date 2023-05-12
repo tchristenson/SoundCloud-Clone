@@ -47,7 +47,8 @@ def add_song():
     form['csrf_token'].data = request.cookies['csrf_token']
 
 
-    print("form.data ======>>", form.data)
+    print("form.data inside New Song route ======>>", form.data)
+    print("request.files ======>", request.files)
 
     if form.validate_on_submit():
         # style_name = form.data['style']

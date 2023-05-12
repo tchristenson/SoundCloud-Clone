@@ -54,7 +54,7 @@ def add_album():
     form = NewAlbum()
     form['csrf_token'].data = request.cookies['csrf_token']
 
-    print("form.data ======>>", form.data)
+    print("form.data inside New Album Route ======>>", form.data)
 
     if form.validate_on_submit():
         # style_name = form.data['style']

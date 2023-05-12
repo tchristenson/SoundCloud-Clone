@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { createAlbumThunk } from "../../store/albums"
+import { createSongThunk } from "../../store/songs";
 
 
 function AlbumFormPage() {
@@ -26,7 +27,6 @@ function AlbumFormPage() {
     console.log('e.dataTransfer.files', e.dataTransfer.files)
     const filesArr = Object.values(e.dataTransfer.files)
     console.log('filesArr', filesArr)
-    filesArr.forEach(file => console.log('file.name', file.name))
     setFiles(filesArr)
   }
 
@@ -40,26 +40,47 @@ function AlbumFormPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log('files inside handleSubmit', files)
+    console.log('files[0]', files[0])
+    console.log('files[1]', files[1])
+
+    // files.forEach(file => console.log('file.name', file.name))
 
     setHasSubmitted(true)
     if (validationErrors.length) return alert('Your Post has errors, cannot submit!')
 
-    const formData = new FormData()
-    formData.append('name', name)
-    formData.append('cover_image', coverImage)
-    formData.append('style_id', styleId)
+    const albumFormData = new FormData()
+    albumFormData.append('name', name)
+    albumFormData.append('cover_image', coverImage)
+    albumFormData.append('style_id', styleId)
 
-    for (let key of formData.entries()) {
+    for (let key of albumFormData.entries()) {
       console.log(key[0] + '----->' + key[1]);
     }
 
-    const newAlbum = await dispatch(createAlbumThunk(formData))
+    const newAlbum = await dispatch(createAlbumThunk(albumFormData))
+    console.log('newAlbum after awaiting dispatch ---->', newAlbum)
+
+    const songFormData = new FormData()
+
+    for (let i = 0; i < files.length; i++) {
+        console.log('newAlbum.coverImage', newAlbum.coverImage)
+        const currFile = files[0]
+        songFormData.append('name', currFile.name)
+        songFormData.append('content', currFile)
+        songFormData.append('album_id', newAlbum.id)
+        songFormData.append('cover_image', newAlbum.coverImage)
+        songFormData.append('style_id', newAlbum.styleId)
+
+        const newSong = await dispatch(createSongThunk(songFormData))
+        console.log('newly created song ------>', newSong)
+    }
 
     setName('')
     setCoverImage('')
     setStyleId('')
     setValidationErrors([])
     setHasSubmitted(false)
+    setFiles(null)
 
     history.push(`/albums/${newAlbum.id}`)
   }
@@ -70,8 +91,9 @@ function AlbumFormPage() {
     if (!name) errors.push('Please enter a name!')
     if (!styleId) errors.push('Please enter a style!')
     if (!coverImage) errors.push('Please enter a coverImage!')
+    if (!files) errors.push('Please provide at least one file!')
     setValidationErrors(errors)
-  }, [name, styleId, coverImage])
+  }, [name, styleId, coverImage, files])
 
   return (
     <div>
@@ -158,7 +180,7 @@ function AlbumFormPage() {
                         >
 
                         <label>Drag and Drop Songs to Upload</label>
-                        <label>Or</label>
+                        {/* <label>Or</label> */}
                         <input
                             type="file"
                             accept="audio/*"
@@ -167,7 +189,7 @@ function AlbumFormPage() {
                             hidden
                             ref={inputRef}
                         />
-                        <button onClick={() => inputRef.current.click()}>Select Songs</button>
+                        {/* <button onClick={() => inputRef.current.click()}>Select Songs</button> */}
 
                         </div>
                     )}
