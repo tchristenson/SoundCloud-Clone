@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { getAllSongsThunk } from "../../store/songs";
 import './SongPage.css'
+import { getAllUsersThunk } from "../../store/users";
 
 
 function SongPage() {
@@ -13,12 +14,17 @@ function SongPage() {
 
   useEffect(() => {
     dispatch(getAllSongsThunk());
+    dispatch(getAllUsersThunk());
   }, [dispatch]);
+
   const songs = useSelector((state) => Object.values(state.songs));
+  const users = useSelector((state) => Object.values(state.users));
+
 
   console.log("songs", songs);
+  console.log("users: ====>", users);
 
-  if (!songs) {
+  if (!songs || !users) {
     return <h1>testerrrrr</h1>;
   }
   return (
@@ -30,22 +36,9 @@ function SongPage() {
             return song;
         } else if (song.name.toLowerCase().includes(query.toLocaleLowerCase())) {
             return song
-        }
+        } //else if (song.ownerId == )
       }).map(({name,albumId, styleId, ownerId, runtime, coverImage, content, id})=>(
         <NavLink to={`/songs/${id}`} key={id}>
-          <div className="song-div">
-            <div className="song-picture-div">
-              <img className="song-picture" src={coverImage}/>
-            </div>
-
-            <div>
-              <div className="playlogo"></div>
-              <div className="song-name">Title: {name}</div>
-              <div>user name ? (owner id):{ownerId} , style: {styleId}</div>
-              <div>album name? album id: {albumId}</div>
-              <div>wav thing</div>
-            </div>
-          </div>
           <div className="song-div">
             <div className="song-picture-div">
               <img className="song-picture" src={coverImage}/>
