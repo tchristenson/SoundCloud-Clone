@@ -3,17 +3,21 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { createSongThunk } from "../../store/songs";
 import { getCurrentUsersAlbumsThunk } from "../../store/albums"
+import {BarLoader} from "react-spinners"
+import './songFormPage.css'
 
 function SongFormPage() {
 
     const dispatch = useDispatch();
     const history = useHistory()
-    const sessionUser = useSelector(state => state.session.user)
 
     useEffect(() => {
+        console.log('useEffect running in SongFormPage to get current users albums')
         dispatch(getCurrentUsersAlbumsThunk())
-        .then((data) => setAlbums(data))
-        console.log('albums inside of SongFormPage', albums)
+        .then((data) => {
+            setAlbums(data);
+            console.log('useEffect complete. Here are the users albums ======>', albums)
+        })
     }, [dispatch])
 
     const [name, setName] = useState("");
@@ -43,7 +47,6 @@ function SongFormPage() {
         }
 
         const newSong = await dispatch(createSongThunk(formData))
-        history.push(`/songs/${newSong.id}`)
 
         setName('')
         setContent('')
@@ -53,6 +56,8 @@ function SongFormPage() {
         setCoverImage('')
         setValidationErrors([])
         setHasSubmitted(false)
+
+        history.push(`/songs/${newSong.id}`)
     }
 
     useEffect(() => {
@@ -60,11 +65,13 @@ function SongFormPage() {
         // Only adding to the validation errors for fields that are nullable=False in the Song model
         if (!name) errors.push('Please enter a name!')
         if (!content) errors.push('Please provide an audio file!')
+        if (!coverImage) errors.push('Please provide an image file!')
+        if (!style) errors.push('Please enter a style!')
         setValidationErrors(errors)
-    }, [name, content])
+    }, [name, content, style, coverImage])
 
     return (
-        <div>
+        <div className="newSongForm">
             <h1>Create a New Song</h1>
             {hasSubmitted && validationErrors.length > 0 && (
                 <div>
@@ -76,9 +83,15 @@ function SongFormPage() {
                     </ul>
                 </div>
             )}
+            <div className="loadingArea">
+                {hasSubmitted &&  validationErrors.length === 0 &&(
+                    <BarLoader color="#36d7b7" className="loadingBar" />
+                )}
+            </div>
             <form
                 onSubmit={(e) => handleSubmit(e)}
                 encType="multipart/form-data"
+                className="newSongFormDetails"
             >
                 <div className="form-input-box">
                     <label>Song Name:</label>
@@ -97,6 +110,7 @@ function SongFormPage() {
                         type="file"
                         accept="image/*"
                         onChange={(e) => setCoverImage(e.target.files[0])}
+                        required={true}
                         >
                     </input>
                 </div>
@@ -107,6 +121,7 @@ function SongFormPage() {
                         type="file"
                         accept="audio/*"
                         onChange={(e) => setContent(e.target.files[0])}
+                        required={true}
                         >
                     </input>
                 </div>
@@ -122,13 +137,12 @@ function SongFormPage() {
 
                 <div className="form-input-box">
                     <label>Song Style:</label>
-                    <select onChange={(e) => setStyle(e.target.value)}>
+                    <select required={true} onChange={(e) => setStyle(e.target.value)}>
                         <option value="">{'(select one)'}</option>
                         <option value='reggae'>Reggae</option>
-                        <option value='classic_rock'>Classic Rock</option>
+                        <option value='rock'>Rock</option>
                         <option value='punk'>Punk</option>
                         <option value='pop'>Pop</option>
-                        <option value='hip_hop'>Hip Hop</option>
                         <option value='electronic'>Electronic</option>
                         <option value='jazz'>Jazz</option>
                         <option value='blues'>Blues</option>
@@ -137,7 +151,6 @@ function SongFormPage() {
                         <option value='folk'>Folk</option>
                         <option value='funk'>Funk</option>
                         <option value='soul'>Soul</option>
-                        <option value='rnb'>R&B</option>
                         <option value='classical'>Classical</option>
 
                     </select>

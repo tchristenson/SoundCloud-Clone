@@ -7,8 +7,12 @@ import { ModalProvider, Modal } from "./context/Modal";
 import configureStore from "./store";
 import * as sessionActions from "./store/session";
 import App from "./App";
+import AudioPlayer from "./components/ReactAudioPlayer/AudioPlayer";
+
 
 import "./index.css";
+
+
 
 const store = configureStore();
 
@@ -36,6 +40,7 @@ function Root() {
 ReactDOM.render(
 	<React.StrictMode>
 		<Root />
+		{/* <AudioPlayer /> */}
 	</React.StrictMode>,
 	document.getElementById("root")
 );

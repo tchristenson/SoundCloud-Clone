@@ -23,11 +23,11 @@ function SongPage() {
       {songs?.map(({name,albumId, styleId, ownerId, runtime, coverImage, content, id})=>(
         <NavLink to={`/songs/${id}`} key={id}>
           <div className="playlogo"></div>
-          <div>{name}</div>
+          <div>Title: {name}</div>
           <div>user name ? (owner id):{ownerId} , style: {styleId}</div>
           <div>album name? album id: {albumId}</div>
           <div>wav thing</div>
-          <div>{coverImage}</div>
+          <img src={coverImage}/>
         </NavLink>
       ))}
     </div>
