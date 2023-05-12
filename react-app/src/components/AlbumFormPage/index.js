@@ -112,10 +112,14 @@ function AlbumFormPage() {
             </div>
 
             <div className="form-input-box">
-                <DragDropFiles />
+                <DragDropFiles
+                    name={name}
+                    coverImage={coverImage}
+                    style={style}
+                />
             </div>
 
-
+            <button type="submit">Create Album</button>
 
         </form>
     </div>

@@ -1,6 +1,6 @@
 import { useState, useRef } from "react";
 
-const DragDropFiles = () => {
+const DragDropFiles = ({name, coverImage, style}) => {
   const [files, setFiles] = useState(null)
   const inputRef = useRef()
 
@@ -59,7 +59,7 @@ const DragDropFiles = () => {
         </div>
 
       )}
-      <button type="submit">Create Album</button>
+
     </>
   )
 }
