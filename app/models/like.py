@@ -6,8 +6,8 @@ from sqlalchemy.schema import ForeignKey
 likes = db.Table(
     'likes',
     db.Model.metadata,
-    db.Column('owner_id', db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')), primary_key=True),
-    db.Column('song_id', db.Integer, db.ForeignKey(add_prefix_for_prod('songs.id')), primary_key=True)
+    db.Column('users', db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')), primary_key=True),
+    db.Column('songs', db.Integer, db.ForeignKey(add_prefix_for_prod('songs.id')), primary_key=True)
 )
 
 if environment == "production":

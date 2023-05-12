@@ -1,19 +1,22 @@
 """empty message
 
-Revision ID: 9f55274ad2f1
+Revision ID: 39f343cf1e3c
 Revises:
-Create Date: 2023-05-06 16:10:02.029512
+Create Date: 2023-05-11 15:15:56.954236
 
 """
 from alembic import op
 import sqlalchemy as sa
 
+
 import os
 environment = os.getenv("FLASK_ENV")
 SCHEMA = os.environ.get("SCHEMA")
 
+
+
 # revision identifiers, used by Alembic.
-revision = '9f55274ad2f1'
+revision = '39f343cf1e3c'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -50,7 +53,6 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('owner_id', sa.Integer(), nullable=True),
     sa.Column('name', sa.String(length=50), nullable=False),
-    sa.Column('total_runtime', sa.String(), nullable=True),
     sa.Column('style_id', sa.Integer(), nullable=True),
     sa.Column('cover_image', sa.String(), nullable=True),
     sa.ForeignKeyConstraint(['owner_id'], ['users.id'], ),
@@ -64,7 +66,6 @@ def upgrade():
     sa.Column('owner_id', sa.Integer(), nullable=True),
     sa.Column('album_id', sa.Integer(), nullable=True),
     sa.Column('name', sa.String(length=50), nullable=False),
-    sa.Column('runtime', sa.String(), nullable=True),
     sa.Column('style_id', sa.Integer(), nullable=True),
     sa.Column('cover_image', sa.String(), nullable=True),
     sa.Column('content', sa.String(), nullable=False),
@@ -76,16 +77,15 @@ def upgrade():
     if environment == "production":
         op.execute(f"ALTER TABLE songs SET SCHEMA {SCHEMA};")
     op.create_table('likes',
-    sa.Column('owner_id', sa.Integer(), nullable=False),
-    sa.Column('song_id', sa.Integer(), nullable=False),
-    sa.ForeignKeyConstraint(['owner_id'], ['users.id'], ),
-    sa.ForeignKeyConstraint(['song_id'], ['songs.id'], ),
-    sa.PrimaryKeyConstraint('owner_id', 'song_id')
+    sa.Column('users', sa.Integer(), nullable=False),
+    sa.Column('songs', sa.Integer(), nullable=False),
+    sa.ForeignKeyConstraint(['songs'], ['songs.id'], ),
+    sa.ForeignKeyConstraint(['users'], ['users.id'], ),
+    sa.PrimaryKeyConstraint('users', 'songs')
     )
     if environment == "production":
         op.execute(f"ALTER TABLE likes SET SCHEMA {SCHEMA};")
     # ### end Alembic commands ###
-
 
 
 def downgrade():
