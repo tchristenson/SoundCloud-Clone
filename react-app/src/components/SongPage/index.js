@@ -4,9 +4,12 @@ import { NavLink, Redirect } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { getAllSongsThunk } from "../../store/songs";
+import './SongPage.css'
+
 
 function SongPage() {
   const dispatch = useDispatch();
+  const [query, setQuery] = useState("")
 
   useEffect(() => {
     dispatch(getAllSongsThunk());
@@ -20,14 +23,29 @@ function SongPage() {
   }
   return (
     <div id="songPage">
-      {songs?.map(({name,albumId, styleId, ownerId, runtime, coverImage, content, id})=>(
+      <h1>Find Songs By Song Name</h1>
+      <input id="searchBar" placeholder="Enter Song Title" onChange={event => setQuery(event.target.value)}/>
+      {songs?.filter(song => {
+          if (query === '') {
+            return song;
+        } else if (song.name.toLowerCase().includes(query.toLocaleLowerCase())) {
+            return song
+        }
+      }).map(({name,albumId, styleId, ownerId, runtime, coverImage, content, id})=>(
         <NavLink to={`/songs/${id}`} key={id}>
-          <div className="playlogo"></div>
-          <div>Title: {name}</div>
-          <div>user name ? (owner id):{ownerId} , style: {styleId}</div>
-          <div>album name? album id: {albumId}</div>
-          <div>wav thing</div>
-          <img src={coverImage}/>
+          <div className="song-div">
+            <div className="song-picture-div">
+              <img className="song-picture" src={coverImage}/>
+            </div>
+
+            <div>
+              <div className="playlogo"></div>
+              <div className="song-name">Title: {name}</div>
+              <div>user name ? (owner id):{ownerId} , style: {styleId}</div>
+              <div>album name? album id: {albumId}</div>
+              <div>wav thing</div>
+            </div>
+          </div>
         </NavLink>
       ))}
     </div>
