@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { createAlbumThunk } from "../../store/albums"
-import { createSongThunk } from "../../store/songs";
+import { bulkCreateSongThunk } from "../../store/songs";
 
 
 function AlbumFormPage() {
@@ -60,22 +60,24 @@ function AlbumFormPage() {
     const newAlbum = await dispatch(createAlbumThunk(albumFormData))
     console.log('newAlbum after awaiting dispatch ---->', newAlbum)
 
-    const songFormData = new FormData()
 
     for (let i = 0; i < files.length; i++) {
-        console.log('newAlbum.coverImage', newAlbum.coverImage)
-        const currFile = files[i]
+        const songFormData = new FormData()
+        // console.log('newAlbum.coverImage', newAlbum.coverImage)
+        let currFile = files[i]
+        // console.log('currFile ------> ', currFile)
         songFormData.append('name', currFile.name)
         songFormData.append('content', currFile)
         songFormData.append('album_id', newAlbum.id)
         songFormData.append('cover_image', newAlbum.coverImage)
         songFormData.append('style_id', newAlbum.styleId)
-        for (let key of songFormData.entries()) {
-            console.log(key[0] + '----->' + key[1]);
-          }
 
-        const newSong = await dispatch(createSongThunk(songFormData))
-        console.log('newly created song ------>', newSong)
+        // for (let key of songFormData.entries()) {
+        //     console.log('Inside SongForm: ' + key[0] + '----->' + key[1]);
+        //   }
+
+        const newSong = await dispatch(bulkCreateSongThunk(songFormData))
+        // console.log('newly created song ------>', newSong)
     }
 
     setName('')
