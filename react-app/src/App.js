@@ -16,6 +16,7 @@ import SongFormPage from "./components/SongFormPage";
 import EditSongFormPage from "./components/EditSongForm";
 import AlbumFormPage from "./components/AlbumFormPage";
 import HomePage from "./components/HomePage";
+import EditAlbumFormPage from "./components/EditAlbumForm";
 
 function App() {
   const dispatch = useDispatch();
@@ -66,7 +67,11 @@ function App() {
             <AlbumPage />
           </Route>
           <Route exact path="/">
-            <HomePage /></Route>
+            <HomePage />
+          </Route>
+          <Route exact path="/albums/:albumId/edit">
+            <EditAlbumFormPage />
+          </Route>
         </Switch>
       )}
     </>

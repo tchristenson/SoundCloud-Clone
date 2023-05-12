@@ -1,52 +1,31 @@
-import SongFormPage from "../SongFormPage";
 import { useHistory, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { getOneSongThunk } from "../../store/songs";
-import { getCurrentUsersAlbumsThunk } from "../../store/albums";
-import { editSongThunk } from "../../store/songs";
+import { getOneAlbumThunk } from "../../store/albums";
+import { editAlbumThunk } from "../../store/albums";
 
-const EditSongFormPage = () => {
-  const {songId} = useParams()
+const EditAlbumFormPage = () => {
+  const {albumId} = useParams()
   const dispatch = useDispatch()
   const history = useHistory()
-  console.log('songId inside EditSongFormPage', songId)
 
-  const sessionUser = useSelector(state => state.session.user)
-  const song = useSelector(state => state.songs[songId])
-  console.log('song inside EditSongFormPage', song)
+  const album = useSelector(state => state.albums[albumId])
 
-  // if (!sessionUser || sessionUser.id != song.ownerId) {
-  //   history.push('/')
-  // }
-
-  const [name, setName] = useState('');
-  const [albums, setAlbums] = useState([]);
-  const [selectedAlbumId, setSelectedAlbumId] = useState('') // Need this to prefill the album dropdown with the current album
-  const [styleId, setStyleId] = useState(''); //Need this to prefill the style dropdown with the current album
-//   const [coverImage, setCoverImage] = useState('')
+  const [name, setName] = useState("");
+  const [styleId, setStyleId] = useState("");
   const [validationErrors, setValidationErrors] = useState([]);
   const [hasSubmitted, setHasSubmitted] = useState(false);
 
-  // Maybe this would be easier just with a use selector instead
-  // of an albums slice of state? Or add to the backend route to include albums when returning a song
   useEffect(() => {
-    dispatch(getCurrentUsersAlbumsThunk())
-    .then((data) => setAlbums(data))
-    console.log('albums inside of SongFormPage', albums)
-
-    dispatch(getOneSongThunk(songId))
-
-}, [dispatch])
+    dispatch(getOneAlbumThunk(albumId))
+  }, [dispatch])
 
   useEffect(() => {
-    if (song) {
-      setName(song.name)
-      setStyleId(song.styleId) // This isn't correctly filling in. Return album model with song from backend route?
-    //   setSelectedAlbumId(song.albumId)
-    //   setCoverImage(song.coverImage)
+    if (album) {
+      setName(album.name)
+      setStyleId(album.styleId)
     }
-  }, [song])
+  }, [album])
 
   useEffect(() => {
     const errors = [];
@@ -54,9 +33,9 @@ const EditSongFormPage = () => {
     if (!name) errors.push('Please enter a name!')
     if (!styleId) errors.push('Please enter a style!')
     setValidationErrors(errors)
-}, [name, styleId])
+  }, [name, styleId])
 
-  if (!song) return null
+  if (!album) return null
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -66,32 +45,23 @@ const EditSongFormPage = () => {
 
     const formData = new FormData()
     formData.append('name', name)
-    formData.append('album_id', +selectedAlbumId)
-    // formData.append('cover_image', coverImage)
     formData.append('style_id', styleId)
-    formData.append('id', song.id)
-    // formData.append('content', song.content)
+    formData.append('id', album.id)
 
-    for (let key of formData.entries()) {
-      console.log(key[0] + '----->' + key[1]);
-  }
+    const editedAlbum = await dispatch(editAlbumThunk(formData)) // Need to actually make this
 
-    const editedSong = await dispatch(editSongThunk(formData))
     setName('')
-    setAlbums([])
-    setSelectedAlbumId('')
     setStyleId('')
-    // setCoverImage('')
     setValidationErrors([])
     setHasSubmitted(false)
 
-    history.push(`/songs/${editedSong.id}`)
+    history.push(`/albums/${editedAlbum.id}`) // Comment this back in when complete
 
   }
 
   return (
     <div>
-        <h1>Update your Song</h1>
+        <h1>Update your Album</h1>
         {hasSubmitted && validationErrors.length > 0 && (
             <div>
                 <h2>The following errors were found:</h2>
@@ -107,7 +77,7 @@ const EditSongFormPage = () => {
             encType="multipart/form-data"
         >
             <div className="form-input-box">
-                <label>Song Name:</label>
+                <label>Album Name:</label>
                 <input
                     type="text"
                     onChange={(e) => setName(e.target.value)}
@@ -128,16 +98,7 @@ const EditSongFormPage = () => {
             </div> */}
 
             <div className="form-input-box">
-                <label>Album:</label>
-                <select value={selectedAlbumId} onChange={(e) => setSelectedAlbumId(e.target.value)}>
-                    {albums && albums.Albums && (albums.Albums.map(album => (
-                        <option key={album.id} value={album.id}>{album.name}</option>
-                    )))}
-                </select>
-            </div>
-
-            <div className="form-input-box">
-                <label>Song Style:</label>
+                <label>Album Style:</label>
                 <select required={true} onChange={(e) => setStyleId(e.target.value)}>
                     <option value="">{'(select one)'}</option>
                     <option value={1}>Reggae</option>
@@ -156,10 +117,11 @@ const EditSongFormPage = () => {
                 </select>
             </div>
 
-            <button type="submit">Update Song</button>
+            <button type="submit">Update Album</button>
         </form>
     </div>
 )
+
 }
 
-export default EditSongFormPage
+export default EditAlbumFormPage
