@@ -17,6 +17,7 @@ import EditSongFormPage from "./components/EditSongForm";
 import AlbumFormPage from "./components/AlbumFormPage";
 import HomePage from "./components/HomePage";
 import EditAlbumFormPage from "./components/EditAlbumForm";
+import UserSearchPage from "./components/UserSearchPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -35,6 +36,9 @@ function App() {
           </Route>
           <Route path="/signup">
             <SignupFormPage />
+          </Route>
+          <Route exact path="/users">
+            <UserSearchPage />
           </Route>
           <Route exact path="/users/:userId">
             <UserProfilePage />

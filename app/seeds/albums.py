@@ -4,19 +4,19 @@ from sqlalchemy.sql import text
 
 def seed_albums():
     album1 = Album(
-        name="album1", owner_id=1, style_id=1, cover_image="album1cvrimg"
+        name="album1", owner_id=1, style_id=1, cover_image="https://i.imgur.com/uJBQnxS.jpg"
     )
     album2 = Album(
-        name="album2", owner_id=2, style_id=2, cover_image="album2cvrimg"
+        name="album2", owner_id=2, style_id=2, cover_image="https://i.imgur.com/hKimbER.jpg"
     )
     album3 = Album(
-        name="album3", owner_id=3, style_id=3, cover_image="album3cvrimg"
+        name="album3", owner_id=3, style_id=3, cover_image="https://i.imgur.com/gXC0USv.jpg"
     )
     album4 = Album(
-        name="album4", owner_id=2, style_id=4, cover_image="album4cvrimg"
+        name="album4", owner_id=2, style_id=4, cover_image="https://i.imgur.com/fywlFjC.jpg"
     )
     album5 = Album(
-        name="album5", owner_id=1, style_id=5, cover_image="album5cvrimg"
+        name="album5", owner_id=1, style_id=5, cover_image="https://i.imgur.com/WulZkLi.jpg"
     )
 
     db.session.add(album1)
