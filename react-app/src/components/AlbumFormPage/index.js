@@ -12,7 +12,7 @@ function AlbumFormPage() {
 
   const [name, setName] = useState("");
   const [coverImage, setCoverImage] = useState("");
-  const [style, setStyle] = useState("");
+  const [styleId, setStyleId] = useState("");
   const [validationErrors, setValidationErrors] = useState([]);
   const [hasSubmitted, setHasSubmitted] = useState(false);
 
@@ -25,7 +25,7 @@ function AlbumFormPage() {
     const formData = new FormData()
     formData.append('name', name)
     formData.append('cover_image', coverImage)
-    formData.append('style', style)
+    formData.append('style_id', styleId)
 
     for (let key of formData.entries()) {
       console.log(key[0] + '----->' + key[1]);
@@ -35,7 +35,7 @@ function AlbumFormPage() {
 
     setName('')
     setCoverImage('')
-    setStyle('')
+    setStyleId('')
     setValidationErrors([])
     setHasSubmitted(false)
 
@@ -93,21 +93,21 @@ function AlbumFormPage() {
 
             <div className="form-input-box">
                 <label>Album Style:</label>
-                <select onChange={(e) => setStyle(e.target.value)}>
+                <select onChange={(e) => setStyleId(e.target.value)}>
                     <option value="">{'(select one)'}</option>
-                    <option value='reggae'>Reggae</option>
-                    <option value='rock'>Rock</option>
-                    <option value='punk'>Punk</option>
-                    <option value='pop'>Pop</option>
-                    <option value='electronic'>Electronic</option>
-                    <option value='jazz'>Jazz</option>
-                    <option value='blues'>Blues</option>
-                    <option value='country'>Country</option>
-                    <option value='metal'>Metal</option>
-                    <option value='folk'>Folk</option>
-                    <option value='funk'>Funk</option>
-                    <option value='soul'>Soul</option>
-                    <option value='classical'>Classical</option>
+                    <option value={1}>Reggae</option>
+                    <option value={2}>Rock</option>
+                    <option value={3}>Punk</option>
+                    <option value={4}>Pop</option>
+                    <option value={5}>Electronic</option>
+                    <option value={6}>Jazz</option>
+                    <option value={7}>Blues</option>
+                    <option value={8}>Country</option>
+                    <option value={9}>Metal</option>
+                    <option value={10}>Folk</option>
+                    <option value={11}>Funk</option>
+                    <option value={12}>Soul</option>
+                    <option value={13}>Classical</option>
 
                 </select>
             </div>
