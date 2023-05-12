@@ -4,6 +4,7 @@ const GET_SONG = "/GET_SONG";
 const CREATE_SONG = "/CREATE_SONG";
 const DELETE_SONG = "/DELETE_SONG";
 const EDIT_SONG = "/EDIT_SONG"
+const BULK_CREATE_SONGS = '/BULK_CREATE_SONGS'
 
 const getAllSongsAction = (songs) => {
   return {
@@ -42,6 +43,13 @@ const createSongAction = (song) => {
 const editSongAction = (song) => {
   return {
     type: EDIT_SONG,
+    song
+  }
+}
+
+const bulkCreateSongAction = (song) => {
+  return {
+    type: BULK_CREATE_SONGS,
     song
   }
 }
@@ -130,6 +138,25 @@ export const editSongThunk = (song) => async (dispatch) => {
   }
 }
 
+export const bulkCreateSongThunk = (song) => async (dispatch) => {
+  // for (let key of song.entries()) {
+  //   console.log('Inside Thunk: ', key[0] + '----->' + key[1]);
+  // }
+  const response = await fetch('/api/songs/bulk', {
+    method: "POST",
+    body: song
+  });
+  // console.log('response inside of bulkCreateSongThunk', response)
+  if (response.ok) {
+    const song = await response.json();
+    // console.log('response.json() from backend', song)
+    dispatch(bulkCreateSongAction(song));
+    return song;
+  } else {
+    return ("bulk create songs: response not ok");
+  }
+};
+
 const initState = {};
 function songReducer(state = initState, action) {
   let newState;
@@ -164,7 +191,13 @@ function songReducer(state = initState, action) {
     case EDIT_SONG:
       newState = {...state};
       console.log('action.song inside EDIT_SONG Reducer', action.song)
-      newState[action.song.id] = action.song;
+      newState[action.song.id] = action.song
+      return newState;
+    case BULK_CREATE_SONGS:
+      newState = {...state}
+      // console.log('action.song inside BULK_CREATE_SONG Reducer', action.song)
+      newState[action.song.id] = action.song
+      return newState;
     default:
       return state;
   }
