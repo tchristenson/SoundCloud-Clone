@@ -23,7 +23,7 @@ const EditSongFormPage = () => {
   const [name, setName] = useState('');
   const [albums, setAlbums] = useState([]);
   const [selectedAlbumId, setSelectedAlbumId] = useState('') // Need this to prefill the album dropdown with the current album
-  const [style, setStyle] = useState(''); //Need this to prefill the style dropdown with the current album
+  const [styleId, setStyleId] = useState(''); //Need this to prefill the style dropdown with the current album
 //   const [coverImage, setCoverImage] = useState('')
   const [validationErrors, setValidationErrors] = useState([]);
   const [hasSubmitted, setHasSubmitted] = useState(false);
@@ -42,7 +42,7 @@ const EditSongFormPage = () => {
   useEffect(() => {
     if (song) {
       setName(song.name)
-      setStyle(song.styleId) // This isn't correctly filling in. Return album model with song from backend route?
+      setStyleId(song.styleId) // This isn't correctly filling in. Return album model with song from backend route?
     //   setSelectedAlbumId(song.albumId)
     //   setCoverImage(song.coverImage)
     }
@@ -52,9 +52,9 @@ const EditSongFormPage = () => {
     const errors = [];
     // Only adding to the validation errors for fields that are nullable=False in the Song model
     if (!name) errors.push('Please enter a name!')
-    if (!style) errors.push('Please enter a style!')
+    if (!styleId) errors.push('Please enter a style!')
     setValidationErrors(errors)
-}, [name, style])
+}, [name, styleId])
 
   if (!song) return null
 
@@ -68,7 +68,7 @@ const EditSongFormPage = () => {
     formData.append('name', name)
     formData.append('album_id', +selectedAlbumId)
     // formData.append('cover_image', coverImage)
-    formData.append('style', style)
+    formData.append('style_id', styleId)
     formData.append('id', song.id)
     // formData.append('content', song.content)
 
@@ -80,7 +80,7 @@ const EditSongFormPage = () => {
     setName('')
     setAlbums([])
     setSelectedAlbumId('')
-    setStyle('')
+    setStyleId('')
     // setCoverImage('')
     setValidationErrors([])
     setHasSubmitted(false)
@@ -138,21 +138,21 @@ const EditSongFormPage = () => {
 
             <div className="form-input-box">
                 <label>Song Style:</label>
-                <select required={true} onChange={(e) => setStyle(e.target.value)}>
+                <select required={true} onChange={(e) => setStyleId(e.target.value)}>
                     <option value="">{'(select one)'}</option>
-                    <option value='reggae'>Reggae</option>
-                    <option value='rock'>Rock</option>
-                    <option value='punk'>Punk</option>
-                    <option value='pop'>Pop</option>
-                    <option value='electronic'>Electronic</option>
-                    <option value='jazz'>Jazz</option>
-                    <option value='blues'>Blues</option>
-                    <option value='country'>Country</option>
-                    <option value='metal'>Metal</option>
-                    <option value='folk'>Folk</option>
-                    <option value='funk'>Funk</option>
-                    <option value='soul'>Soul</option>
-                    <option value='classical'>Classical</option>
+                    <option value={1}>Reggae</option>
+                    <option value={2}>Rock</option>
+                    <option value={3}>Punk</option>
+                    <option value={4}>Pop</option>
+                    <option value={5}>Electronic</option>
+                    <option value={6}>Jazz</option>
+                    <option value={7}>Blues</option>
+                    <option value={8}>Country</option>
+                    <option value={9}>Metal</option>
+                    <option value={10}>Folk</option>
+                    <option value={11}>Funk</option>
+                    <option value={12}>Soul</option>
+                    <option value={13}>Classical</option>
                 </select>
             </div>
 

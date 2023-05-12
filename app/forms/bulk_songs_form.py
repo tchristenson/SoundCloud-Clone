@@ -19,10 +19,11 @@ def song_exists(form, field):
     if song:
         raise ValidationError('This song already exists!')
 
-class EditSong(FlaskForm):
+class BulkSongs(FlaskForm):
     name = StringField("Song Name", validators=[DataRequired()])
     # runtime = StringField("Run Time")
-    # cover_image = FileField("Cover Image", validators=[FileRequired(), FileAllowed(list(ALLOWED_IMAGE_EXTENSIONS))])
+    cover_image = StringField("Cover Image", validators=[DataRequired()])
+    content = FileField("Content", validators=[FileRequired(), FileAllowed(list(ALLOWED_SONG_EXTENSIONS))])
     album_id = SelectField("Album", choices=[], validate_choice=False)
     style_id = SelectField("Style", validators=[DataRequired()], choices=[(1, "Reggae"), (2, "Rock"),
                                           (3, "Punk"), (4, "Pop"),

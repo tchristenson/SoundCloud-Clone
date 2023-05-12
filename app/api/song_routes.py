@@ -3,6 +3,7 @@ from app.models import Song, Style
 from flask_login import current_user, login_required, current_user
 from ..forms.song_form import NewSong
 from ..forms.edit_song_form import EditSong
+from ..forms.bulk_songs_form import BulkSongs
 from ..models import db
 from ..api.aws_song_helpers import get_unique_song_filename, upload_song_file_to_s3
 from ..api.aws_image_helpers import get_unique_image_filename, upload_image_file_to_s3
@@ -47,11 +48,12 @@ def add_song():
     form['csrf_token'].data = request.cookies['csrf_token']
 
 
-    print("form.data ======>>", form.data)
+    print("form.data inside New Song route ======>>", form.data)
+    print("request.files ======>", request.files)
 
     if form.validate_on_submit():
-        style_name = form.data['style']
-        style_instance = (Style.query.filter(Style.genre == style_name)).first().to_dict()
+        # style_name = form.data['style']
+        # style_instance = (Style.query.filter(Style.genre == style_name)).first().to_dict()
 
         cover_image = form.data["cover_image"]
         cover_image.filename = get_unique_image_filename(cover_image.filename)
@@ -74,7 +76,7 @@ def add_song():
                         cover_image = image_upload["url"],
                         content = audio_upload["url"],
                         album_id = form.data['album_id'],
-                        style_id = style_instance['id'])
+                        style_id = form.data['style_id'])
         print("song here look belive me ===> :", song)
         db.session.add(song)
         db.session.commit()
@@ -113,19 +115,70 @@ def edit_song(id):
     print("form.data ======>>", form.data)
 
     if form.validate_on_submit():
-        style_name = form.data['style']
-        print("style_name =========>  :", style_name)
-        print("Style.genre =========>  :", Style.genre)
-        style_instance = (Style.query.filter(Style.genre == style_name)).first().to_dict()
+        # style_name = form.data['style']
+        # print("style_name =========>  :", style_name)
+        # print("Style.genre =========>  :", Style.genre)
+        # style_instance = (Style.query.filter(Style.genre == style_name)).first().to_dict()
 
         song.name = form.data['name']
         song.album_id = form.data['album_id']
-        song.style_id = style_instance['id']
+        song.style_id = form.data['style_id']
         # song.cover_image = image_upload["url"]
         # song.content = audio_upload["url"]
         # db.session.add(song)
         db.session.commit()
         print('song printing inside of validate on submit route ======>>', song.to_dict())
+        return song.to_dict()
+
+
+    return { "errors": form.errors}
+
+@song_routes.route('/bulk', methods = ['POST'])
+@login_required
+def add_bulk_songs():
+    """Handles displaying a new post form on get requests and validating submitted data for songs posts"""
+
+    # Reference line below when considering how to display the user's albums. We may need to set choices to an
+    # empty list to start, then query the Album model and fill it only where the Album's user_id matches
+    # the current user's id
+    # form.author.choices = [(user.id, user.username) for user in User.query.all()]
+
+    form = BulkSongs()
+    form['csrf_token'].data = request.cookies['csrf_token']
+
+
+    print("form.data inside Bulk Songs route ======>>", form.data)
+    print("request.files ======>", request.files)
+
+    if form.validate_on_submit():
+        # style_name = form.data['style']
+        # style_instance = (Style.query.filter(Style.genre == style_name)).first().to_dict()
+
+        # cover_image = form.data["cover_image"]
+        # cover_image.filename = get_unique_image_filename(cover_image.filename)
+        # image_upload = upload_image_file_to_s3(cover_image)
+
+        # print("=========> upload data here get y IMAGE :", image_upload)
+        content = form.data["content"]
+        content.filename = get_unique_song_filename(content.filename)
+        audio_upload = upload_song_file_to_s3(content)
+
+        print("=========> upload data here get y AUDIO :", audio_upload["url"])
+
+        # if "url" not in audio_upload:
+        #     return { "errors": form.errors}
+        # if "url" not in image_upload:
+        #     return { "errors": form.errors}
+
+        song= Song(name = form.data['name'],
+                        owner_id = current_user.id,
+                        cover_image = form.data["cover_image"],
+                        content = audio_upload["url"],
+                        album_id = form.data['album_id'],
+                        style_id = form.data['style_id'])
+        print("song here look belive me ===> :", song)
+        db.session.add(song)
+        db.session.commit()
         return song.to_dict()
 
 

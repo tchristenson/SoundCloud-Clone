@@ -25,9 +25,9 @@ class NewSong(FlaskForm):
     cover_image = FileField("Cover Image", validators=[FileRequired(), FileAllowed(list(ALLOWED_IMAGE_EXTENSIONS))])
     content = FileField("Content", validators=[FileRequired(), FileAllowed(list(ALLOWED_SONG_EXTENSIONS))])
     album_id = SelectField("Album", choices=[], validate_choice=False)
-    style = SelectField("Style", validators=[DataRequired()], choices=[('reggae', "Reggae"), ('rock', "Rock"),
-                                          ('punk', "Punk"), ('pop', "Pop"),
-                                          ('electronic', "Electronic"), ('jazz', "Jazz"), ('blues', "Blues"),
-                                          ('country', "Country"), ('metal', "Metal"), ('folk', "Folk"),
-                                          ('funk', "Funk"), ('soul', "Soul"),
-                                          ('classical', "Classical")])
+    style_id = SelectField("Style", validators=[DataRequired()], choices=[(1, "Reggae"), (2, "Rock"),
+                                          (3, "Punk"), (4, "Pop"),
+                                          (5, "Electronic"), (6, "Jazz"), (7, "Blues"),
+                                          (8, "Country"), (9, "Metal"), (10, "Folk"),
+                                          (11, "Funk"), (12, "Soul"),
+                                          (13, "Classical")])
