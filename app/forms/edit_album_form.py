@@ -11,9 +11,8 @@ def album_exists(form, field):
     if album:
         raise ValidationError('This album already exists!')
 
-class NewAlbum(FlaskForm):
+class EditAlbum(FlaskForm):
     name = StringField("Album Name", validators=[DataRequired()])
-    cover_image = FileField("Cover Image", validators=[FileRequired(), FileAllowed(list(ALLOWED_IMAGE_EXTENSIONS))])
     style_id = SelectField("Style", validators=[DataRequired()], choices=[(1, "Reggae"), (2, "Rock"),
                                           (3, "Punk"), (4, "Pop"),
                                           (5, "Electronic"), (6, "Jazz"), (7, "Blues"),
