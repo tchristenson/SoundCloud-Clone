@@ -17,12 +17,23 @@ function AlbumPage() {
 
   const album = useSelector(state => state.albums[albumId]);
 
+  console.log('album ', album);
+
   if (!album) return null;
 
   return (
     <div>
       <h1>This is the AlbumPage Component</h1>
+      <div>
+        <img src={album.coverImage} />
+      </div>
+      
       <div>{album.name}</div>
+
+      <div>
+        <h2>Songs</h2>
+      </div>
+
       {sessionUser && sessionUser.id === album.ownerId && (
         <OpenModalButton buttonText="Delete Album" modalComponent={<AlbumDeleteModal albumId = {albumId}/>} />
       )}
