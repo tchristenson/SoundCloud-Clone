@@ -80,6 +80,9 @@ function App() {
           <Route exact path="/albums/:albumId/edit">
             <EditAlbumFormPage />
           </Route>
+          <Route>
+            Page Not Found
+          </Route>
         </Switch>
       )}
     </>
