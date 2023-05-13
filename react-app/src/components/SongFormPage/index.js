@@ -23,8 +23,8 @@ function SongFormPage() {
     const [name, setName] = useState("");
     const [content, setContent] = useState("");
     const [albums, setAlbums] = useState([]);
-    const [selectedAlbumId, setSelectedAlbumId] = useState("") // Need to find a way to set this to the album name via redux or prop threading/context
-    const [styleId, setStyleId] = useState(""); // Need to find a way to set this to the style name via redux or prop threading/context
+    const [selectedAlbumId, setSelectedAlbumId] = useState(0) // Need to find a way to set this to the album name via redux or prop threading/context
+    const [styleId, setStyleId] = useState(0); // Need to find a way to set this to the style name via redux or prop threading/context
     const [coverImage, setCoverImage] = useState("")
     const [validationErrors, setValidationErrors] = useState([]);
     const [hasSubmitted, setHasSubmitted] = useState(false);
@@ -67,8 +67,9 @@ function SongFormPage() {
         if (!content) errors.push('Please provide an audio file!')
         if (!coverImage) errors.push('Please provide an image file!')
         if (!styleId) errors.push('Please enter a style!')
+        if (!selectedAlbumId) errors.push('Please enter album details!')
         setValidationErrors(errors)
-    }, [name, content, styleId, coverImage])
+    }, [name, content, styleId, coverImage, selectedAlbumId])
 
     return (
         <div className="newSongForm">
@@ -128,8 +129,10 @@ function SongFormPage() {
 
                 <div className="form-input-box">
                     <label>Album:</label>
-                    <select value={selectedAlbumId} onChange={(e) => setSelectedAlbumId(e.target.value)}>
-                        {albums && albums.Albums && (albums.Albums.map(album => (
+                    <select required={true} value={selectedAlbumId} onChange={(e) => setSelectedAlbumId(e.target.value)}>
+                        <option value="">{'(select one)'}</option>
+                        <option key={null} value={null}>{`No Album`}</option>
+                        {albums && albums.Albums && (albums.Albums.map((album, idx) => (
                             <option key={album.id} value={album.id}>{album.name}</option>
                         )))}
                     </select>
@@ -138,7 +141,7 @@ function SongFormPage() {
                 <div className="form-input-box">
                     <label>Song Style:</label>
                     <select required={true} onChange={(e) => setStyleId(e.target.value)}>
-                        <option value="">{'(select one)'}</option>
+                        <option value={0}>{'(select one)'}</option>
                         <option value={1}>Reggae</option>
                         <option value={2}>Rock</option>
                         <option value={3}>Punk</option>
