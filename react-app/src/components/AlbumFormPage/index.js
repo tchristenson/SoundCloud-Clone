@@ -103,6 +103,11 @@ function AlbumFormPage() {
   return (
     <div>
         <h1>Create a New Album</h1>
+              <p>Note: The drag and drop feature is in process, so to create an album with
+        songs on it you must select multiple song files at once and drag them onto the
+         div tag that says "Drag and Drop Songs to Upload". You cannot drag and drop songs one by one
+         and the songs cannot be inside of a folder. But as long as you  drop multiple files all together, the songs
+         should simultaneously be created when creating the album. An actual song-length audio file could take a couple minutes  </p>
         {hasSubmitted && validationErrors.length > 0 && (
             <div>
                 <h2>The following errors were found:</h2>

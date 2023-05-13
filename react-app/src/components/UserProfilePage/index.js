@@ -22,11 +22,11 @@ function UserProfilePage() {
 
   return (
     <>
-      <h1>Testing</h1>
+      <h1>{user.alias}'s Profile Page</h1>
 
       <div>
         {" "}
-        <div>{user.profileImage} </div>
+        <img src={user.profileImage}/>
         <p>{user.username}</p>
         <div>
           {user.firstName} {user.lastName}
