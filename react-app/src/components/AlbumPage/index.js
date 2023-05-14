@@ -33,7 +33,7 @@ function AlbumPage() {
 
   return (
     <div className="album-page-div">
-      <h1>{album.name}</h1>
+      <h1 className="album-name-header">{album.name}</h1>
 
       <div className="album-details-1">
         <div className="album-page-pic-div">
@@ -48,7 +48,7 @@ function AlbumPage() {
       </div>
 
       <div>
-        <h2>Songs</h2>
+        <h2 className="album-song-header">Songs in {album.name}</h2>
         <div className="album-songs-div">
           {albumSongs?.map(({name, albumId, styleId, ownerId, coverImage, id}) => (
             <NavLink to={`/songs/${id}`} key={id}>
@@ -56,7 +56,7 @@ function AlbumPage() {
                 <div className="album-song-pic-div">
                   <img className="album-song-pic" src={coverImage} />
                 </div>
-                <div>{name}</div>
+                <div className="album-song-name">{name}</div>
               </div>
             </NavLink>
           ))}
@@ -64,7 +64,12 @@ function AlbumPage() {
       </div>
 
       {sessionUser && sessionUser.id === album.ownerId && (
-        <OpenModalButton buttonText="Delete Album" modalComponent={<AlbumDeleteModal albumId = {albumId}/>} />
+        <div className="album-user-settings">
+          <h2 className="album-user-settings-header">Album Settings</h2>
+          <div className="album-user-settings-ui">
+            <OpenModalButton buttonClass="album-user-settings-del" buttonText="Delete Album" modalComponent={<AlbumDeleteModal albumId = {albumId}/>} />
+          </div>
+        </div>
       )}
     </div>
   )
