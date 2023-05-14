@@ -75,9 +75,9 @@ function HomePage() {
               <p>{name}</p>
                 </a>
               </div>
-              <div></div>
+              <div>{songUsers2[id - 1]}</div>
             </div>
-          
+
         ))}{" "}
       </div>
       {sessionUser ? <a href={`/songs`}><button>Explore trending playlists</button> </a> : <OpenModalButton buttonText="Explore trending playlists" onItemClick="" modalComponent={<LoginFormModal />} />}

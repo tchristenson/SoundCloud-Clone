@@ -41,9 +41,6 @@ function SongPage() {
   }
   return (
     <div id="songPage">
-<<<<<<< HEAD
-      {songs?.map(({name,albumId, styleId, ownerId, runtime, coverImage, content, id, likes})=>(
-=======
       <h1>Find Songs By Song Name</h1>
       <input id="searchBar" placeholder="Enter Song Title" onChange={event => setQuery(event.target.value)}/>
       {songs?.filter(song => {
@@ -55,7 +52,6 @@ function SongPage() {
            // return song
         //}
       }).map(({name,albumId, styleId, ownerId, runtime, coverImage, content, id})=>(
->>>>>>> dev
         <NavLink to={`/songs/${id}`} key={id}>
           <div className="song-div">
             <div className="song-picture-div">
