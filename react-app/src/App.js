@@ -18,6 +18,7 @@ import AlbumFormPage from "./components/AlbumFormPage";
 import HomePage from "./components/HomePage";
 import EditAlbumFormPage from "./components/EditAlbumForm";
 import UserSearchPage from "./components/UserSearchPage";
+import UsersPlaylistPage from "./components/UserPlaylist";
 
 function App() {
   const dispatch = useDispatch();
@@ -70,11 +71,17 @@ function App() {
           <Route exact path="/albums/:albumId">
             <AlbumPage />
           </Route>
+          <Route exact path="/playlists/current">
+            <UsersPlaylistPage />
+          </Route>
           <Route exact path="/">
             <HomePage />
           </Route>
           <Route exact path="/albums/:albumId/edit">
             <EditAlbumFormPage />
+          </Route>
+          <Route>
+            Page Not Found
           </Route>
         </Switch>
       )}
