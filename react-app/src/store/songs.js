@@ -5,7 +5,7 @@ const CREATE_SONG = "/CREATE_SONG";
 const DELETE_SONG = "/DELETE_SONG";
 const EDIT_SONG = "/EDIT_SONG"
 const BULK_CREATE_SONGS = '/BULK_CREATE_SONGS'
-const ADD_SONG_TO_PLAYLIST = '/ADD_SONG_TO_PLAYLIST'
+// const ADD_SONG_TO_PLAYLIST = '/ADD_SONG_TO_PLAYLIST'
 const ADD_LIKE_TO_SONG = '/ADD_LIKE_TO_SONG'
 const DELETE_LIKE_FROM_SONG = '/DELETE_LIKE_FROM_SONG'
 
@@ -72,28 +72,28 @@ const bulkCreateSongAction = (song) => {
   }
 }
 
-const addSongToPlaylistAction = (song) => {
-  return {
-    type: ADD_SONG_TO_PLAYLIST,
-    song
-  }
-}
+// const addSongToPlaylistAction = (song) => {
+//   return {
+//     type: ADD_SONG_TO_PLAYLIST,
+//     song
+//   }
+// }
 
 
-export const addSongToPlaylistThunk = (playlistId, songId) => async (dispatch) => {
-  const response = await fetch(`/api/playlists/${playlistId}/new_song/${songId}`, {
-    method: "PUT",
-    body: playlistId, songId
-  });
-  if (response.ok) {
-    const song = await response.json()
-    dispatch(addSongToPlaylistAction(song))
-    return song
-  } else {
-    return 'addSongToPlaylist response not ok!!!!!!!!!!!!'
-  }
+// export const addSongToPlaylistThunk = (playlistId, songId) => async (dispatch) => {
+//   const response = await fetch(`/api/playlists/${playlistId}/new_song/${songId}`, {
+//     method: "PUT",
+//     body: playlistId, songId
+//   });
+//   if (response.ok) {
+//     const song = await response.json()
+//     dispatch(addSongToPlaylistAction(song))
+//     return song
+//   } else {
+//     return 'addSongToPlaylist response not ok!!!!!!!!!!!!'
+//   }
 
-}
+// }
 
 export const getAllSongsThunk = () => async (dispatch) => {
   const response = await fetch("/api/songs");

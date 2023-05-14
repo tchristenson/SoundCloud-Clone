@@ -3,7 +3,7 @@ from .users import seed_users, undo_users
 from .styles import seed_styles, undo_styles
 from .albums import seed_albums, undo_albums
 from .songs import seed_songs, undo_songs
-from .playlists import seed_playlists, undo_playlists
+# from .playlists import seed_playlists, undo_playlists
 # from .likes import seed_likes, undo_likes
 from app.models.db import db, environment, SCHEMA
 
@@ -21,7 +21,7 @@ def seed():
         # the schema name (see comment in users.py undo_users function).
         # Make sure to add all your other model's undo functions below
         # undo_likes()
-        undo_playlists()
+        # undo_playlists()
         undo_songs()
         undo_albums()
         undo_users()
@@ -32,7 +32,7 @@ def seed():
     seed_albums()
     # seed_songs(all_users)
     seed_songs()
-    seed_playlists()
+    # seed_playlists()
     # seed_likes()
     # Add other seed functions here
 
@@ -41,7 +41,7 @@ def seed():
 @seed_commands.command('undo')
 def undo():
     # undo_likes()
-    undo_playlists()
+    # undo_playlists()
     undo_songs()
     undo_albums()
     undo_users()

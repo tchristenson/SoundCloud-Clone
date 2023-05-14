@@ -17,7 +17,7 @@ class Song(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     owner_id = db.Column(db.Integer, ForeignKey(add_prefix_for_prod('users.id')))
     album_id = db.Column(db.Integer, ForeignKey(add_prefix_for_prod('albums.id')))
-    playlist_id = db.Column(db.PickleType(), ForeignKey(add_prefix_for_prod('playlists.id')))
+    # playlist_id = db.Column(db.PickleType(), ForeignKey(add_prefix_for_prod('playlists.id')))
     name = db.Column(db.String(50), nullable=False)
     # runtime = db.Column(db.String) # Undecided on datatype. Date, datetime, or integer?
     style_id = db.Column(db.Integer, ForeignKey(add_prefix_for_prod('styles.id')))
@@ -26,7 +26,7 @@ class Song(db.Model):
 
     owner = db.relationship('User', back_populates='songs')
     album = db.relationship('Album', back_populates='songs')
-    playlist = db.relationship('Playlist', back_populates='songs')
+    # playlist = db.relationship('Playlist', back_populates='songs')
     style = db.relationship('Style', back_populates='songs')
 
     user_likes = db.relationship('User', secondary=likes, back_populates='song_likes')
@@ -48,10 +48,10 @@ class Song(db.Model):
         else:
             data['albumId'] = None
 
-        if self.playlist_id:
-            data['playlistId'] = self.playlist_id
-        else:
-            data['playlistId'] = None
+        # if self.playlist_id:
+        #     data['playlistId'] = self.playlist_id
+        # else:
+        #     data['playlistId'] = None
 
 
         return data
