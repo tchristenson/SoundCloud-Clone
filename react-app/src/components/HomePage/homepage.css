@@ -17,7 +17,7 @@ border : 2px solid black;
 
 gap: 20px;
 flex-flow: row wrap;
-flex: 200px;
+flex: 2 1 auto;
 
 
 
@@ -28,15 +28,22 @@ flex: 200px;
 
 
  #homePageStyle{
+     display: block;
+     flex: 2 5 auto;
+
 
 }
 
 .songDiv{
-border: 2px solid green;
+background-color: white;
 display: flex;
-justify-items: space-around;
-width: fit-content;
-height: fit-content;
+align-items: flex-start;
+text-align: center;
+
+
+
+
+
 
 }
 
@@ -55,6 +62,7 @@ padding: 20px;
 .songImage{
 width: 7.5rem;
 height: 7.5rem;
+
 }
 
 footer{
