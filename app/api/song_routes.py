@@ -20,20 +20,6 @@ def songs():
     return {'songs': [song.to_dict() for song in songs]}
 
 
-@song_routes.route('/<int:id>/new_playlist')
-def add_to_playlist(id):
-    """Query for adding a song to playlist"""
-    song = Song.query.get(id)
-    
-    if not song:
-        return {'errors': "Song doesn't exist"}
-
-
-
-
-    return song.to_dict()
-
-
 
 
 

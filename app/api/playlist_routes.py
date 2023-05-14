@@ -1,9 +1,38 @@
 from flask import Blueprint, request
-from ..models import Playlist, db
+from ..models import Playlist, db, Song
 from flask_login import current_user, login_required
 from ..forms.playlist_form import NewPlaylist
 
 playlist_routes = Blueprint('playlists', __name__)
+
+
+@playlist_routes.route('/<int:playlist_id>/new_song/<int:song_id>', methods=["PUT"])
+def add_to_playlist(playlist_id, song_id):
+    """Query for adding a song to playlist"""
+    song = Song.query.get(song_id)
+    print("==========================>>>>>>>>>>>>>>>>>", song.playlist_id)
+
+    if not song:
+        return {'errors': "Song doesn't exist"}
+    # playlist = Playlist.query.get(playlist_id)
+    song.playlist_id = song.playlist_id or []
+
+    if playlist_id not in list(song.playlist_id):
+        if playlist_id is None:
+            song.playlist_id = playlist_id
+        # if len(song.playlist_id) > 1:
+        #     song.playlist_id.append(playlist_id)
+        else:
+            song.playlist_id.append(playlist_id)
+        db.session.commit()
+    else:
+        return "Song already in playlist"
+
+    return song.to_dict()
+
+
+
+
 
 @playlist_routes.route('')
 def get_all_playlists():

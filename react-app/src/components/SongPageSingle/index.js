@@ -40,6 +40,7 @@ function SongPageSingle() {
       <div>album name? album id: {song?.albumId}</div>
       <div>wav thing</div>
       <div>{song?.coverImage}</div>
+    
 
       {sessionUser && sessionUser.id === song.ownerId && (
         <OpenModalButton buttonText="Delete Song" modalComponent={<SongDeleteModal songId = {songId}/>} />

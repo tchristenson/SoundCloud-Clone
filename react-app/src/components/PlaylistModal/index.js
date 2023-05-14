@@ -1,5 +1,8 @@
 import { useModal } from "../../context/Modal"
 import { useState } from "react"
+import { useDispatch } from "react-redux";
+
+import { addSongToPlaylistThunk } from "../../store/songs"
 
 
 
@@ -9,20 +12,19 @@ import { useState } from "react"
 
 
 function PlaylistModal({ playlists, song }) {
+    const dispatch = useDispatch()
     const [playlistId, setPlaylistId] = useState(0)
 
     console.log('playlistmodal playlists', playlists)
     const { closeModal } = useModal()
 
     const addToPlaylist = async (e, playlistId) => {
-        e.preventDefault()
-        console.log(playlistId)
-
-
-
-
-
-
+        e.preventDefault();
+        console.log(playlistId);
+        const playlistUpdate = await dispatch(addSongToPlaylistThunk(playlistId, song.id));
+        if(playlistUpdate){
+            closeModal()
+        }
     }
 
 

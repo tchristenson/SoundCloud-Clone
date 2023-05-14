@@ -1,6 +1,7 @@
 const GET_USER_PLAYLISTS = 'playlists/GET_USER_PLAYLISTS'
 const CREATE_PLAYLIST = 'playlist/CREATE_PLAYLIST'
 
+
 const getUserplaylistsAction = (playlists) => {
     return {
       type: GET_USER_PLAYLISTS,
@@ -14,6 +15,9 @@ const getUserplaylistsAction = (playlists) => {
       playlist
     }
   }
+
+
+
 
 
 export const getCurrentUsersPlaylistsThunk = () => async (dispatch) => {

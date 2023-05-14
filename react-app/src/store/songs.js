@@ -5,6 +5,7 @@ const CREATE_SONG = "/CREATE_SONG";
 const DELETE_SONG = "/DELETE_SONG";
 const EDIT_SONG = "/EDIT_SONG"
 const BULK_CREATE_SONGS = '/BULK_CREATE_SONGS'
+const ADD_SONG_TO_PLAYLIST = '/ADD_SONG_TO_PLAYLIST'
 
 const getAllSongsAction = (songs) => {
   return {
@@ -54,6 +55,29 @@ const bulkCreateSongAction = (song) => {
   }
 }
 
+const addSongToPlaylistAction = (song) => {
+  return {
+    type: ADD_SONG_TO_PLAYLIST,
+    song
+  }
+}
+
+
+export const addSongToPlaylistThunk = (playlistId, songId) => async (dispatch) => {
+  const response = await fetch(`/api/playlists/${playlistId}/new_song/${songId}`, {
+    method: "PUT",
+    body: playlistId, songId
+  });
+  if (response.ok) {
+    const song = await response.json()
+    dispatch(addSongToPlaylistAction(song))
+    return song
+  } else {
+    return 'addSongToPlaylist response not ok!!!!!!!!!!!!'
+  }
+
+}
+
 export const getAllSongsThunk = () => async (dispatch) => {
   const response = await fetch("/api/songs");
   console.log("response", response);
@@ -82,8 +106,8 @@ export const getOneSongThunk = (songId) => async (dispatch) => {
 export const getCurrentUsersSongsThunk = () => async (dispatch) => {
   const response = await fetch(`/api/songs/current`)
 
-  if(response.ok) {
-    const {songs} = await response.json()
+  if (response.ok) {
+    const { songs } = await response.json()
     dispatch(getAllSongsAction2(songs))
   } else {
     return ("get current user songs: response not ok")
@@ -99,7 +123,7 @@ export const createSongThunk = (song) => async (dispatch) => {
   console.log('response inside of createSongThunk', response)
   if (response.ok) {
     const song = await response.json();
-    console.log('newSong inside of createSongThunk',song)
+    console.log('newSong inside of createSongThunk', song)
     dispatch(createSongAction(song));
     return song;
   } else {
@@ -114,7 +138,7 @@ export const deleteOneSongThunk = (songId) => async (dispatch) => {
   });
   if (res.ok) {
     dispatch(deleteOneSongAction(songId));
-    return {'message': 'delete successful'};
+    return { 'message': 'delete successful' };
   } else {
     return ("Song couldnt be deleted")
   }
@@ -180,22 +204,27 @@ function songReducer(state = initState, action) {
       });
       return newState;
     case DELETE_SONG:
-      newState = {...state}
+      newState = { ...state }
       delete newState[action.songId]
       return newState
     case CREATE_SONG:
-      newState = {...state}
+      newState = { ...state }
       console.log('action.song inside CREATE_SONG Reducer', action.song)
       newState[action.song.id] = action.song
       return newState;
     case EDIT_SONG:
-      newState = {...state};
+      newState = { ...state };
       console.log('action.song inside EDIT_SONG Reducer', action.song)
       newState[action.song.id] = action.song
       return newState;
     case BULK_CREATE_SONGS:
-      newState = {...state}
+      newState = { ...state }
       // console.log('action.song inside BULK_CREATE_SONG Reducer', action.song)
+      newState[action.song.id] = action.song
+      return newState;
+    case ADD_SONG_TO_PLAYLIST:
+      newState = { ...state };
+      console.log('action.song inside EDIT_SONG Reducer', action.song)
       newState[action.song.id] = action.song
       return newState;
     default:
