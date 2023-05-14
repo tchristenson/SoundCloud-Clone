@@ -33,7 +33,7 @@ class User(db.Model, UserMixin):
     playlists = db.relationship('Playlist', back_populates='owner')
 
 
-    # user_likes = db.relationship('Song', secondary=likes, back_populates='song_likes')
+    song_likes = db.relationship('Song', secondary=likes, back_populates='user_likes')
 
 
 

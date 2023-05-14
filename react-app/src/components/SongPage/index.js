@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import { getAllSongsThunk } from "../../store/songs";
 import './SongPage.css'
 import { getAllUsersThunk } from "../../store/users";
+import AddToPlaylistButton from "../AddToPlaylistButton";
 
 
 function SongPage() {
@@ -64,6 +65,7 @@ function SongPage() {
               <div>album name? album id: {albumId}</div>
               <div>wav thing</div>
             </div>
+              <AddToPlaylistButton />
           </div>
         </NavLink>
       ))}
