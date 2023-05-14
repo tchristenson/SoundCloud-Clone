@@ -4,6 +4,7 @@ import { logout } from "../../store/session";
 import OpenModalButton from "../OpenModalButton";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
+import { NavLink } from "react-router-dom";
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
@@ -47,6 +48,12 @@ function ProfileButton({ user }) {
           <>
             <li className="username-li">{user.username}</li>
             <li className="email-li">{user.email}</li>
+            <li className="albums-li">
+              <NavLink className="albums-link" to={`/albums/current`}>Albums</NavLink>
+            </li>
+            <li className="songs-li">
+              <NavLink className="songs-link" to={`/songs/current`}>Songs</NavLink>
+            </li>
             <li className="logout-li">
               <button className="logout-btn" onClick={handleLogout}>Log Out</button>
             </li>
