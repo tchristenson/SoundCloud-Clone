@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { createPlaylistThunk } from "../../store/playlists";
+// import { createPlaylistThunk } from "../../store/playlists";
 
 
 
@@ -38,7 +38,7 @@ function PlaylistFormPage() {
         playlistData.append('name', name)
         playlistData.append('owner_id', user.id)
         const newPlaylist = await dispatch(createPlaylistThunk(playlistData))
-        
+
         setName('')
         setValidationErrors([])
         setHasSubmitted(false)
