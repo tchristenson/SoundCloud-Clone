@@ -43,15 +43,19 @@ function AlbumPage() {
         <div>
           <div>By {album.ownerId}</div>
           <div>Songs: {albumSongs.length}</div>
+          <div>Style: {album.styleId}</div>
         </div>
       </div>
 
       <div>
         <h2>Songs</h2>
-        <div>
+        <div className="album-songs-div">
           {albumSongs?.map(({name, albumId, styleId, ownerId, coverImage, id}) => (
             <NavLink to={`/songs/${id}`} key={id}>
-              <div key={id}>
+              <div className="album-song-div" key={id}>
+                <div className="album-song-pic-div">
+                  <img className="album-song-pic" src={coverImage} />
+                </div>
                 <div>{name}</div>
               </div>
             </NavLink>
