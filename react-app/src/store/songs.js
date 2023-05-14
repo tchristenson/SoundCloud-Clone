@@ -266,11 +266,11 @@ function songReducer(state = initState, action) {
       // console.log('action.song inside BULK_CREATE_SONG Reducer', action.song)
       newState[action.song.id] = action.song
       return newState;
-    case ADD_SONG_TO_PLAYLIST:
-      newState = { ...state };
-      console.log('action.song inside EDIT_SONG Reducer', action.song)
-      newState[action.song.id] = action.song
-      return newState;
+    // case ADD_SONG_TO_PLAYLIST:
+    //   newState = { ...state };
+    //   console.log('action.song inside EDIT_SONG Reducer', action.song)
+    //   newState[action.song.id] = action.song
+    //   return newState;
     case ADD_LIKE_TO_SONG:
       newState = { ...state };
       // console.log('action.song inside EDIT_SONG Reducer', action.song)
