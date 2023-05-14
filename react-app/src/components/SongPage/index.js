@@ -6,13 +6,9 @@ import { useEffect } from "react";
 import { getAllSongsThunk } from "../../store/songs";
 import './SongPage.css'
 import { getAllUsersThunk } from "../../store/users";
-<<<<<<< HEAD
 import AddToPlaylistButton from "../AddToPlaylistButton";
 import { getAllAlbumsThunk } from "../../store/albums";
 import { getAllStylesThunk } from "../../store/styles";
-=======
-// import AddToPlaylistButton from "../AddToPlaylistButton";
->>>>>>> dev
 
 
 function SongPage() {
