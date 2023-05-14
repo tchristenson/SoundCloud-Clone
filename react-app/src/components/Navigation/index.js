@@ -14,6 +14,8 @@ function Navigation({ isLoaded }){
 			</li>
 			{isLoaded && (
 				<li>
+					<NavLink exact to="/albums">Albums</NavLink> {" "}
+					<NavLink exact to="/songs">Songs</NavLink>
 					<ProfileButton user={sessionUser} />
 				</li>
 			)}

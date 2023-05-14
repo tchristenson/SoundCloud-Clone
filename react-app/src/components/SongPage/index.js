@@ -7,6 +7,7 @@ import { getAllSongsThunk } from "../../store/songs";
 import './SongPage.css'
 import { getAllUsersThunk } from "../../store/users";
 import AddToPlaylistButton from "../AddToPlaylistButton";
+import { getAllAlbumsThunk } from "../../store/albums";
 
 
 function SongPage() {
@@ -16,25 +17,32 @@ function SongPage() {
   useEffect(() => {
     dispatch(getAllSongsThunk());
     dispatch(getAllUsersThunk());
+    dispatch(getAllAlbumsThunk())
   }, [dispatch]);
 
   const songs = useSelector((state) => Object.values(state.songs));
-  const users = useSelector((state) => Object.values(state.users));
+  const users = useSelector((state) => (state.users));
+  const albums = useSelector((state)=> Object.values(state.albums))
+  const userIds = songs.map((song)=>{
+    return song.ownerId
+  })
+  const songUsers = userIds.map(id =>{
+    return users[id]?.alias
+})
 
-  const validUsers = []
+const albumIds = albums.map(album=>{
+  return album.name
+})
 
-  useEffect(() => {
-    users.forEach(user => {
-      songs.forEach(song => {
-        if(user.id === song.ownerId) {
-          validUsers.push(user.alias)
-        }
-      })
-    });
-  },[query])
+const songUsers2 = songs.map((val, index) => {
+  const username = songUsers[index]
+  console.log("this is the song content========", username)
+  return (<>
+    <a href={`/users/${val.ownerId}`}>{username}</a>
+  </>)
+})
 
-  console.log("songs", songs);
-  console.log("users: ====>", users);
+console.log("alubbbbbbbbbbbbums", albumIds)
 
   if (!songs || !users) {
     return <h1>testerrrrr</h1>;
@@ -55,30 +63,21 @@ function SongPage() {
         <NavLink to={`/songs/${id}`} key={id}>
           <div className="song-div">
             <div className="song-picture-div">
-              <img className="song-picture" src={coverImage}/>
+              <img alt='songImage' className="song-picture" src={coverImage}/>
             </div>
 
             <div>
               <div className="playlogo"></div>
               <div className="song-name">Title: {name}</div>
-              <div>user name ? (owner id):{ownerId} , style: {styleId}</div>
-              <div>album name? album id: {albumId}</div>
+              <div>Artist:{songUsers2[id - 1]} , style: {styleId}</div>
+              <div>album name? album id: {albumIds[id - 1]} </div>
               <div>wav thing</div>
             </div>
               <AddToPlaylistButton />
           </div>
         </NavLink>
       ))}
-      {validUsers?.filter(user => {
-        if (query === '') {
-          return user
-        }
-      }).map(({alias}) => (
-        <div>
-          <div>{alias}</div>
-          <div>yoyoyo</div>
-        </div>
-      ))}
+
     </div>
   );
 }
