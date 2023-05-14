@@ -103,10 +103,10 @@ export const addSongToPlaylistThunk = (playlistId, songId) => async (dispatch) =
 
 export const getAllSongsThunk = () => async (dispatch) => {
   const response = await fetch("/api/songs");
-  console.log("response", response);
+  // console.log("response", response);
   if (response.ok) {
     const { songs } = await response.json();
-    console.log("songsTHUNK", songs);
+    // console.log("songsTHUNK", songs);
     dispatch(getAllSongsAction(songs));
   } else {
     return ("getAllSongs Response not ok");
