@@ -10,23 +10,28 @@ playlist_routes = Blueprint('playlists', __name__)
 def add_to_playlist(playlist_id, song_id):
     """Query for adding a song to playlist"""
     song = Song.query.get(song_id)
-    print("==========================>>>>>>>>>>>>>>>>>", song.playlist_id)
+    print('playlist_id =======================>>>>>>', playlist_id)
 
     if not song:
         return {'errors': "Song doesn't exist"}
     # playlist = Playlist.query.get(playlist_id)
+
+    if not isinstance(song.playlist_id, list):
+         song.playlist_id = [song.playlist_id]
     song.playlist_id = song.playlist_id or []
 
-    if playlist_id not in list(song.playlist_id):
-        if playlist_id is None:
-            song.playlist_id = playlist_id
-        # if len(song.playlist_id) > 1:
-        #     song.playlist_id.append(playlist_id)
-        else:
-            song.playlist_id.append(playlist_id)
-        db.session.commit()
+    if playlist_id is not None and playlist_id not in song.playlist_id:
+        print('song.playlist_id BEFORE APPENDING ==================>>>>>', song.playlist_id)
+        song.playlist_id.append(playlist_id)
+        print('song.playlist_id AFTER APPENDING ==================>>>>>', song.playlist_id)
+        # song.playlist_id = list(set(song.playlist_id))
+        try:
+            db.session.commit()
+            db.session.refresh(song)
+        except Exception as e:
+            print("Error occurred during commit:", e)
     else:
-        return "Song already in playlist"
+        return {'errors': 'Song already in playlist'}
 
     return song.to_dict()
 

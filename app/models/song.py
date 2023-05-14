@@ -17,7 +17,7 @@ class Song(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     owner_id = db.Column(db.Integer, ForeignKey(add_prefix_for_prod('users.id')))
     album_id = db.Column(db.Integer, ForeignKey(add_prefix_for_prod('albums.id')))
-    playlist_id = db.Column(db.PickleType(), ForeignKey(add_prefix_for_prod('playlists.id')))
+    playlist_id = db.Column(db.PickleType(), ForeignKey(add_prefix_for_prod('playlists.id')), default=[])
     name = db.Column(db.String(50), nullable=False)
     # runtime = db.Column(db.String) # Undecided on datatype. Date, datetime, or integer?
     style_id = db.Column(db.Integer, ForeignKey(add_prefix_for_prod('styles.id')))
