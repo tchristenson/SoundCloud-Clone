@@ -20,6 +20,11 @@ def songs():
     return {'songs': [song.to_dict() for song in songs]}
 
 
+@song_routes.route('/styles')
+def song_styles():
+    styles = Style.query.all()
+    return {'styles': [style.to_dict() for style in styles]}
+
 @song_routes.route('/current')
 @login_required
 def user_songs():

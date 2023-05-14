@@ -8,6 +8,7 @@ import './SongPage.css'
 import { getAllUsersThunk } from "../../store/users";
 import AddToPlaylistButton from "../AddToPlaylistButton";
 import { getAllAlbumsThunk } from "../../store/albums";
+import { getAllStylesThunk } from "../../store/styles";
 
 
 function SongPage() {
@@ -18,11 +19,13 @@ function SongPage() {
     dispatch(getAllSongsThunk());
     dispatch(getAllUsersThunk());
     dispatch(getAllAlbumsThunk())
+    dispatch(getAllStylesThunk())
   }, [dispatch]);
 
   const songs = useSelector((state) => Object.values(state.songs));
   const users = useSelector((state) => (state.users));
   const albums = useSelector((state)=> Object.values(state.albums))
+  const styles = useSelector(state => Object.values(state.styles))
   const userIds = songs.map((song)=>{
     return song.ownerId
   })
@@ -34,9 +37,11 @@ const albumIds = albums.map(album=>{
   return album.name
 })
 
+const styleIds = styles.map(style =>
+   style.genre)
 const songUsers2 = songs.map((val, index) => {
   const username = songUsers[index]
-  console.log("this is the song content========", username)
+  console.log("this is the styles========", styles)
   return (<>
     <a href={`/users/${val.ownerId}`}>{username}</a>
   </>)
@@ -69,9 +74,9 @@ console.log("alubbbbbbbbbbbbums", albumIds)
             <div>
               <div className="playlogo"></div>
               <div className="song-name">Title: {name}</div>
-              <div>Artist:{songUsers2[id - 1]} , style: {styleId}</div>
-              <div>album name? album id: {albumIds[id - 1]} </div>
-              <div>wav thing</div>
+              <div>Artist:{songUsers2[id - 1]}  Genre: {styleIds[styleId - 1]}</div>
+              <div>album name: {albumIds[albumId - 1]} </div>
+
             </div>
               <AddToPlaylistButton />
           </div>
