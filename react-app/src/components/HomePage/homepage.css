@@ -19,12 +19,6 @@ gap: 20px;
 flex-flow: row wrap;
 flex: 2 1 auto;
 
-
-
-
-
-
-
 }
 
 
@@ -73,4 +67,8 @@ border-radius: 20px;
 
 footer{
     text-align: center;
+}
+
+.likeComponent{
+    size: 20px;
 }

@@ -52,32 +52,32 @@ function HomePage() {
 
   return (
 
-      <main id="homePage">
-        <div>
-          <img alt="placeholder" src={'https://cdn.pixabay.com/photo/2015/12/27/05/48/turntable-1109588_960_720.jpg'} className="mainImage" />
-        </div>
-        <div className='inputDiv'>
-          <input type="search" placeholder="Search for artists, bands, tracks, and podcasts" size={"50"} onChange={event => setQuery(event.target.value)}></input> or {' '}
-          {!sessionUser ? (<OpenModalButton buttonText="Upload your Song" onItemClick="" modalComponent={<LoginFormModal />} />) : (<OpenModalButton buttonText="Upload your Song" onItemClick="" modalComponent={<SongFormPage />} />)}
-        </div>
-        <h2>Hear what's trending for free in the Vibillow community</h2>
-        <div id="songContainer">
-          {songs?.filter(song => {
+    <main id="homePage">
+      <div>
+        <img alt="placeholder" src={'https://cdn.pixabay.com/photo/2015/12/27/05/48/turntable-1109588_960_720.jpg'} className="mainImage" />
+      </div>
+      <div className='inputDiv'>
+        <input type="search" placeholder="Search for songs" size={"50"} onChange={event => setQuery(event.target.value)}></input> or {' '}
+        {!sessionUser ? (<OpenModalButton buttonText="Upload your Song" onItemClick="" modalComponent={<LoginFormModal />} />) : (<OpenModalButton buttonText="Upload your Song" onItemClick="" modalComponent={<SongFormPage />} />)}
+      </div>
+      <h2>Hear what's trending for free in the Vibillow community</h2>
+      <div id="songContainer">
+        {songs?.filter(song => {
           if (query === '') {
             return song;
-        } else if (song.name.toLowerCase().includes(query.toLocaleLowerCase())) {
+          } else if (song.name.toLowerCase().includes(query.toLocaleLowerCase())) {
             return song
-        } //else if (song.ownerId == )
-      }).map((song) => (
-            <div className="songDiv" key={song.id}>
-                <a href={`/songs/${song.id}`}>
-                  <img className="songImage" alt="" src={song.coverImage} />
-               {sessionUser && <LikeComponent song={song} sessionUser={sessionUser} />}
+          } //else if (song.ownerId == )
+        }).map((song) => (
+          <div className="songDiv" key={song.id}>
+            <a href={`/songs/${song.id}`}>
+              <img className="songImage" alt="" src={song.coverImage} />
               <p>{song.name}</p>
-                </a>
-              {songUsers2[song.id - 1]}
+            </a>
+            {songUsers2[song.id - 1]}
+              {sessionUser && <LikeComponent song={song} sessionUser={sessionUser} />}
 
-            </div>
+          </div>
 
         ))}{" "}
       </div>
@@ -89,7 +89,8 @@ function HomePage() {
         <a href="https://github.com/tchristenson">Tommy Christenson</a>{' '}
         <a href="https://github.com/anwersaad0">Saad Anwer</a>{' '}
         <a href="https://github.com/meyermatt22">Matt Meyer</a>{' '}
-        <a href="https://github.com/sousyoshi">Joshua Johnson</a></footer>
+        <a href="https://github.com/sousyoshi">Joshua Johnson</a>
+      </footer>
     </main>
 
   );

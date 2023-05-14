@@ -74,8 +74,8 @@ console.log("alubbbbbbbbbbbbums", albumIds)
             <div>
               <div className="playlogo"></div>
               <div className="song-name">Title: {name}</div>
-              <div>Artist:{songUsers2[id - 1]}  Genre: {styleIds[styleId - 1]}</div>
-              <div>album name: {albumIds[albumId - 1]} </div>
+              <div>Artist: {songUsers2[id - 1]}  Genre: {styleIds[styleId - 1]}</div>
+              <div>Album name: {albumIds[albumId - 1]} </div>
 
             </div>
               {/* <AddToPlaylistButton /> */}

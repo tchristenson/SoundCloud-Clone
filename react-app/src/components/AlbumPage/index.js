@@ -6,6 +6,7 @@ import { getAllSongsThunk } from "../../store/songs";
 import AlbumDeleteModal from "../AlbumDeleteModal";
 import OpenModalButton from "../OpenModalButton";
 import './AlbumPage.css';
+import AudioPlayer from "../ReactAudioPlayer/AudioPlayer";
 
 function AlbumPage() {
   const dispatch = useDispatch();
@@ -15,13 +16,14 @@ function AlbumPage() {
   const songs = useSelector(state => Object.values(state.songs));
   const songsArr = Object.values(songs);
   const albumSongs = [];
-  
+
   useEffect(() => {
     dispatch(getOneAlbumThunk(albumId))
     dispatch(getAllSongsThunk());
   }, [albumId, dispatch])
 
   const album = useSelector(state => state.albums[albumId]);
+  
 
   for (let i = 0; i < songsArr.length; i++) {
     if (songsArr[i].albumId === parseInt(albumId)) {
@@ -37,11 +39,11 @@ function AlbumPage() {
 
       <div className="album-details-1">
         <div className="album-page-pic-div">
-          <img className="album-page-pic" src={album.coverImage} />
+          <img alt="img" className="album-page-pic" src={album.coverImage} />
         </div>
 
         <div>
-          <div>By {album.ownerId}</div>
+          <div><a href={`/users/${sessionUser.id}`}>By {}</a></div>
           <div>Songs: {albumSongs.length}</div>
           <div>Style: {album.styleId}</div>
         </div>
@@ -50,11 +52,11 @@ function AlbumPage() {
       <div>
         <h2 className="album-song-header">Songs in {album.name}</h2>
         <div className="album-songs-div">
-          {albumSongs?.map(({name, albumId, styleId, ownerId, coverImage, id}) => (
+          {albumSongs?.map(({name, albumId, styleId, ownerId, coverImage, id, content}) => (
             <NavLink to={`/songs/${id}`} key={id}>
               <div className="album-song-div" key={id}>
                 <div className="album-song-pic-div">
-                  <img className="album-song-pic" src={coverImage} />
+                  <img alt="img" className="album-song-pic" src={coverImage} />
                 </div>
                 <div className="album-song-name">{name}</div>
               </div>

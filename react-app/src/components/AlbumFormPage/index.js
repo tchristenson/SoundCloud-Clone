@@ -100,8 +100,7 @@ function AlbumFormPage() {
     setValidationErrors([])
     setHasSubmitted(false)
     setFiles([])
-
-    history.push(`/albums/${newAlbum.id}`)
+     if(newAlbum) history.push(`/albums/${newAlbum.id}`)
   }
 
   useEffect(() => {
