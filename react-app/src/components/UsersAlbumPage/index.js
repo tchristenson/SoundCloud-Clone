@@ -13,26 +13,33 @@ function UsersAlbumsPage() {
 
     const albums = useSelector((state) => state.albums);
     console.log('user albums inside UsersAlbumsPage', albums)
+    const sessionUser = useSelector((state) => state.session.user);
 
     if (!albums) return null;
 
     const albumsArr = Object.values(albums)
 
     const albumList = albumsArr.map(album => (
-        <div className="album-div">
-            <div className="album-pic-div">
-                <img className="album-pic" src={album.coverImage} />
+        <NavLink to={`/albums/${album.id}`} key={album.id}>
+            <div className="album-div">
+                <div className="album-pic-div">
+                    <img className="album-pic" src={album.coverImage} />
+                </div>
+                <div>
+                    <div>{album.name}</div>
+                    <div></div>
+                </div>
             </div>
-            <div>
-                <div>{album.name}</div>
-                <div></div>
-            </div>
-        </div>
+        </NavLink>
     ))
 
     return (
-        <div>
-        {albumList}
+        <div className="user-album-page-div">
+            <h1>{sessionUser.username}'s Albums</h1>
+
+            <div>
+                {albumList}
+            </div>
         </div>
     )
 }

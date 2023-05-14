@@ -2,8 +2,7 @@
     margin: 24px;
 }
 
-.inner {
-    background: linear-gradient(45deg, rgb(121, 121, 121) 20%, rgb(207, 115, 87));
+.audio-player {
     border-top: 4px solid rgb(87, 207, 87);
 }
 

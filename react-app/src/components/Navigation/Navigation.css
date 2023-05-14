@@ -72,8 +72,8 @@ body {
   background-color: rgb(112, 112, 112);
   
   border: none;
-  border-top: 1px solid rgb(153, 153, 153);
-  border-bottom: 1px solid rgb(153, 153, 153);
+  /* border-top: 1px solid rgb(153, 153, 153);
+  border-bottom: 1px solid rgb(153, 153, 153); */
   padding-top: 10px;
   padding-bottom: 10px;
   width: max-content;
@@ -83,13 +83,35 @@ body {
   bottom: 0px;
 }
 
-.logout-btn:hover, .signup-btn:hover, .login-btn:hover {
+.logout-btn:hover, .signup-btn:hover, .login-btn:hover, .songs-link:hover, .albums-link:hover, .profile-link:hover {
   text-decoration: underline;
 }
 
 .username-li, .email-li {
   margin: 6px 0px;
   font-weight: bold;
+}
+
+.albums-li, .songs-li, .profile-li {
+  padding: 8px 0px;
+}
+
+.profile-li {
+  border-top: 1px solid rgb(153, 153, 153);
+  padding-bottom: 6px;
+}
+
+.albums-li {
+  padding: 6px 0px;
+}
+
+.songs-li {
+  border-bottom: 1px solid rgb(153, 153, 153);
+  padding-top: 6px;
+}
+
+.songs-link, .albums-link, .profile-link {
+  color: white;
 }
 
 .login-btn, .signup-btn {

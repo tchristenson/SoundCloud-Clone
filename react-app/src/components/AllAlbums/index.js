@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { getAllAlbumsThunk } from "../../store/albums"
 import { NavLink } from "react-router-dom"
 import './AllAlbums.css';
@@ -12,6 +12,7 @@ import AlbumFormPage from "../AlbumFormPage";
 function AllAlbums() {
 
   const dispatch = useDispatch()
+  const [query, setQuery] = useState("")
 
   useEffect(() => {
     dispatch(getAllAlbumsThunk())
@@ -36,28 +37,44 @@ function AllAlbums() {
 
   const albumsArr = Object.values(albums)
 
-  const albumList = albumsArr.map(album => (
-    <div to={`/albums/${album.id}`}>
-      <div className="album-div">
-        <div className="album-pic-div">
-          <a href={`/albums/${album.id}`}><img alt="img" className="album-pic" src={album.coverImage} /></a>
-        </div>
-        <div>
-          <div> <a href={`/albums/${album.id}`}>Album title: {album.name}</a></div>
-          <div> <a href={`/users/${[album.ownerId]}`}>Artist: {users[album.ownerId]?.alias}</a> <div>Genre: {styleIds[album.styleId - 1]}</div>
-          </div>
-        </div>
-      </div>
+  // const albumList = albumsArr.map(album => (
+  //   <NavLink to={`/albums/${album.id}`}>
+  //     <div className="album-div">
+  //       <div className="album-pic-div">
+  //         <img className="album-pic" src={album.coverImage} />
+  //       </div>
+  //       <div>
+  //         <div>{album.name}</div>
+  //         <div></div>
+  //       </div>
+  //     </div>
 
-
-    </div>
-  ))
+  //   </NavLink>
+  // ))
 
   return (
     <div>
-      {sessionUser && (<OpenModalButton buttonText="Create an album" onItemClick="" modalComponent={<AlbumFormPage />} />) }
-      {albumList}
+      <input id="searchBar" placeholder="Enter Album Title" onChange={event => setQuery(event.target.value)}/>
+      {albumsArr?.filter(album => {
+        if (query === '') {
+          return album;
+      } else if (album.name.toLowerCase().includes(query.toLocaleLowerCase())) {
+          return album
+      }
+      }).map(album => (
+        <NavLink to={`/albums/${album.id}`}>
+          <div className="album-div">
+            <div className="album-pic-div">
+              <img className="album-pic" src={album.coverImage} />
+            </div>
+            <div>
+              <div>{album.name}</div>
+              <div></div>
+            </div>
+          </div>
 
+        </NavLink>
+      ))}
     </div>
   )
 }
