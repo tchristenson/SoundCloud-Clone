@@ -12,7 +12,7 @@ const EditAlbumFormPage = () => {
   const album = useSelector(state => state.albums[albumId])
 
   const [name, setName] = useState("");
-  const [styleId, setStyleId] = useState("");
+  const [styleId, setStyleId] = useState(0);
   const [validationErrors, setValidationErrors] = useState([]);
   const [hasSubmitted, setHasSubmitted] = useState(false);
 
@@ -99,8 +99,8 @@ const EditAlbumFormPage = () => {
 
             <div className="form-input-box">
                 <label>Album Style:</label>
-                <select required={true} onChange={(e) => setStyleId(e.target.value)}>
-                    <option value="">{'(select one)'}</option>
+                <select required={true} value={styleId} onChange={(e) => setStyleId(e.target.value)}>
+                    <option value={0}>{'(select one)'}</option>
                     <option value={1}>Reggae</option>
                     <option value={2}>Rock</option>
                     <option value={3}>Punk</option>
