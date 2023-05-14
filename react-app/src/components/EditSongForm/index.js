@@ -22,8 +22,8 @@ const EditSongFormPage = () => {
 
   const [name, setName] = useState('');
   const [albums, setAlbums] = useState([]);
-  const [selectedAlbumId, setSelectedAlbumId] = useState('') // Need this to prefill the album dropdown with the current album
-  const [styleId, setStyleId] = useState(''); //Need this to prefill the style dropdown with the current album
+  const [selectedAlbumId, setSelectedAlbumId] = useState(0) // Need this to prefill the album dropdown with the current album
+  const [styleId, setStyleId] = useState(0); //Need this to prefill the style dropdown with the current album
 //   const [coverImage, setCoverImage] = useState('')
   const [validationErrors, setValidationErrors] = useState([]);
   const [hasSubmitted, setHasSubmitted] = useState(false);
@@ -42,6 +42,7 @@ const EditSongFormPage = () => {
   useEffect(() => {
     if (song) {
       setName(song.name)
+      setSelectedAlbumId(song.albumId)
       setStyleId(song.styleId) // This isn't correctly filling in. Return album model with song from backend route?
     //   setSelectedAlbumId(song.albumId)
     //   setCoverImage(song.coverImage)
@@ -126,10 +127,13 @@ const EditSongFormPage = () => {
                     >
                 </input>
             </div> */}
+{/* defaultValue={albums?.Albums[selectedAlbumId]?.id} */}
 
             <div className="form-input-box">
                 <label>Album:</label>
-                <select value={selectedAlbumId} onChange={(e) => setSelectedAlbumId(e.target.value)}>
+                <select required={true} onChange={(e) => setSelectedAlbumId(e.target.value)}>
+                    <option value={0}>{'(select one)'}</option>
+                    <option key={null} value={null}>{`No Album`}</option>
                     {albums && albums.Albums && (albums.Albums.map(album => (
                         <option key={album.id} value={album.id}>{album.name}</option>
                     )))}
@@ -138,8 +142,8 @@ const EditSongFormPage = () => {
 
             <div className="form-input-box">
                 <label>Song Style:</label>
-                <select required={true} onChange={(e) => setStyleId(e.target.value)}>
-                    <option value="">{'(select one)'}</option>
+                <select required={true} value={styleId} onChange={(e) => setStyleId(e.target.value)}>
+                    <option value={0}>{'(select one)'}</option>
                     <option value={1}>Reggae</option>
                     <option value={2}>Rock</option>
                     <option value={3}>Punk</option>

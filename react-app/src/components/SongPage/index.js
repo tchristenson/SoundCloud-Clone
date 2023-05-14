@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import { getAllSongsThunk } from "../../store/songs";
 import './SongPage.css'
 import { getAllUsersThunk } from "../../store/users";
+import AddToPlaylistButton from "../AddToPlaylistButton";
 
 
 function SongPage() {
@@ -20,6 +21,17 @@ function SongPage() {
   const songs = useSelector((state) => Object.values(state.songs));
   const users = useSelector((state) => Object.values(state.users));
 
+  const validUsers = []
+
+  useEffect(() => {
+    users.forEach(user => {
+      songs.forEach(song => {
+        if(user.id === song.ownerId) {
+          validUsers.push(user.alias)
+        }
+      })
+    });
+  },[query])
 
   console.log("songs", songs);
   console.log("users: ====>", users);
@@ -36,7 +48,9 @@ function SongPage() {
             return song;
         } else if (song.name.toLowerCase().includes(query.toLocaleLowerCase())) {
             return song
-        } //else if (song.ownerId == )
+        } //else if (validUsers.toLowerCase().includes(query.toLocaleLowerCase())) {
+           // return song
+        //}
       }).map(({name,albumId, styleId, ownerId, runtime, coverImage, content, id})=>(
         <NavLink to={`/songs/${id}`} key={id}>
           <div className="song-div">
@@ -51,8 +65,19 @@ function SongPage() {
               <div>album name? album id: {albumId}</div>
               <div>wav thing</div>
             </div>
+              <AddToPlaylistButton />
           </div>
         </NavLink>
+      ))}
+      {validUsers?.filter(user => {
+        if (query === '') {
+          return user
+        }
+      }).map(({alias}) => (
+        <div>
+          <div>{alias}</div>
+          <div>yoyoyo</div>
+        </div>
       ))}
     </div>
   );

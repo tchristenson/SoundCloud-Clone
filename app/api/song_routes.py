@@ -1,5 +1,5 @@
 from flask import Blueprint, request
-from app.models import Song, Style
+from app.models import Song, Style, User, likes
 from flask_login import current_user, login_required, current_user
 from ..forms.song_form import NewSong
 from ..forms.edit_song_form import EditSong
@@ -19,6 +19,7 @@ def songs():
     songs = Song.query.all()
     return {'songs': [song.to_dict() for song in songs]}
 
+
 @song_routes.route('/current')
 @login_required
 def user_songs():
@@ -33,6 +34,40 @@ def song(id):
     """
     song = Song.query.get(id)
     return song.to_dict()
+
+@song_routes.route('/<int:id>/likes/<int:userId>', methods=['POST'])
+@login_required
+def like_song(id, userId):
+    """Query for a song by id and user, adds user to song.user_likes"""
+    song = Song.query.get(id)
+    user = User.query.get(userId)
+
+    song.user_likes.append(user)
+    db.session.commit()
+    return song.to_dict()
+
+@song_routes.route('/<int:id>/likes/delete/<int:userId>', methods=['DELETE'])
+@login_required
+def delete_like(id, userId):
+    """Handles deleting a like for a song by userId"""
+    song = Song.query.get(id)
+    user = User.query.get(userId)
+
+    # song.user_likes.get(user.id == id).remove(user)
+    # like_list = [x for x in song.user_likes if id in x]
+    # for x in range(0, len(song.user_likes)):
+    #     # users = song.user_likes[x]
+    #     if id == user.id:
+    #         song.user_likes.pop(user[x])
+    #         db.session.commit()
+    #         return "song deleted"
+
+
+    user.song_likes.remove(song)
+
+    db.session.commit()
+    return song.to_dict()
+
 
 @song_routes.route('/new', methods = ['POST'])
 @login_required

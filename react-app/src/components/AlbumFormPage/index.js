@@ -12,10 +12,10 @@ function AlbumFormPage() {
 
   const [name, setName] = useState("");
   const [coverImage, setCoverImage] = useState("");
-  const [styleId, setStyleId] = useState("");
+  const [styleId, setStyleId] = useState(0);
   const [validationErrors, setValidationErrors] = useState([]);
   const [hasSubmitted, setHasSubmitted] = useState(false);
-  const [files, setFiles] = useState(null)
+  const [files, setFiles] = useState([])
   const inputRef = useRef()
 
   const handleDragOver = (e) => {
@@ -24,16 +24,30 @@ function AlbumFormPage() {
 
   const handleDrop = (e) => {
     e.preventDefault()
-    console.log('e.dataTransfer.files', e.dataTransfer.files)
-    const filesArr = Object.values(e.dataTransfer.files)
-    console.log('filesArr', filesArr)
-    setFiles(filesArr)
+    // console.log('files state var', files)
+    let currFileNames = []
+    if (files.length) {
+        files.forEach(file => currFileNames.push(file.name))
+    }
+
+    // console.log('currFileNames', currFileNames)
+    // console.log('e.dataTransfer.files', e.dataTransfer.files)
+
+    let filesArr = Object.values(e.dataTransfer.files)
+    filesArr = filesArr.filter(file => !currFileNames.includes(file.name))
+    // console.log('filesArr', filesArr)
+    setFiles((prevFiles) => [...prevFiles, ...filesArr])
+
+    // console.log('e.dataTransfer.files', e.dataTransfer.files)
+    // const filesArr = Object.values(e.dataTransfer.files)
+    // console.log('filesArr', filesArr)
+    // setFiles(filesArr)
   }
 
   const handleCancel = (canceledFile) => {
     setFiles((prevFiles) => {
       const filteredFiles = Array.from(prevFiles).filter((file) => file !== canceledFile);
-      return filteredFiles.length === 0 ? null : filteredFiles;
+      return filteredFiles.length === 0 ? [] : filteredFiles;
     });
   };
 
@@ -85,7 +99,7 @@ function AlbumFormPage() {
     setStyleId('')
     setValidationErrors([])
     setHasSubmitted(false)
-    setFiles(null)
+    setFiles([])
 
     history.push(`/albums/${newAlbum.id}`)
   }
@@ -147,7 +161,7 @@ function AlbumFormPage() {
             <div className="form-input-box">
                 <label>Album Style:</label>
                 <select required={true} onChange={(e) => setStyleId(e.target.value)}>
-                    <option value="">{'(select one)'}</option>
+                    <option value={0}>{'(select one)'}</option>
                     <option value={1}>Reggae</option>
                     <option value={2}>Rock</option>
                     <option value={3}>Punk</option>
@@ -180,31 +194,25 @@ function AlbumFormPage() {
                     </>
                 )}
 
-                {!files && (
-                    <>
-                    {!files && (
-                        <div
-                        className="dropzone"
-                        onDragOver={handleDragOver}
-                        onDrop={handleDrop}
-                        >
+                <div
+                className="dropzone"
+                onDragOver={handleDragOver}
+                onDrop={handleDrop}
+                >
 
-                        <label>Drag and Drop Songs to Upload</label>
-                        {/* <label>Or</label> */}
-                        <input
-                            type="file"
-                            accept="audio/*"
-                            multiple
-                            onChange={(e) => setFiles(e.target.files)}
-                            hidden
-                            ref={inputRef}
-                        />
-                        {/* <button onClick={() => inputRef.current.click()}>Select Songs</button> */}
+                <label>Drag and Drop Songs to Upload</label>
+                {/* <label>Or</label> */}
+                <input
+                    type="file"
+                    accept="audio/*"
+                    multiple
+                    onChange={(e) => setFiles(e.target.files)}
+                    hidden
+                    ref={inputRef}
+                />
+                {/* <button onClick={() => inputRef.current.click()}>Select Songs</button> */}
+                </div>
 
-                        </div>
-                    )}
-                    </>
-                )}
             </div>
 
             <button type="submit">Create Album</button>

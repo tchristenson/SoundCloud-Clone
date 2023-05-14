@@ -24,7 +24,7 @@ console.log("this is the current user ======>", sessionUser)
         </div>
         <div className="text">
           <p className="title">{currentTrack.name}</p>
-          <p>{}</p>
+          <p>{/* currentTrack.ownerId */}</p>
         </div>
       </div>
     </div>

@@ -2,6 +2,7 @@ import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { deleteOneSongThunk } from "../../store/songs";
 import { useModal } from "../../context/Modal";
+import './SongDeleteModal.css';
 
 function SongDeleteModal({songId}) {
   const dispatch = useDispatch();
@@ -22,11 +23,11 @@ function SongDeleteModal({songId}) {
   }
 
   return (
-    <div>
-        <h1>Delete Song?</h1>
+    <div className="delete-song-div">
+        <h1>Delete This Song?</h1>
         <form onSubmit={handleDelete}>
-            <button type="submit">Yes, delete the song</button>
-            <button onClick={closeModal}>No, keep this song</button>
+            <button className="confirm-song-delete" type="submit">Yes, delete the song</button>
+            <button className="decline-song-delete" onClick={closeModal}>No, keep this song</button>
         </form>
     </div>
 )
