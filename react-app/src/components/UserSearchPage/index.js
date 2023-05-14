@@ -26,11 +26,11 @@ function UserSearchPage() {
         {users?.filter(user => {
             if (query === '') {
               return user;
-          } else if (user.alias.toLowerCase().includes(query.toLocaleLowerCase())) {
+          } else if (user?.alias.toLowerCase().includes(query.toLocaleLowerCase())) {
               return user
-          } else if (user.firstName.toLowerCase().includes(query.toLocaleLowerCase())) {
+          } else if (user?.firstName.toLowerCase().includes(query.toLocaleLowerCase())) {
               return user
-          } else if (user.lastName.toLowerCase().includes(query.toLocaleLowerCase())) {
+          } else if (user?.lastName.toLowerCase().includes(query.toLocaleLowerCase())) {
             return user
         }
         }).map(({alias, profileImage, id, firstName, lastName})=>(
