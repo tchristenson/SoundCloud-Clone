@@ -15,7 +15,7 @@ function AlbumPage() {
   const songs = useSelector(state => Object.values(state.songs));
   const songsArr = Object.values(songs);
   const albumSongs = [];
-  
+
   useEffect(() => {
     dispatch(getOneAlbumThunk(albumId))
     dispatch(getAllSongsThunk());
