@@ -47,7 +47,7 @@ function HomePage() {
   //     })
   //   }
 
-  
+
 
   if (!songs) {
     return <h1>testerrrrr</h1>;
@@ -82,7 +82,7 @@ function HomePage() {
               <div></div>
             </div>
           ))}{" "}
-          {sessionUser ? <a href={`/songs`}><button>Explore trending playlists</button> </a> : <OpenModalButton buttonText="Explore trending playlists" onItemClick="" modalComponent={<LoginFormModal />} />}
+          {/* {sessionUser ? <a href={`/songs`}><button>Explore trending playlists</button> </a> : <OpenModalButton buttonText="Explore trending playlists" onItemClick="" modalComponent={<LoginFormModal />} />} */}
         </div>
         <section>
           <h2>Vibillow is an app where you can upload and listen to songs and albums.</h2>
