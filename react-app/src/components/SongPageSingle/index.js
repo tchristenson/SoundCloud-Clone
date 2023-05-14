@@ -6,6 +6,7 @@ import { getOneSongThunk} from "../../store/songs";
 import SongDeleteModal from "../SongDeleteModal";
 import OpenModalButton from "../OpenModalButton";
 import AudioPlayer from "../ReactAudioPlayer/AudioPlayer";
+import './SongPageSingle.css';
 
 function SongPageSingle() {
   const dispatch = useDispatch();
@@ -31,13 +32,13 @@ function SongPageSingle() {
       <h1>single song page</h1>
       <AudioPlayer song={song} sessionUser={sessionUser}/>
       <div className="playlogo"></div>
-      <div>{song?.name}</div>
+      {/* <div>{song?.name}</div>
       <div>
         user name ? (owner id):{song?.ownerId} , style: {song?.styleId}
       </div>
       <div>album name? album id: {song?.albumId}</div>
       <div>wav thing</div>
-      <div>{song?.coverImage}</div>
+      <div>{song?.coverImage}</div> */}
 
       {sessionUser && sessionUser.id === song.ownerId && (
         <OpenModalButton buttonText="Delete Song" modalComponent={<SongDeleteModal songId = {songId}/>} />
