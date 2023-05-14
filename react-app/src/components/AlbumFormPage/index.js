@@ -10,6 +10,14 @@ function AlbumFormPage() {
   const dispatch = useDispatch();
   const history = useHistory();
 
+  const sessionUser = useSelector(state => state.session.user)
+
+  useEffect(() => {
+    if (!sessionUser) {
+      history.push('/')
+    }
+  }, [sessionUser, history])
+
   const [name, setName] = useState("");
   const [coverImage, setCoverImage] = useState("");
   const [styleId, setStyleId] = useState(0);

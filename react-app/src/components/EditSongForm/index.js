@@ -16,11 +16,13 @@ const EditSongFormPage = () => {
   const song = useSelector(state => state.songs[songId])
   console.log('song inside EditSongFormPage', song)
 
-  if (song) {
-      if (!sessionUser || sessionUser.id != song.ownerId) {
+  useEffect(() => {
+    if (song) {
+      if (!sessionUser || sessionUser.id !== song.ownerId) {
         history.push('/')
       }
-  }
+    }
+  }, [song, sessionUser, history])
 
   const [name, setName] = useState('');
   const [albums, setAlbums] = useState([]);
