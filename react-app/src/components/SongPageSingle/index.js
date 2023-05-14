@@ -24,7 +24,7 @@ function SongPageSingle() {
   const song = useSelector((state) => state.songs[songId]);
 
   if (!song) {
-    return 'yoyoyo';
+    return null;
   }
 
   console.log('song inside SongPageSingle', song)

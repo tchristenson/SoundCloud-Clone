@@ -14,7 +14,6 @@ function LikeComponent({song, sessionUser}) {
     const deleteLikeEvent = (e) => {
         e.preventDefault();
         dispatch(deleteOneLikeThunk(song.id, sessionUser.id))
-        history.push('/songs/${}')
     }
 
     // console.log("song info like component : ", song.likes)
