@@ -7,7 +7,7 @@ import SongDeleteModal from "../SongDeleteModal";
 import OpenModalButton from "../OpenModalButton";
 import AudioPlayer from "../ReactAudioPlayer/AudioPlayer";
 import './SongPageSingle.css';
-import AddToPlaylistButton from "../AddToPlaylistButton";
+// import AddToPlaylistButton from "../AddToPlaylistButton";
 import LikeComponent from "../LikeComponent";
 
 function SongPageSingle() {
@@ -50,7 +50,7 @@ function SongPageSingle() {
 
       <div className="song-secondary-ui">
         <LikeComponent song={song} sessionUser={sessionUser}/>
-        <AddToPlaylistButton song={song} />
+        {/* <AddToPlaylistButton song={song} /> */}
         {sessionUser && sessionUser.id === song.ownerId && (
           <OpenModalButton buttonClass="song-del-btn" buttonText="Delete Song" modalComponent={<SongDeleteModal songId = {songId}/>} />
         )}
