@@ -5,6 +5,7 @@ import { getAllUsersThunk } from "../../store/users";
 import AudioPlayer from "../ReactAudioPlayer/AudioPlayer";
 import LoginFormModal from "../LoginFormModal";
 import OpenModalButton from "../OpenModalButton";
+import LikeComponent from "../LikeComponent";
 import "./homepage.css";
 
 import { useEffect } from "react";
@@ -67,15 +68,15 @@ function HomePage() {
         } else if (song.name.toLowerCase().includes(query.toLocaleLowerCase())) {
             return song
         } //else if (song.ownerId == )
-      }).map(({ name, coverImage, id, ownerId }) => (
-            <div className="songDiv" key={id}>
-              <div>
-                <a href={`/songs/${id}`}>
-                  <img className="songImage" alt="" src={coverImage} />
-              <p>{name}</p>
+      }).map((song) => (
+            <div className="songDiv" key={song.id}>
+                <a href={`/songs/${song.id}`}>
+                  <img className="songImage" alt="" src={song.coverImage} />
+               {sessionUser && <LikeComponent song={song} sessionUser={sessionUser} />}
+              <p>{song.name}</p>
                 </a>
-              </div>
-              <div>{songUsers2[id - 1]}</div>
+              {songUsers2[song.id - 1]}
+
             </div>
 
         ))}{" "}
