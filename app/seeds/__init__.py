@@ -27,9 +27,9 @@ def seed():
         undo_users()
         undo_styles()
     seed_styles()
-    seed_users()
+    all_users = seed_users()
     seed_albums()
-    seed_songs()
+    seed_songs(all_users)
     seed_playlists()
     # seed_likes()
     # Add other seed functions here

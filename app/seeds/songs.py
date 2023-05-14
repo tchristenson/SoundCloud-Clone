@@ -1,7 +1,7 @@
 from app.models import db, Song, environment, SCHEMA
 from sqlalchemy.sql import text
 
-def seed_songs():
+def seed_songs(all_users):
     song_one = Song(
         owner_id = 1,
         album_id = 1,
@@ -9,8 +9,8 @@ def seed_songs():
         style_id = 2,
         cover_image = 'http://vibillow-images.s3.amazonaws.com/024c21e29efb4c6eb090d057a29eac79.jpg',
         content = 'http://vibillow-songs.s3.amazonaws.com/0ae94e4ea5e34441b032038b63dbc95d.wav',
-        playlist_id = [1, 2]
-
+        playlist_id = [1, 2],
+        user_likes = [all_users[0], all_users[1]]
     )
 
     song_two = Song(

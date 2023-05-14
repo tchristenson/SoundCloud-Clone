@@ -14,16 +14,17 @@ def add_to_playlist(playlist_id, song_id):
 
     if not song:
         return {'errors': "Song doesn't exist"}
-    # playlist = Playlist.query.get(playlist_id)
-    song.playlist_id = song.playlist_id or []
+    playlist = Playlist.query.get(playlist_id)
+    print('playlist here: ', playlist)
+    playlist_id = [song.playlist_id] or []
 
-    if playlist_id not in list(song.playlist_id):
+    if playlist_id not in list(playlist_id):
         if playlist_id is None:
             song.playlist_id = playlist_id
         # if len(song.playlist_id) > 1:
         #     song.playlist_id.append(playlist_id)
-        else:
-            song.playlist_id.append(playlist_id)
+
+        song.playlist_id.append(playlist_id)
         db.session.commit()
     else:
         return "Song already in playlist"

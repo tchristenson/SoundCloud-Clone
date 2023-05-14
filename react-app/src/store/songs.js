@@ -6,6 +6,8 @@ const DELETE_SONG = "/DELETE_SONG";
 const EDIT_SONG = "/EDIT_SONG"
 const BULK_CREATE_SONGS = '/BULK_CREATE_SONGS'
 const ADD_SONG_TO_PLAYLIST = '/ADD_SONG_TO_PLAYLIST'
+const ADD_LIKE_TO_SONG = '/ADD_LIKE_TO_SONG'
+
 
 const getAllSongsAction = (songs) => {
   return {
@@ -48,6 +50,13 @@ const editSongAction = (song) => {
   }
 }
 
+const createLikeAction = (song) => {
+  return {
+    type: ADD_LIKE_TO_SONG,
+    song
+  }
+}
+
 const bulkCreateSongAction = (song) => {
   return {
     type: BULK_CREATE_SONGS,
@@ -62,6 +71,20 @@ const addSongToPlaylistAction = (song) => {
   }
 }
 
+export const addLikeToSongThunk = (songId, userId) => async (dispatch) => {
+  const response = await fetch(`/api/songs/${songId}/likes/${userId}`, {
+    method: "POST",
+    body: songId, userId
+  });
+  if (response.ok) {
+    const song = await response.json()
+    console.log("song inside add like thunk ============>", song)
+    dispatch(createLikeAction(song))
+    return song
+  } else {
+    return 'response in add liketosongthunk not ok'
+  }
+}
 
 export const addSongToPlaylistThunk = (playlistId, songId) => async (dispatch) => {
   const response = await fetch(`/api/playlists/${playlistId}/new_song/${songId}`, {
@@ -225,6 +248,11 @@ function songReducer(state = initState, action) {
     case ADD_SONG_TO_PLAYLIST:
       newState = { ...state };
       console.log('action.song inside EDIT_SONG Reducer', action.song)
+      newState[action.song.id] = action.song
+      return newState;
+    case ADD_LIKE_TO_SONG:
+      newState = { ...state };
+      // console.log('action.song inside EDIT_SONG Reducer', action.song)
       newState[action.song.id] = action.song
       return newState;
     default:

@@ -29,7 +29,7 @@ class Song(db.Model):
     playlist = db.relationship('Playlist', back_populates='songs')
     style = db.relationship('Style', back_populates='songs')
 
-    user_likes = db.relationship('User', secondary=likes)
+    user_likes = db.relationship('User', secondary=likes, back_populates='song_likes')
 
     def to_dict(self):
         data = {

@@ -7,6 +7,7 @@ import SongDeleteModal from "../SongDeleteModal";
 import OpenModalButton from "../OpenModalButton";
 import AudioPlayer from "../ReactAudioPlayer/AudioPlayer";
 import AddToPlaylistButton from "../AddToPlaylistButton";
+import LikeComponent from "../LikeComponent";
 
 function SongPageSingle() {
   const dispatch = useDispatch();
@@ -40,11 +41,13 @@ function SongPageSingle() {
       <div>album name? album id: {song?.albumId}</div>
       <div>wav thing</div>
       <div>{song?.coverImage}</div>
-    
+
 
       {sessionUser && sessionUser.id === song.ownerId && (
         <OpenModalButton buttonText="Delete Song" modalComponent={<SongDeleteModal songId = {songId}/>} />
       )}
+
+      <LikeComponent song={song} sessionUser={sessionUser}/>
 
     </div>
   );

@@ -18,9 +18,9 @@ function PlaylistModal({ playlists, song }) {
     console.log('playlistmodal playlists', playlists)
     const { closeModal } = useModal()
 
-    const addToPlaylist = async (e, playlistId) => {
+    const addToPlaylist = async (e) => {
         e.preventDefault();
-        console.log(playlistId);
+        // console.log(playlistId);
         const playlistUpdate = await dispatch(addSongToPlaylistThunk(playlistId, song.id));
         if(playlistUpdate){
             closeModal()
@@ -34,7 +34,7 @@ function PlaylistModal({ playlists, song }) {
         <form>
             <div>
                 {playlists.map(playlist => (
-                    <button key={playlist.id} value={playlist.id} onClick={ e => addToPlaylist(e, playlist.id)}>{playlist.name}
+                    <button key={playlist.id} value={playlist.id} onClick={ e => addToPlaylist(e)}>{playlist.name}
                     </button>
 
 
