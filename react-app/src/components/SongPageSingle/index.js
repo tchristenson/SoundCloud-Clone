@@ -6,6 +6,7 @@ import { getOneSongThunk} from "../../store/songs";
 import SongDeleteModal from "../SongDeleteModal";
 import OpenModalButton from "../OpenModalButton";
 import AudioPlayer from "../ReactAudioPlayer/AudioPlayer";
+import AddToPlaylistButton from "../AddToPlaylistButton";
 
 function SongPageSingle() {
   const dispatch = useDispatch();
@@ -30,6 +31,7 @@ function SongPageSingle() {
     <div id="singSongPage">
       <h1>single song page</h1>
       <AudioPlayer song={song} sessionUser={sessionUser}/>
+      <AddToPlaylistButton song={song} />
       <div className="playlogo"></div>
       <div>{song?.name}</div>
       <div>

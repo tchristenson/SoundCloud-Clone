@@ -5,4 +5,4 @@ from wtforms.validators import DataRequired, ValidationError
 from app.models import Playlist
 
 class NewPlaylist(FlaskForm):
-    name = StringField("Album Name", validators=[DataRequired()])
+    name = StringField("Playlist Name", validators=[DataRequired()])
