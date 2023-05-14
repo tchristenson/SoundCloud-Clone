@@ -33,7 +33,16 @@
 
 .album-song-div {
     display: flex;
-    margin: 8px 0px;
+    margin: -1px 0px;
+    border: 1px solid lightgray;
+    border-left: none;
+    border-right: none;
+    padding: 12px 0px;
+}
+
+.album-song-div:hover {
+    background-color: rgb(131, 131, 131);
+    transition: .5s;
 }
 
 .album-song-pic-div {
