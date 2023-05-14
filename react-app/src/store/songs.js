@@ -7,6 +7,7 @@ const EDIT_SONG = "/EDIT_SONG"
 const BULK_CREATE_SONGS = '/BULK_CREATE_SONGS'
 const ADD_SONG_TO_PLAYLIST = '/ADD_SONG_TO_PLAYLIST'
 const ADD_LIKE_TO_SONG = '/ADD_LIKE_TO_SONG'
+const DELETE_LIKE_FROM_SONG = '/DELETE_LIKE_FROM_SONG'
 
 
 const getAllSongsAction = (songs) => {
@@ -35,6 +36,13 @@ const deleteOneSongAction = (songId) => {
     songId,
   };
 };
+
+const deleteOneLikeAction = (songId) => {
+  return {
+    type: DELETE_LIKE_FROM_SONG,
+    songId,
+  }
+}
 
 const createSongAction = (song) => {
   return {
@@ -71,20 +79,6 @@ const addSongToPlaylistAction = (song) => {
   }
 }
 
-export const addLikeToSongThunk = (songId, userId) => async (dispatch) => {
-  const response = await fetch(`/api/songs/${songId}/likes/${userId}`, {
-    method: "POST",
-    body: songId, userId
-  });
-  if (response.ok) {
-    const song = await response.json()
-    console.log("song inside add like thunk ============>", song)
-    dispatch(createLikeAction(song))
-    return song
-  } else {
-    return 'response in add liketosongthunk not ok'
-  }
-}
 
 export const addSongToPlaylistThunk = (playlistId, songId) => async (dispatch) => {
   const response = await fetch(`/api/playlists/${playlistId}/new_song/${songId}`, {
@@ -166,6 +160,33 @@ export const deleteOneSongThunk = (songId) => async (dispatch) => {
     return ("Song couldnt be deleted")
   }
 };
+export const addLikeToSongThunk = (songId, userId) => async (dispatch) => {
+  const response = await fetch(`/api/songs/${songId}/likes/${userId}`, {
+    method: "POST",
+    body: songId, userId
+  });
+  if (response.ok) {
+    const song = await response.json()
+    console.log("song inside add like thunk ============>", song)
+    dispatch(createLikeAction(song))
+    return song
+  } else {
+    return 'response in add liketosongthunk not ok'
+  }
+}
+
+export const deleteOneLikeThunk = (songId, userId) => async (dispatch) => {
+  const res = await fetch(`/api/songs/${songId}/likes/delete/${userId}`, {
+    method: 'DELETE'
+  });
+  if(res.ok) {
+    const song = await res.json()
+    dispatch(deleteOneLikeAction(songId));
+    return song
+  } else {
+    return "delete on like thunk: res not ok"
+  }
+}
 
 export const editSongThunk = (song) => async (dispatch) => {
   // const songId = parseInt(song.get('id'))
@@ -255,6 +276,10 @@ function songReducer(state = initState, action) {
       // console.log('action.song inside EDIT_SONG Reducer', action.song)
       newState[action.song.id] = action.song
       return newState;
+    case DELETE_LIKE_FROM_SONG:
+      newState = { ...state};
+      delete newState[action.songId]
+      return newState
     default:
       return state;
   }
