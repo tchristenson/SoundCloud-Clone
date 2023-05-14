@@ -24,7 +24,7 @@ function SongPageSingle() {
   const song = useSelector((state) => state.songs[songId]);
 
   if (!song) {
-    return null;
+    return 'yoyoyo';
   }
 
   console.log('song inside SongPageSingle', song)
@@ -41,7 +41,7 @@ function SongPageSingle() {
           <OpenModalButton buttonClass="song-del-btn" buttonText="Delete Song" modalComponent={<SongDeleteModal songId = {songId}/>} />
         )}
       </div>
-      
+
       <div className="playlogo"></div>
       {/* <div>{song?.name}</div>
       <div>
