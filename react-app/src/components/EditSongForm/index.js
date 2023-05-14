@@ -130,6 +130,8 @@ const EditSongFormPage = () => {
             <div className="form-input-box">
                 <label>Album:</label>
                 <select value={selectedAlbumId} onChange={(e) => setSelectedAlbumId(e.target.value)}>
+                    <option value="">{'(select one)'}</option>
+                    <option key={null} value={null}>{`No Album`}</option>
                     {albums && albums.Albums && (albums.Albums.map(album => (
                         <option key={album.id} value={album.id}>{album.name}</option>
                     )))}

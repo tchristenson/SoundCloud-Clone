@@ -5,3 +5,4 @@ from .album import Album
 from .song import Song
 from .like import likes
 from .style import Style
+from .playlist import Playlist

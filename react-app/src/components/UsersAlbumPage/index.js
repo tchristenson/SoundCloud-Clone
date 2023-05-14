@@ -2,6 +2,7 @@ import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getCurrentUsersAlbumsThunk } from "../../store/albums";
+import './UsersAlbumPage.css';
 
 function UsersAlbumsPage() {
     const dispatch = useDispatch();
@@ -18,9 +19,15 @@ function UsersAlbumsPage() {
     const albumsArr = Object.values(albums)
 
     const albumList = albumsArr.map(album => (
-        <NavLink to={`/albums/${album.id}`}>
-            <div>{album.name}</div>
-        </NavLink>
+        <div className="album-div">
+            <div className="album-pic-div">
+                <img className="album-pic" src={album.coverImage} />
+            </div>
+            <div>
+                <div>{album.name}</div>
+                <div></div>
+            </div>
+        </div>
     ))
 
     return (

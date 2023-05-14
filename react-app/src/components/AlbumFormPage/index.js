@@ -15,7 +15,7 @@ function AlbumFormPage() {
   const [styleId, setStyleId] = useState("");
   const [validationErrors, setValidationErrors] = useState([]);
   const [hasSubmitted, setHasSubmitted] = useState(false);
-  const [files, setFiles] = useState(null)
+  const [files, setFiles] = useState([])
   const inputRef = useRef()
 
   const handleDragOver = (e) => {
@@ -24,16 +24,30 @@ function AlbumFormPage() {
 
   const handleDrop = (e) => {
     e.preventDefault()
-    console.log('e.dataTransfer.files', e.dataTransfer.files)
-    const filesArr = Object.values(e.dataTransfer.files)
-    console.log('filesArr', filesArr)
-    setFiles(filesArr)
+    // console.log('files state var', files)
+    let currFileNames = []
+    if (files.length) {
+        files.forEach(file => currFileNames.push(file.name))
+    }
+
+    // console.log('currFileNames', currFileNames)
+    // console.log('e.dataTransfer.files', e.dataTransfer.files)
+
+    let filesArr = Object.values(e.dataTransfer.files)
+    filesArr = filesArr.filter(file => !currFileNames.includes(file.name))
+    // console.log('filesArr', filesArr)
+    setFiles((prevFiles) => [...prevFiles, ...filesArr])
+
+    // console.log('e.dataTransfer.files', e.dataTransfer.files)
+    // const filesArr = Object.values(e.dataTransfer.files)
+    // console.log('filesArr', filesArr)
+    // setFiles(filesArr)
   }
 
   const handleCancel = (canceledFile) => {
     setFiles((prevFiles) => {
       const filteredFiles = Array.from(prevFiles).filter((file) => file !== canceledFile);
-      return filteredFiles.length === 0 ? null : filteredFiles;
+      return filteredFiles.length === 0 ? [] : filteredFiles;
     });
   };
 
@@ -85,7 +99,7 @@ function AlbumFormPage() {
     setStyleId('')
     setValidationErrors([])
     setHasSubmitted(false)
-    setFiles(null)
+    setFiles([])
 
     history.push(`/albums/${newAlbum.id}`)
   }
@@ -103,6 +117,11 @@ function AlbumFormPage() {
   return (
     <div>
         <h1>Create a New Album</h1>
+              <p>Note: The drag and drop feature is in process, so to create an album with
+        songs on it you must select multiple song files at once and drag them onto the
+         div tag that says "Drag and Drop Songs to Upload". You cannot drag and drop songs one by one
+         and the songs cannot be inside of a folder. But as long as you  drop multiple files all together, the songs
+         should simultaneously be created when creating the album. An actual song-length audio file could take a couple minutes  </p>
         {hasSubmitted && validationErrors.length > 0 && (
             <div>
                 <h2>The following errors were found:</h2>
@@ -175,31 +194,25 @@ function AlbumFormPage() {
                     </>
                 )}
 
-                {!files && (
-                    <>
-                    {!files && (
-                        <div
-                        className="dropzone"
-                        onDragOver={handleDragOver}
-                        onDrop={handleDrop}
-                        >
+                <div
+                className="dropzone"
+                onDragOver={handleDragOver}
+                onDrop={handleDrop}
+                >
 
-                        <label>Drag and Drop Songs to Upload</label>
-                        {/* <label>Or</label> */}
-                        <input
-                            type="file"
-                            accept="audio/*"
-                            multiple
-                            onChange={(e) => setFiles(e.target.files)}
-                            hidden
-                            ref={inputRef}
-                        />
-                        {/* <button onClick={() => inputRef.current.click()}>Select Songs</button> */}
+                <label>Drag and Drop Songs to Upload</label>
+                {/* <label>Or</label> */}
+                <input
+                    type="file"
+                    accept="audio/*"
+                    multiple
+                    onChange={(e) => setFiles(e.target.files)}
+                    hidden
+                    ref={inputRef}
+                />
+                {/* <button onClick={() => inputRef.current.click()}>Select Songs</button> */}
+                </div>
 
-                        </div>
-                    )}
-                    </>
-                )}
             </div>
 
             <button type="submit">Create Album</button>

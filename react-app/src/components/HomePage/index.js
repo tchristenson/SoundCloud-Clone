@@ -51,26 +51,33 @@ function HomePage() {
 
   return (
 
-    <main id="homePage">
-      <div>
-        <img alt="placeholder" src={'https://cdn.pixabay.com/photo/2015/12/27/05/48/turntable-1109588_960_720.jpg'} className="mainImage" />
-      </div>
-      <div className='inputDiv'>
-        <input type="search" placeholder="Search for artists, bands, tracks, and podcasts" size={"50"}></input> or {' '}
-        {!sessionUser ? (<OpenModalButton buttonText="Upload your Song" onItemClick="" modalComponent={<LoginFormModal />} />) : (<OpenModalButton buttonText="Upload your Song" onItemClick="" modalComponent={<SongFormPage />} />)}
-      </div>
-      <h2>Hear what's trending for free in the Vibillow community</h2>
-      <div id="songContainer">
-        {songs?.map(({ name, coverImage, id }) => (
-          <div className="songDiv" key={id}>
-            <div>
-              <a href={`/songs/${id}`}>
-
-                <img className="songImage" alt="" src={coverImage} />  <p>{name}</p>
-
-              </a>{songUsers2[id - 1]}
+      <main id="homePage">
+        <div>
+          <img alt="placeholder" src={'https://cdn.pixabay.com/photo/2015/12/27/05/48/turntable-1109588_960_720.jpg'} className="mainImage" />
+        </div>
+        <div className='inputDiv'>
+          <input type="search" placeholder="Search for artists, bands, tracks, and podcasts" size={"50"} onChange={event => setQuery(event.target.value)}></input> or {' '}
+          {!sessionUser ? (<OpenModalButton buttonText="Upload your Song" onItemClick="" modalComponent={<LoginFormModal />} />) : (<OpenModalButton buttonText="Upload your Song" onItemClick="" modalComponent={<SongFormPage />} />)}
+        </div>
+        <h2>Hear what's trending for free in the Vibillow community</h2>
+        <div id="songContainer">
+          {songs?.filter(song => {
+          if (query === '') {
+            return song;
+        } else if (song.name.toLowerCase().includes(query.toLocaleLowerCase())) {
+            return song
+        } //else if (song.ownerId == )
+      }).map(({ name, coverImage, id, ownerId }) => (
+            <div className="songDiv" key={id}>
+              <div>
+                <a href={`/songs/${id}`}>
+                  <img className="songImage" alt="" src={coverImage} />
+              <p>{name}</p>
+                </a>
+              </div>
+              <div></div>
             </div>
-          </div>
+          
         ))}{" "}
       </div>
       {sessionUser ? <a href={`/songs`}><button>Explore trending playlists</button> </a> : <OpenModalButton buttonText="Explore trending playlists" onItemClick="" modalComponent={<LoginFormModal />} />}

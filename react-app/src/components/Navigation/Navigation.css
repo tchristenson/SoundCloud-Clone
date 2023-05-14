@@ -34,7 +34,8 @@ body {
   margin: 0px;
   padding: 14px 0px;
   padding-bottom: 12px;
-  border-bottom: 4px solid rgb(87, 207, 87);
+  border-bottom: 6px solid rgb(87, 207, 87);
+  border-image: linear-gradient(45deg, rgb(87, 207, 87), rgb(207, 115, 87)) 1;
   height: 76px;
 }
 

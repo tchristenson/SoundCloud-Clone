@@ -17,6 +17,9 @@ import EditSongFormPage from "./components/EditSongForm";
 import AlbumFormPage from "./components/AlbumFormPage";
 import HomePage from "./components/HomePage";
 import EditAlbumFormPage from "./components/EditAlbumForm";
+import UserSearchPage from "./components/UserSearchPage";
+import UsersPlaylistPage from "./components/UserPlaylist";
+import PlaylistFormPage from "./components/PlaylistFormPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -35,6 +38,9 @@ function App() {
           </Route>
           <Route path="/signup">
             <SignupFormPage />
+          </Route>
+          <Route exact path="/users">
+            <UserSearchPage />
           </Route>
           <Route exact path="/users/:userId">
             <UserProfilePage />
@@ -66,11 +72,20 @@ function App() {
           <Route exact path="/albums/:albumId">
             <AlbumPage />
           </Route>
+          <Route exact path="/playlists/current">
+            <UsersPlaylistPage />
+          </Route>
+          <Route exact path="/playlist/new">
+            <PlaylistFormPage />
+          </Route>
           <Route exact path="/">
             <HomePage />
           </Route>
           <Route exact path="/albums/:albumId/edit">
             <EditAlbumFormPage />
+          </Route>
+          <Route>
+            Page Not Found
           </Route>
         </Switch>
       )}
