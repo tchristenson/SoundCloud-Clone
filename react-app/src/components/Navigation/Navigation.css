@@ -83,7 +83,7 @@ body {
   bottom: 0px;
 }
 
-.logout-btn:hover, .signup-btn:hover, .login-btn:hover, .songs-link:hover, .albums-link:hover {
+.logout-btn:hover, .signup-btn:hover, .login-btn:hover, .songs-link:hover, .albums-link:hover, .profile-link:hover {
   text-decoration: underline;
 }
 
@@ -92,13 +92,17 @@ body {
   font-weight: bold;
 }
 
-.albums-li, .songs-li {
+.albums-li, .songs-li, .profile-li {
   padding: 8px 0px;
 }
 
-.albums-li {
+.profile-li {
   border-top: 1px solid rgb(153, 153, 153);
   padding-bottom: 6px;
+}
+
+.albums-li {
+  padding: 6px 0px;
 }
 
 .songs-li {
@@ -106,7 +110,7 @@ body {
   padding-top: 6px;
 }
 
-.songs-link, .albums-link {
+.songs-link, .albums-link, .profile-link {
   color: white;
 }
 

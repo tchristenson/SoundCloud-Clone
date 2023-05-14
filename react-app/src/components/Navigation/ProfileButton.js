@@ -48,6 +48,9 @@ function ProfileButton({ user }) {
           <>
             <li className="username-li">{user.username}</li>
             <li className="email-li">{user.email}</li>
+            <li className="profile-li">
+              <NavLink className="profile-link" to={`/users/${user.id}`}>Profile</NavLink>
+            </li>
             <li className="albums-li">
               <NavLink className="albums-link" to={`/albums/current`}>Albums</NavLink>
             </li>
