@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { getOneAlbumThunk } from "../../store/albums";
 import { editAlbumThunk } from "../../store/albums";
+import './EditAlbumForm.css';
 
 const EditAlbumFormPage = () => {
   const {albumId} = useParams()
@@ -69,8 +70,8 @@ const EditAlbumFormPage = () => {
   }
 
   return (
-    <div>
-        <h1>Update your Album</h1>
+    <div className="new-album-form">
+        <h1 className="form-header edit-album-header">Update your Album</h1>
         {hasSubmitted && validationErrors.length > 0 && (
             <div>
                 <h2>The following errors were found:</h2>
@@ -84,11 +85,13 @@ const EditAlbumFormPage = () => {
         <form
             onSubmit={(e) => handleSubmit(e)}
             encType="multipart/form-data"
+            className="new-album-form-details"
         >
-            <div className="form-input-box">
-                <label>Album Name:</label>
+            <div className="form-input-box name-input">
+                <div><label for="name">Album Name:</label></div>
                 <input
                     type="text"
+                    name="name"
                     onChange={(e) => setName(e.target.value)}
                     value={name}
                     required={true}
@@ -106,9 +109,9 @@ const EditAlbumFormPage = () => {
                 </input>
             </div> */}
 
-            <div className="form-input-box">
-                <label>Album Style:</label>
-                <select required={true} value={styleId} onChange={(e) => setStyleId(e.target.value)}>
+            <div className="form-input-box album-style-input">
+                <div><label for="style">Album Style:</label></div>
+                <select name="style" required={true} value={styleId} onChange={(e) => setStyleId(e.target.value)}>
                     <option value="" disabled>{'(select one)'}</option>
                     <option value={1}>Reggae</option>
                     <option value={2}>Rock</option>
@@ -126,7 +129,9 @@ const EditAlbumFormPage = () => {
                 </select>
             </div>
 
-            <button type="submit">Update Album</button>
+            <div className="four album-four">
+              <button className="confirm-submit" type="submit">Update Album</button>
+            </div>
         </form>
     </div>
 )
