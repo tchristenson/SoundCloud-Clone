@@ -18,7 +18,7 @@ function SignupFormPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (password === confirmPassword) {
-      console.log('inside handleSubmit on SignupFormPage')
+      // console.log('inside handleSubmit on SignupFormPage')
         const data = await dispatch(signUp(username, email, password));
         if (data) {
           setErrors(data)

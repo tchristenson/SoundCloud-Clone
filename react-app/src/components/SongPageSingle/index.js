@@ -23,7 +23,7 @@ function SongPageSingle() {
   dispatch(getOneSongThunk(songId));
   }, [songId, dispatch]);
 
-  console.log('song inside SongPageSingle', song)
+  // console.log('song inside SongPageSingle', song)
   const [liked, setLiked] = useState(false)
   const [likeCount, setLikeCount] = useState(+(song?.likes))
 

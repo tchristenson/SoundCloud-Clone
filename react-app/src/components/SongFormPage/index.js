@@ -20,18 +20,18 @@ function SongFormPage() {
       }, [sessionUser, history])
 
     useEffect(() => {
-        console.log('useEffect running in SongFormPage to get current users albums')
+        // console.log('useEffect running in SongFormPage to get current users albums')
         dispatch(getCurrentUsersAlbumsThunk())
         .then((data) => {
             setAlbums(data);
-            console.log('useEffect complete. Here are the users albums ======>', albums)
+            // console.log('useEffect complete. Here are the users albums ======>', albums)
         })
     }, [dispatch])
 
     const [name, setName] = useState("");
     const [content, setContent] = useState("");
     const [albums, setAlbums] = useState([]);
-    const [selectedAlbumId, setSelectedAlbumId] = useState(0) // Need to find a way to set this to the album name via redux or prop threading/context
+    const [selectedAlbumId, setSelectedAlbumId] = useState("") // Need to find a way to set this to the album name via redux or prop threading/context
     const [styleId, setStyleId] = useState(0); // Need to find a way to set this to the style name via redux or prop threading/context
     const [coverImage, setCoverImage] = useState("")
     const [validationErrors, setValidationErrors] = useState([]);
@@ -51,7 +51,7 @@ function SongFormPage() {
         formData.append('style_id', styleId)
 
         for (let key of formData.entries()) {
-            console.log(key[0] + '----->' + key[1]);
+            // console.log(key[0] + '----->' + key[1]);
         }
 
         const newSong = await dispatch(createSongThunk(formData))
@@ -145,7 +145,7 @@ function SongFormPage() {
                         <div><label for="album">Album:</label></div>
                         <select name="album" required={true} value={selectedAlbumId} onChange={(e) => setSelectedAlbumId(e.target.value)}>
                             <option value="" disabled>{'(select one)'}</option>
-                            <option key={null} value={0}>{`No Album`}</option>
+                            <option key={null} value={null}>{`No Album`}</option>
                             {albums && albums.Albums && (albums.Albums.map((album, idx) => (
                                 <option key={album.id} value={album.id}>{album.name}</option>
                             )))}

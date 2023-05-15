@@ -15,7 +15,7 @@ function PlaylistModal({ playlists, song }) {
     const dispatch = useDispatch()
     const [playlistId, setPlaylistId] = useState(0)
 
-    console.log('playlistmodal playlists', playlists)
+    // console.log('playlistmodal playlists', playlists)
     const { closeModal } = useModal()
 
     const addToPlaylist = async (e) => {

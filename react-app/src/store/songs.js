@@ -109,7 +109,7 @@ export const getAllSongsThunk = () => async (dispatch) => {
 
 export const getOneSongThunk = (songId) => async (dispatch) => {
   const response = await fetch(`/api/songs/${songId}`);
-  console.log("getOneSongThunk Hit ##"); // We are hitting this thunk instead of createSongThunk
+  // console.log("getOneSongThunk Hit ##"); // We are hitting this thunk instead of createSongThunk
 
   if (response.ok) {
     const song = await response.json();
@@ -133,16 +133,16 @@ export const getCurrentUsersSongsThunk = () => async (dispatch) => {
 
 export const createSongThunk = (song) => async (dispatch) => {
   for (let key of song.entries()) {
-    console.log(key[0] + '----->' + key[1]);
+    // console.log(key[0] + '----->' + key[1]);
   }
   const response = await fetch('/api/songs/new', {
     method: "POST",
     body: song
   });
-  console.log('response inside of createSongThunk', response)
+  // console.log('response inside of createSongThunk', response)
   if (response.ok) {
     const song = await response.json();
-    console.log('newSong inside of createSongThunk', song)
+    // console.log('newSong inside of createSongThunk', song)
     dispatch(createSongAction(song));
     return song;
   } else {
@@ -151,7 +151,7 @@ export const createSongThunk = (song) => async (dispatch) => {
 };
 
 export const deleteOneSongThunk = (songId) => async (dispatch) => {
-  console.log("deleting a song by id THUNK")
+  // console.log("deleting a song by id THUNK")
   const res = await fetch(`/api/songs/delete/${songId}`, {
     method: "DELETE",
   });
@@ -169,7 +169,7 @@ export const addLikeToSongThunk = (songId, userId) => async (dispatch) => {
   });
   if (response.ok) {
     const song = await response.json()
-    console.log("song inside add like thunk ============>", song)
+    // console.log("song inside add like thunk ============>", song)
     dispatch(createLikeAction(song))
     return song
   } else {
@@ -194,18 +194,18 @@ export const editSongThunk = (song) => async (dispatch) => {
   // console.log('inside editSongThunk')
   // console.log('song inside editSongThunk', song)
   for (let key of song.entries()) {
-    console.log('formData inside Thunk', '---', key[0] + '---' + key[1]);
+    // console.log('formData inside Thunk', '---', key[0] + '---' + key[1]);
   }
   const songId = parseInt(song.get('id'))
-  console.log('songId inside editSongThunk', songId)
+  // console.log('songId inside editSongThunk', songId)
   const response = await fetch(`/api/songs/edit/${songId}`, {
     method: 'PUT',
     body: song
   })
-  console.log('response inside editSongThunk', response)
+  // console.log('response inside editSongThunk', response)
   if (response.ok) {
     const song = await response.json()
-    console.log('song after response inside editSongThunk', song)
+    // console.log('song after response inside editSongThunk', song)
     dispatch(editSongAction(song))
     return song
   } else {
@@ -242,14 +242,14 @@ function songReducer(state = initState, action) {
       return newState;
     case GET_USERS_SONGS:
       newState = { ...state };
-      console.log("action, action", action.songs);
+      // console.log("action, action", action.songs);
       action.songs.forEach((song) => {
         newState[song.id] = song;
       });
       return newState;
     case GET_ALL_SONGS:
       newState = { ...state };
-      console.log("action, action", action.songs);
+      // console.log("action, action", action.songs);
       action.songs.forEach((song) => {
         newState[song.id] = song;
       });
@@ -260,12 +260,12 @@ function songReducer(state = initState, action) {
       return newState
     case CREATE_SONG:
       newState = { ...state }
-      console.log('action.song inside CREATE_SONG Reducer', action.song)
+      // console.log('action.song inside CREATE_SONG Reducer', action.song)
       newState[action.song.id] = action.song
       return newState;
     case EDIT_SONG:
       newState = { ...state };
-      console.log('action.song inside EDIT_SONG Reducer', action.song)
+      // console.log('action.song inside EDIT_SONG Reducer', action.song)
       newState[action.song.id] = action.song
       return newState;
     case BULK_CREATE_SONGS:

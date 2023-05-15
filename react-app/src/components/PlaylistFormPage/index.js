@@ -22,7 +22,7 @@ function PlaylistFormPage() {
     const [validationErrors, setValidationErrors] = useState([]);
     const [hasSubmitted, setHasSubmitted] = useState(false);
 
-    console.log("this is my userrrrrr", user)
+    // console.log("this is my userrrrrr", user)
 
 
 

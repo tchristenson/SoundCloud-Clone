@@ -14,7 +14,7 @@ function UsersAlbumsPage() {
     }, [dispatch])
 
     const albums = useSelector((state) => state.albums);
-    console.log('user albums inside UsersAlbumsPage', albums)
+    // console.log('user albums inside UsersAlbumsPage', albums)
     const sessionUser = useSelector((state) => state.session.user);
 
     const styles = useSelector(state => Object.values(state.styles));
