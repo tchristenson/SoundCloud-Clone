@@ -5,6 +5,8 @@ import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { getCurrentUsersSongsThunk } from "../../store/songs";
 import './UsersSongPage.css';
+import {  getCurrentUsersAlbumsThunk } from "../../store/albums";
+import { getAllStylesThunk } from "../../store/styles";
 
 
 function UsersSongsPage() {
@@ -12,14 +14,29 @@ function UsersSongsPage() {
 
     useEffect(() => {
         dispatch(getCurrentUsersSongsThunk());
+        dispatch(getCurrentUsersAlbumsThunk())
+        dispatch(getAllStylesThunk())
     }, [dispatch]);
 
     const songs = useSelector((state) => Object.values(state.songs));
     const sessionUser = useSelector(state => state.session.user);
-    console.log(sessionUser)
-    console.log(songs[0]);
+    const albums = useSelector((state) => Object.values(state.albums))
+    const styles = useSelector(state => Object.values(state.styles))
+    const albumIds = albums.map(album => {
+      return album.name
+    })
 
-    if(!songs) {
+
+    const styleIds = styles.map(style =>
+      style.genre)
+
+
+
+
+
+
+
+    if(!songs || !albums) {
         return <h1>no current users songs found</h1>
     }
 
@@ -30,20 +47,22 @@ function UsersSongsPage() {
         //     <h4>song name above?</h4>
         // </div>
         <div id="usersSongPage">
+
           <h1 className="user-songs-title">{sessionUser.username}'s Songs</h1>
-        {songs?.map(({name,albumId, styleId, ownerId, runtime, coverImage, content, id})=>(
+        {songs?.map(({name, albumId, styleId, ownerId, runtime, coverImage, content, id})=>(
           <NavLink to={`/songs/${id}`} key={id}>
             <div className="song-div" key={id}>
               <div className="song-picture-div">
-                <img className="song-picture" src={coverImage}/>
+                <img alt="" className="song-picture" src={coverImage}/>
               </div>
-              
+
               <div>
                 <div className="playlogo"></div>
-                <div className="song-name">{name}</div>
-                <div>By {sessionUser.username} (owner id):{ownerId} , style: {styleId}</div>
-                <div>album name? album id: {albumId}</div>
-                <div>wav thing</div>
+                <div className="song-name">Song name: {name}</div>
+                <div>By {sessionUser.username}</div>
+                <div>Genre: {styleIds[styleId - 1]}</div>
+                <div>album name: {albumIds[albumId - 1]} </div>
+
               </div>
             </div>
           </NavLink>

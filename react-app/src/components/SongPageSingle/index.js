@@ -19,7 +19,7 @@ function SongPageSingle() {
 
   // console.log("this is the length of the users songs", song);
   useEffect(() => {
-  dispatch(getOneSongThunk(songId));
+    dispatch(getOneSongThunk(songId));
   }, [songId, dispatch]);
 
   console.log('song inside SongPageSingle', song)
@@ -27,12 +27,12 @@ function SongPageSingle() {
   const [likeCount, setLikeCount] = useState(+(song?.likes))
 
 
-  const addLike = () =>{
+  const addLike = () => {
     setLiked(!liked)
     setLikeCount(likeCount + 1)
 
   }
-  const removeLike = () =>{
+  const removeLike = () => {
     setLiked(!liked)
     setLikeCount(likeCount - 1)
   }
@@ -46,13 +46,14 @@ function SongPageSingle() {
   return (
     <div id="singSongPage">
       {/* <h1>single song page</h1> */}
-      <AudioPlayer song={song} sessionUser={sessionUser}/>
 
+      <AudioPlayer song={song} sessionUser={sessionUser} />
+      <div></div>
       <div className="song-secondary-ui">
-        <LikeComponent song={song} sessionUser={sessionUser}/>
+        <LikeComponent song={song} sessionUser={sessionUser} />
         {/* <AddToPlaylistButton song={song} /> */}
         {sessionUser && sessionUser.id === song.ownerId && (
-          <OpenModalButton buttonClass="song-del-btn" buttonText="Delete Song" modalComponent={<SongDeleteModal songId = {songId}/>} />
+          <OpenModalButton buttonClass="song-del-btn" buttonText="Delete Song" modalComponent={<SongDeleteModal songId={songId} />} />
         )}
       </div>
 
