@@ -10,11 +10,15 @@ function LikeComponent({song, sessionUser}) {
 
     const addLikeEvent = (e) => {
         e.preventDefault();
-        dispatch(addLikeToSongThunk(song.id, sessionUser.id))
+        if (sessionUser) {
+            dispatch(addLikeToSongThunk(song.id, sessionUser.id))
+        }
     }
     const deleteLikeEvent = (e) => {
         e.preventDefault();
-        dispatch(deleteOneLikeThunk(song.id, sessionUser.id))
+        if (sessionUser) {
+            dispatch(deleteOneLikeThunk(song.id, sessionUser.id))
+        }
     }
 
     // console.log("song info like component : ", song.likes)
