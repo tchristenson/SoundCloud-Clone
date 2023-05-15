@@ -110,6 +110,11 @@ def add_song():
         #     return { "errors": form.errors}
         # if "url" not in image_upload:
         #     return { "errors": form.errors}
+        print('form.data[album_id] =============>>>>>>>>>', form.data['album_id'])
+        print('form.data[album_id] type =============>>>>>>>>>', type(form.data['album_id']))
+        print('form.data[album_id] == 0 =============>>>>>>>>>', form.data['album_id'] == 0)
+        print('form.data[album_id] == string 0 =============>>>>>>>>>', form.data['album_id'] == '0')
+
 
         song= Song(name = form.data['name'],
                         owner_id = current_user.id,
@@ -117,7 +122,14 @@ def add_song():
                         content = audio_upload["url"],
                         album_id = form.data['album_id'],
                         style_id = form.data['style_id'])
+
         print("song here look belive me ===> :", song)
+
+        if song.album_id == '0':
+            song.album_id = None
+
+        print('song.album_id =============>>>>>>>>>', song.album_id)
+
         db.session.add(song)
         db.session.commit()
         return song.to_dict()
@@ -160,8 +172,12 @@ def edit_song(id):
         # print("Style.genre =========>  :", Style.genre)
         # style_instance = (Style.query.filter(Style.genre == style_name)).first().to_dict()
 
+
         song.name = form.data['name']
-        song.album_id = form.data['album_id']
+        if form.data['album_id'] == 0:
+            song.album_id = None
+        else:
+            song.album_id = form.data['album_id']
         song.style_id = form.data['style_id']
         # song.cover_image = image_upload["url"]
         # song.content = audio_upload["url"]
