@@ -42,7 +42,7 @@ function HomePage() {
     const username = songUsers[index]
     console.log("this is the song content========", username)
     return (<>
-      <a href={`/users/${val.ownerId}`}>{username}</a>
+      <a className='songLink' href={`/users/${val.ownerId}`}>{username}</a>
     </>)
   })
 
@@ -70,18 +70,18 @@ function HomePage() {
           } //else if (song.ownerId == )
         }).map((song) => (
           <div className="songDiv" key={song.id}>
-            <a href={`/songs/${song.id}`}>
+            <a className="songLink" href={`/songs/${song.id}`}>
               <img className="songImage" alt="" src={song.coverImage} />
-              <p>{song.name}</p>
+              <p id='songNameHome'>{song.name}</p>
             </a>
             {songUsers2[song.id - 1]}
-              {sessionUser && <LikeComponent song={song} sessionUser={sessionUser} />}
+            {<LikeComponent song={song} sessionUser={sessionUser} />}
 
           </div>
 
         ))}{" "}
       </div>
-      {sessionUser ? <a href={`/songs`}><button>Explore trending playlists</button> </a> : <OpenModalButton buttonText="Explore trending playlists" onItemClick="" modalComponent={<LoginFormModal />} />}
+      {/* {sessionUser ? <a href={`/songs`}><button>Explore trending playlists</button> </a> : <OpenModalButton buttonText="Explore trending playlists" onItemClick="" modalComponent={<LoginFormModal />} />} */}
       <section>
         <h2>Vibillow is an app where you can upload and listen to songs and albums.</h2>
       </section>

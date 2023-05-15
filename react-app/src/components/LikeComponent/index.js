@@ -25,9 +25,9 @@ function LikeComponent({song, sessionUser}) {
     // console.log("present taTION info like component : ", present)
 
     return (
-        <div>
+        <div className="likeDiv">
             {present}
-            <p>song likes : {song.likes}</p>
+            <p>{song.likes}</p>
         </div>)
 }
 
