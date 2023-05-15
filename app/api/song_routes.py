@@ -176,10 +176,14 @@ def edit_song(id):
 
 
         song.name = form.data['name']
+
         if form.data['album_id'] == 0:
+            song.album_id = None
+        if form.data['album_id'] == 'No Album':
             song.album_id = None
         else:
             song.album_id = form.data['album_id']
+
         song.style_id = form.data['style_id']
         # song.cover_image = image_upload["url"]
         # song.content = audio_upload["url"]
