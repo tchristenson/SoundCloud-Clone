@@ -11,6 +11,7 @@ import './SongPageSingle.css';
 import LikeComponent from "../LikeComponent";
 
 function SongPageSingle() {
+  const history = useHistory();
   const dispatch = useDispatch();
   const { songId } = useParams();
   const sessionUser = useSelector((state) => state.session.user);
@@ -55,9 +56,7 @@ function SongPageSingle() {
           <OpenModalButton buttonClass="song-del-btn" buttonText="Delete Song" modalComponent={<SongDeleteModal songId = {songId}/>} />
         )}
         {sessionUser && sessionUser.id === song.ownerId && (
-          <Link to={`/songs/${song.id}/edit`}>
-            <button className="song-edit-btn">Edit Song</button>
-          </Link>
+          <button className="song-edit-btn" onClick={() => history.push(`/songs/${song.id}/edit`)}>Edit Song</button>
 
         )}
       </div>
