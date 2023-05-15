@@ -127,6 +127,8 @@ def add_song():
 
         if song.album_id == '0':
             song.album_id = None
+        if song.album_id == 'No Album':
+            song.album_id = None
 
         print('song.album_id =============>>>>>>>>>', song.album_id)
 
