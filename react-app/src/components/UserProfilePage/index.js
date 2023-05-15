@@ -11,6 +11,7 @@ import './UserProfilePage.css';
 function UserProfilePage() {
   const dispatch = useDispatch();
   //const profileUser = useSelector((state));
+  const sessionUser = useSelector(state => state.session.user);
   const { userId } = useParams();
 
   useEffect(() => {
@@ -38,8 +39,6 @@ function UserProfilePage() {
     }
   }
 
-  console.log('user albums ', userAlbumsArr);
-  console.log('user songs ', userSongsArr);
 
   if (!user) {
     return null;
@@ -61,6 +60,18 @@ function UserProfilePage() {
           </div>
         </div>
       </div>
+
+      {sessionUser && sessionUser.id === user.id && (
+        <div className="user-profile-ui">
+          <div>
+            <NavLink className="user-profile-ui-link" to={`/songs/new`}>Create Song</NavLink>
+          </div>
+
+          <div>
+            <NavLink className="user-profile-ui-link" to={`/albums/new`}>Create Album</NavLink>
+          </div>
+        </div>
+      )}
 
       <div>
         <div>

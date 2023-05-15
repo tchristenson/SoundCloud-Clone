@@ -6,6 +6,7 @@ import AudioPlayer from "../ReactAudioPlayer/AudioPlayer";
 import LoginFormModal from "../LoginFormModal";
 import OpenModalButton from "../OpenModalButton";
 import LikeComponent from "../LikeComponent";
+import { useHistory } from "react-router-dom";
 import "./homepage.css";
 
 import { useEffect } from "react";
@@ -13,6 +14,7 @@ import { faker } from "@faker-js/faker";
 import SongFormPage from "../SongFormPage";
 
 function HomePage() {
+  const history = useHistory();
   const dispatch = useDispatch();
   const [query, setQuery] = useState('')
   const songs = useSelector((state) => Object.values(state.songs));
@@ -58,7 +60,7 @@ function HomePage() {
       </div>
       <div className='inputDiv'>
         <input type="search" placeholder="Search for songs" size={"50"} onChange={event => setQuery(event.target.value)}></input> or {' '}
-        {!sessionUser ? (<OpenModalButton buttonText="Upload your Song" onItemClick="" modalComponent={<LoginFormModal />} />) : (<OpenModalButton buttonText="Upload your Song" onItemClick="" modalComponent={<SongFormPage />} />)}
+        {!sessionUser ? (<OpenModalButton buttonText="Upload your Song" onItemClick="" modalComponent={<LoginFormModal />} />) : (<button onClick={() => history.push('/songs/new')}>Upload Your Song</button>)}
       </div>
       <h2>Hear what's trending for free in the Vibillow community</h2>
       <div id="songContainer">
