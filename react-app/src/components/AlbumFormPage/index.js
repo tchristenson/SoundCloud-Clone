@@ -169,7 +169,7 @@ function AlbumFormPage() {
             <div className="form-input-box">
                 <label>Album Style:</label>
                 <select required={true} onChange={(e) => setStyleId(e.target.value)}>
-                    <option value={0}>{'(select one)'}</option>
+                    <option value="" disabled>{'(select one)'}</option>
                     <option value={1}>Reggae</option>
                     <option value={2}>Rock</option>
                     <option value={3}>Punk</option>

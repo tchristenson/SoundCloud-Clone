@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux"
-import { NavLink, useParams } from "react-router-dom"
+import { NavLink, useParams, Link } from "react-router-dom"
 import { useEffect } from "react"
 import { getOneAlbumThunk } from "../../store/albums";
 import { getAllSongsThunk } from "../../store/songs";
@@ -68,6 +68,9 @@ function AlbumPage() {
           <h2 className="album-user-settings-header">Album Settings</h2>
           <div className="album-user-settings-ui">
             <OpenModalButton buttonClass="album-user-settings-del" buttonText="Delete Album" modalComponent={<AlbumDeleteModal albumId = {albumId}/>} />
+            <Link to={`/albums/${album.id}/edit`}>
+              <button className="album-edit-btn">Edit Album</button>
+            </Link>
           </div>
         </div>
       )}
