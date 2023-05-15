@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { getOneSongThunk } from "../../store/songs";
 import { getCurrentUsersAlbumsThunk } from "../../store/albums";
 import { editSongThunk } from "../../store/songs";
+import './EditSongForm.css'
 
 const EditSongFormPage = () => {
   const {songId} = useParams()
@@ -95,8 +96,8 @@ const EditSongFormPage = () => {
   }
 
   return (
-    <div>
-        <h1>Update your Song</h1>
+    <div className="newSongForm">
+        <h1 className="form-header edit-song-header">Update your Song</h1>
         {hasSubmitted && validationErrors.length > 0 && (
             <div>
                 <h2>The following errors were found:</h2>
@@ -110,15 +111,17 @@ const EditSongFormPage = () => {
         <form
             onSubmit={(e) => handleSubmit(e)}
             encType="multipart/form-data"
+            className="newSongFormDetails"
         >
-            <div className="form-input-box">
-                <label>Song Name:</label>
+            <div className="form-input-box name-input">
+                  <div><label for="name">Song Name:</label></div>
                 <input
-                    type="text"
-                    onChange={(e) => setName(e.target.value)}
-                    value={name}
-                    required={true}
-                    >
+                  type="text"
+                  name="name"
+                  onChange={(e) => setName(e.target.value)}
+                  value={name}
+                  required={true}
+                >
                 </input>
             </div>
 
@@ -133,38 +136,44 @@ const EditSongFormPage = () => {
             </div> */}
 {/* defaultValue={albums?.Albums[selectedAlbumId]?.id} */}
 
-            <div className="form-input-box">
-                <label>Album:</label>
-                <select required={true} onChange={(e) => setSelectedAlbumId(e.target.value)}>
-                    <option value="" disabled>{'(select one)'}</option>
-                    <option key={null} value={0}>{`No Album`}</option>
-                    {albums && albums.Albums && (albums.Albums.map(album => (
-                        <option key={album.id} value={album.id}>{album.name}</option>
-                    )))}
-                </select>
+            <div className="ui-portion three">
+                      <div className="form-input-box album-input">
+                          <div><label for="album">Album:</label></div>
+                          <select name="album" required={true} value={selectedAlbumId} onChange={(e) => setSelectedAlbumId(e.target.value)}>
+                              <option value="" disabled>{'(select one)'}</option>
+                              <option key={null} value={0}>{`No Album`}</option>
+                              {albums && albums.Albums && (albums.Albums.map((album, idx) => (
+                                  <option key={album.id} value={album.id}>{album.name}</option>
+                              )))}
+                          </select>
+                      </div>
+
+                      <div className="form-input-box">
+                          <div><label for="style">Song Style:</label></div>
+                          <select name="style" required={true} onChange={(e) => setStyleId(e.target.value)}>
+                              <option value="" disabled>{'(select one)'}</option>
+                              <option value={1}>Reggae</option>
+                              <option value={2}>Rock</option>
+                              <option value={3}>Punk</option>
+                              <option value={4}>Pop</option>
+                              <option value={5}>Electronic</option>
+                              <option value={6}>Jazz</option>
+                              <option value={7}>Blues</option>
+                              <option value={8}>Country</option>
+                              <option value={9}>Metal</option>
+                              <option value={10}>Folk</option>
+                              <option value={11}>Funk</option>
+                              <option value={12}>Soul</option>
+                              <option value={13}>Classical</option>
+
+                          </select>
+                      </div>
+              </div>
+
+            <div className="four">
+              <button className="confirm-submit" type="submit">Update Song</button>
             </div>
 
-            <div className="form-input-box">
-                <label>Song Style:</label>
-                <select required={true} value={styleId} onChange={(e) => setStyleId(e.target.value)}>
-                    <option value="" disabled>{'(select one)'}</option>
-                    <option value={1}>Reggae</option>
-                    <option value={2}>Rock</option>
-                    <option value={3}>Punk</option>
-                    <option value={4}>Pop</option>
-                    <option value={5}>Electronic</option>
-                    <option value={6}>Jazz</option>
-                    <option value={7}>Blues</option>
-                    <option value={8}>Country</option>
-                    <option value={9}>Metal</option>
-                    <option value={10}>Folk</option>
-                    <option value={11}>Funk</option>
-                    <option value={12}>Soul</option>
-                    <option value={13}>Classical</option>
-                </select>
-            </div>
-
-            <button type="submit">Update Song</button>
         </form>
     </div>
 )
