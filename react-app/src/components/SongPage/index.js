@@ -18,8 +18,8 @@ function SongPage() {
   useEffect(() => {
     dispatch(getAllSongsThunk());
     dispatch(getAllUsersThunk());
-    dispatch(getAllAlbumsThunk())
-    dispatch(getAllStylesThunk())
+    dispatch(getAllAlbumsThunk());
+    dispatch(getAllStylesThunk());
   }, [dispatch]);
 
   const songs = useSelector((state) => Object.values(state.songs));
