@@ -9,7 +9,16 @@ const EditAlbumFormPage = () => {
   const dispatch = useDispatch()
   const history = useHistory()
 
+  const sessionUser = useSelector(state => state.session.user)
   const album = useSelector(state => state.albums[albumId])
+
+  useEffect(() => {
+    if (album) {
+      if (!sessionUser || sessionUser.id !== album.ownerId) {
+        history.push('/')
+      }
+    }
+  }, [album, sessionUser, history])
 
   const [name, setName] = useState("");
   const [styleId, setStyleId] = useState(0);

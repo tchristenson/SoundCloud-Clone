@@ -11,6 +11,14 @@ function SongFormPage() {
     const dispatch = useDispatch();
     const history = useHistory()
 
+    const sessionUser = useSelector(state => state.session.user)
+
+    useEffect(() => {
+        if (!sessionUser) {
+          history.push('/')
+        }
+      }, [sessionUser, history])
+
     useEffect(() => {
         console.log('useEffect running in SongFormPage to get current users albums')
         dispatch(getCurrentUsersAlbumsThunk())
