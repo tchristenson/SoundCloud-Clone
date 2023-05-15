@@ -27,7 +27,7 @@ const EditSongFormPage = () => {
 
   const [name, setName] = useState('');
   const [albums, setAlbums] = useState([]);
-  const [selectedAlbumId, setSelectedAlbumId] = useState(0) // Need this to prefill the album dropdown with the current album
+  const [selectedAlbumId, setSelectedAlbumId] = useState("") // Need this to prefill the album dropdown with the current album
   const [styleId, setStyleId] = useState(0); //Need this to prefill the style dropdown with the current album
 //   const [coverImage, setCoverImage] = useState('')
   const [validationErrors, setValidationErrors] = useState([]);
@@ -153,7 +153,7 @@ const EditSongFormPage = () => {
                           <div><label for="album">Album:</label></div>
                           <select name="album" required={true} value={selectedAlbumId} onChange={(e) => setSelectedAlbumId(e.target.value)}>
                               <option value="" disabled>{'(select one)'}</option>
-                              <option key={null} value={0}>{`No Album`}</option>
+                              <option key={null} value={null}>{`No Album`}</option>
                               {albums && albums.Albums && (albums.Albums.map((album, idx) => (
                                   <option key={album.id} value={album.id}>{album.name}</option>
                               )))}
