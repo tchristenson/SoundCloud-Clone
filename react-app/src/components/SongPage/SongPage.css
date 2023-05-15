@@ -39,3 +39,7 @@
     margin: 20px;
 }
 
+.artistName{
+    text-decoration: none;
+    color: white;
+}

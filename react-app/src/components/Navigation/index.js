@@ -13,10 +13,10 @@ function Navigation({ isLoaded }){
 				<NavLink className="website-title" exact to="/">Vibillow</NavLink>
 			</li>
 			{isLoaded && (
-				<li>
-					<NavLink exact to="/albums">Albums</NavLink> {" "}
-					<NavLink exact to="/songs">Songs</NavLink>
-					<ProfileButton user={sessionUser} />
+				<li className='rightNav'>
+					<NavLink className='allNav' exact to="/albums">Albums</NavLink> {" "}
+					<NavLink className='allNav' exact to="/songs">Songs</NavLink>
+					<ProfileButton  user={sessionUser} />
 				</li>
 			)}
 		</ul>

@@ -22,20 +22,21 @@ function AllAlbums() {
   }, [dispatch])
 
   const albums = useSelector(state => state.albums)
-  const sessionUser = useSelector(state => state.session.user)
   const users = useSelector(state => state.users)
   const styles = useSelector(state => Object.values(state.styles))
   const songs = useSelector(state => Object.values(state.songs))
 
+
   const songAlbumIds = songs.map(song => song.name)
-  console.log("albums idddddds", songAlbumIds)
+
 
   const styleIds = styles.map(style =>
     style.genre)
-  console.log("thjsesaldajsd", albums)
+  console.log("USERRSSSSSS", users)
   if (!albums) return null
 
   const albumsArr = Object.values(albums)
+
 
   // const albumList = albumsArr.map(album => (
   //   <NavLink to={`/albums/${album.id}`}>
@@ -53,8 +54,9 @@ function AllAlbums() {
   // ))
 
   return (
-    <div>
-      <input id="searchBar" placeholder="Enter Album Title" onChange={event => setQuery(event.target.value)}/>
+    <div id="albumPage">
+      <h1>Find Albums By Album Name</h1>
+      <input id="searchBar" placeholder="Enter Album Name" onChange={event => setQuery(event.target.value)}/>
       {albumsArr?.filter(album => {
         if (query === '') {
           return album;
@@ -65,11 +67,11 @@ function AllAlbums() {
         <NavLink to={`/albums/${album.id}`}>
           <div className="album-div">
             <div className="album-pic-div">
-              <img className="album-pic" src={album.coverImage} />
+              <img alt='' className="album-pic" src={album.coverImage} />
             </div>
             <div>
               <div>{album.name}</div>
-              <div></div>
+              <div>alias: {users[album.ownerId]?.alias}</div> <div>Genre: {styleIds[album.styleId]?.toUpperCase()}</div>
             </div>
           </div>
 
