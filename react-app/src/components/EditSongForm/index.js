@@ -11,11 +11,11 @@ const EditSongFormPage = () => {
   const {songId} = useParams()
   const dispatch = useDispatch()
   const history = useHistory()
-  console.log('songId inside EditSongFormPage', songId)
+  // console.log('songId inside EditSongFormPage', songId)
 
   const sessionUser = useSelector(state => state.session.user)
   const song = useSelector(state => state.songs[songId])
-  console.log('song inside EditSongFormPage', song)
+  // console.log('song inside EditSongFormPage', song)
 
   useEffect(() => {
     if (song) {
@@ -38,7 +38,7 @@ const EditSongFormPage = () => {
   useEffect(() => {
     dispatch(getCurrentUsersAlbumsThunk())
     .then((data) => setAlbums(data))
-    console.log('albums inside of SongFormPage', albums)
+    // console.log('albums inside of SongFormPage', albums)
 
     dispatch(getOneSongThunk(songId))
 
@@ -66,27 +66,39 @@ const EditSongFormPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    console.log('handleSubmit running on EditSongForm')
 
     setHasSubmitted(true)
     if (validationErrors.length) return alert('Your Post has errors, cannot submit!')
 
+    // const payload = {
+    //   name: name,
+    //   album_id: selectedAlbumId,
+    //   style_id: styleId,
+    //   id: song.id
+    // }
+
     const formData = new FormData()
     formData.append('name', name)
-    formData.append('album_id', +selectedAlbumId)
+    formData.append('album_id', selectedAlbumId)
     // formData.append('cover_image', coverImage)
     formData.append('style_id', styleId)
     formData.append('id', song.id)
+    console.log('formData inside handleSubmit', formData)
     // formData.append('content', song.content)
 
     for (let key of formData.entries()) {
-      console.log(key[0] + '----->' + key[1]);
+      console.log('is this hitting')
+      console.log('formData before sending to Thunk', '---', key[0] + '---' + key[1]);
   }
+  // console.log('payload before sending to thunk', payload)
 
     const editedSong = await dispatch(editSongThunk(formData))
+
     setName('')
     setAlbums([])
-    setSelectedAlbumId('')
-    setStyleId('')
+    setSelectedAlbumId(0)
+    setStyleId(0)
     // setCoverImage('')
     setValidationErrors([])
     setHasSubmitted(false)

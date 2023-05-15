@@ -3,8 +3,8 @@ from sqlalchemy.sql import text
 
 
 def seed_albums():
-    album1 = Album(
-        name="album1", owner_id=1, style_id=1, cover_image="https://i.imgur.com/uJBQnxS.jpg"
+    Dream = Album(
+        name="Dream", owner_id=1, style_id=3, cover_image="https://i.imgur.com/LcmtbtF.jpg"
     )
     album2 = Album(
         name="album2", owner_id=2, style_id=2, cover_image="https://i.imgur.com/hKimbER.jpg"
@@ -19,7 +19,7 @@ def seed_albums():
         name="album5", owner_id=1, style_id=5, cover_image="https://i.imgur.com/WulZkLi.jpg"
     )
 
-    db.session.add(album1)
+    db.session.add(Dream)
     db.session.add(album2)
     db.session.add(album3)
     db.session.add(album4)
