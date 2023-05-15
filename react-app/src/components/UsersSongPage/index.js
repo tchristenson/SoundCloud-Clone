@@ -61,7 +61,7 @@ function UsersSongsPage() {
                 <div className="song-name">Song name: {name}</div>
                 <div>By {sessionUser.username}</div>
                 <div>Genre: {styleIds[styleId - 1]}</div>
-                <div>album name: {albumIds[albumId - 1]} </div>
+                <div>Album name: {albumIds[albumId - 1]} </div>
 
               </div>
             </div>
