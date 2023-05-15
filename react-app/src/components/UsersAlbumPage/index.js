@@ -34,7 +34,7 @@ function UsersAlbumsPage() {
                 </div>
                 <div>
                     <div>{album.name}</div>
-                    <div>alias: {sessionUser.alias}</div> <div>Genre: {styleIds[album.styleId]?.toUpperCase()}</div>
+                    <div>alias: {sessionUser.alias}</div> <div>Genre: {styleIds[album.styleId - 1]?.toUpperCase()}</div>
                 </div>
             </div>
         </NavLink>
