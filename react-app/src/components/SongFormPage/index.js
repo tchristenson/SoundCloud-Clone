@@ -11,6 +11,14 @@ function SongFormPage() {
     const dispatch = useDispatch();
     const history = useHistory()
 
+    const sessionUser = useSelector(state => state.session.user)
+
+    useEffect(() => {
+        if (!sessionUser) {
+          history.push('/')
+        }
+      }, [sessionUser, history])
+
     useEffect(() => {
         console.log('useEffect running in SongFormPage to get current users albums')
         dispatch(getCurrentUsersAlbumsThunk())
@@ -136,8 +144,8 @@ function SongFormPage() {
                     <div className="form-input-box album-input">
                         <div><label for="album">Album:</label></div>
                         <select name="album" required={true} value={selectedAlbumId} onChange={(e) => setSelectedAlbumId(e.target.value)}>
-                            <option value="">{'(select one)'}</option>
-                            <option key={null} value={null}>{`No Album`}</option>
+                            <option value={0}>{'(select one)'}</option>
+                            <option key={null} value={0}>{`No Album`}</option>
                             {albums && albums.Albums && (albums.Albums.map((album, idx) => (
                                 <option key={album.id} value={album.id}>{album.name}</option>
                             )))}

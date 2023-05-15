@@ -37,7 +37,7 @@ function PlaylistFormPage() {
 
         playlistData.append('name', name)
         playlistData.append('owner_id', user.id)
-        const newPlaylist = await dispatch(createPlaylistThunk(playlistData))
+        // const newPlaylist = await dispatch(createPlaylistThunk(playlistData))
 
         setName('')
         setValidationErrors([])

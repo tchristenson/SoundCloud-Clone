@@ -16,9 +16,13 @@ const EditSongFormPage = () => {
   const song = useSelector(state => state.songs[songId])
   console.log('song inside EditSongFormPage', song)
 
-  // if (!sessionUser || sessionUser.id != song.ownerId) {
-  //   history.push('/')
-  // }
+  useEffect(() => {
+    if (song) {
+      if (!sessionUser || sessionUser.id !== song.ownerId) {
+        history.push('/')
+      }
+    }
+  }, [song, sessionUser, history])
 
   const [name, setName] = useState('');
   const [albums, setAlbums] = useState([]);
@@ -133,7 +137,7 @@ const EditSongFormPage = () => {
                 <label>Album:</label>
                 <select required={true} onChange={(e) => setSelectedAlbumId(e.target.value)}>
                     <option value={0}>{'(select one)'}</option>
-                    <option key={null} value={null}>{`No Album`}</option>
+                    <option key={null} value={0}>{`No Album`}</option>
                     {albums && albums.Albums && (albums.Albums.map(album => (
                         <option key={album.id} value={album.id}>{album.name}</option>
                     )))}
