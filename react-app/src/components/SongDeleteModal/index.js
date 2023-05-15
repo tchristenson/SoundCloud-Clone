@@ -24,7 +24,7 @@ function SongDeleteModal({songId}) {
 
   return (
     <div className="delete-song-div">
-        <h1>Delete This Song?</h1>
+        <h1 className="modalText">Delete This Song?</h1>
         <form onSubmit={handleDelete}>
             <button className="confirm-song-delete" type="submit">Yes, delete the song</button>
             <button className="decline-song-delete" onClick={closeModal}>No, keep this song</button>

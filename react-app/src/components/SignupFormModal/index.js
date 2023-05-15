@@ -40,7 +40,7 @@ function SignupFormModal() {
 
 	return (
 		<div className="signup-div">
-			<h1>Create Your Profile</h1>
+			<h1 className="modalText">Create Your Profile</h1>
 			<form className="signup-form" onSubmit={handleSubmit}>
 				<ul className="signup-errors">
 					{errors.map((error, idx) => (
