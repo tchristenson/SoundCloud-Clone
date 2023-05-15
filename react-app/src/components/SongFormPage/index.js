@@ -144,7 +144,7 @@ function SongFormPage() {
                     <div className="form-input-box album-input">
                         <div><label for="album">Album:</label></div>
                         <select name="album" required={true} value={selectedAlbumId} onChange={(e) => setSelectedAlbumId(e.target.value)}>
-                            <option value={0}>{'(select one)'}</option>
+                            <option value="" disabled>{'(select one)'}</option>
                             <option key={null} value={0}>{`No Album`}</option>
                             {albums && albums.Albums && (albums.Albums.map((album, idx) => (
                                 <option key={album.id} value={album.id}>{album.name}</option>
@@ -155,7 +155,7 @@ function SongFormPage() {
                     <div className="form-input-box">
                         <div><label for="style">Song Style:</label></div>
                         <select name="style" required={true} onChange={(e) => setStyleId(e.target.value)}>
-                            <option value={0}>{'(select one)'}</option>
+                            <option value="" disabled>{'(select one)'}</option>
                             <option value={1}>Reggae</option>
                             <option value={2}>Rock</option>
                             <option value={3}>Punk</option>
