@@ -11,7 +11,7 @@
 
 .confirm-album-delete, .decline-album-delete {
     background-color: rgb(112, 112, 112);
-  
+
     border: none;
     border-right: 1px solid rgb(153, 153, 153);
 
@@ -36,4 +36,8 @@
 .decline-album-delete:hover {
     background-color: rgb(131, 131, 131);
     transition: .5s;
+}
+
+.modalText {
+    color: white;
 }

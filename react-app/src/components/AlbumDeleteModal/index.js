@@ -24,7 +24,7 @@ function AlbumDeleteModal({albumId}) {
 
     return (
         <div className="delete-album-div">
-            <h1>Delete This Album?</h1>
+            <h1 className="modalText">Delete This Album?</h1>
             <form onSubmit={handleDelete}>
                 <button className="confirm-album-delete" type="submit">Yes, delete the album</button>
                 <button className="decline-album-delete" onClick={closeModal}>No, keep this album</button>

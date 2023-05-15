@@ -9,6 +9,10 @@
     width: 330px;
 }
 
+.modalText {
+    color: white;
+}
+
 .signup-form {
     display: flex;
     justify-content: center;
@@ -28,9 +32,9 @@
     margin-left: auto;
     margin-right: auto;
     width: 40%;
-    
+
     background-color: rgb(112, 112, 112);
-  
+
     border: none;
     border-top: 1px solid rgb(153, 153, 153);
     border-bottom: 1px solid rgb(153, 153, 153);
