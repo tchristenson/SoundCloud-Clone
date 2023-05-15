@@ -2,6 +2,7 @@ import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getCurrentUsersAlbumsThunk } from "../../store/albums";
+import { getAllStylesThunk } from "../../store/styles";
 import './UsersAlbumPage.css';
 
 function UsersAlbumsPage() {
@@ -9,11 +10,17 @@ function UsersAlbumsPage() {
 
     useEffect(() => {
         dispatch(getCurrentUsersAlbumsThunk());
+        dispatch(getAllStylesThunk());
     }, [dispatch])
 
     const albums = useSelector((state) => state.albums);
     console.log('user albums inside UsersAlbumsPage', albums)
     const sessionUser = useSelector((state) => state.session.user);
+
+    const styles = useSelector(state => Object.values(state.styles));
+
+    const styleIds = styles.map(style =>
+        style.genre)
 
     if (!albums) return null;
 
@@ -27,7 +34,7 @@ function UsersAlbumsPage() {
                 </div>
                 <div>
                     <div>{album.name}</div>
-                    <div></div>
+                    <div>alias: {sessionUser.alias}</div> <div>Genre: {styleIds[album.styleId]?.toUpperCase()}</div>
                 </div>
             </div>
         </NavLink>

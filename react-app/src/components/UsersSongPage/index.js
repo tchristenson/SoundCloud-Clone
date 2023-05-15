@@ -4,6 +4,8 @@ import { NavLink, Redirect } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { getCurrentUsersSongsThunk } from "../../store/songs";
+import { getAllStylesThunk } from "../../store/styles";
+import { getAllAlbumsThunk } from "../../store/albums";
 import './UsersSongPage.css';
 
 
@@ -12,12 +14,24 @@ function UsersSongsPage() {
 
     useEffect(() => {
         dispatch(getCurrentUsersSongsThunk());
+        dispatch(getAllStylesThunk());
+        dispatch(getAllAlbumsThunk());
     }, [dispatch]);
 
     const songs = useSelector((state) => Object.values(state.songs));
     const sessionUser = useSelector(state => state.session.user);
-    console.log(sessionUser)
-    console.log(songs[0]);
+
+    const styles = useSelector(state => Object.values(state.styles));
+    const albums = useSelector((state) => Object.values(state.albums));
+    //console.log(sessionUser)
+    //console.log(songs[0]);
+
+    const albumIds = albums.map(album => {
+      return album.name
+    })
+
+    const styleIds = styles.map(style =>
+      style.genre)
 
     if(!songs) {
         return <h1>no current users songs found</h1>
@@ -40,10 +54,11 @@ function UsersSongsPage() {
               
               <div>
                 <div className="playlogo"></div>
-                <div className="song-name">{name}</div>
-                <div>By {sessionUser.username} (owner id):{ownerId} , style: {styleId}</div>
-                <div>album name? album id: {albumId}</div>
-                <div>wav thing</div>
+                <div className="song-name">Title: {name}</div>
+                <div>Artist: {sessionUser.username}</div>
+                <div>Genre: {styleIds[styleId - 1]}</div>
+                <div>Album name: {albumIds[albumId - 1]}</div>
+                {/* <div>wav thing</div> */}
               </div>
             </div>
           </NavLink>

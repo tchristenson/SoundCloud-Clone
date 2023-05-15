@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux"
-import { NavLink, useParams, Link } from "react-router-dom"
+import { NavLink, useParams, Link, useHistory } from "react-router-dom"
 import { useEffect } from "react"
 import { getOneAlbumThunk } from "../../store/albums";
 import { getAllSongsThunk } from "../../store/songs";
@@ -11,6 +11,7 @@ import { getAllUsersThunk } from "../../store/users";
 import { getAllStylesThunk } from "../../store/styles";
 
 function AlbumPage() {
+  const history = useHistory();
   const dispatch = useDispatch();
   const sessionUser = useSelector((state) => state.session.user);
   const { albumId } = useParams();
@@ -80,9 +81,9 @@ function AlbumPage() {
           <h2 className="album-user-settings-header">Album Settings</h2>
           <div className="album-user-settings-ui">
             <OpenModalButton buttonClass="album-user-settings-del" buttonText="Delete Album" modalComponent={<AlbumDeleteModal albumId = {albumId}/>} />
-            <Link to={`/albums/${album.id}/edit`}>
-              <button className="album-edit-btn">Edit Album</button>
-            </Link>
+            
+            <button className="album-user-settings-edit" onClick={() => history.push(`/albums/${album.id}/edit`)}>Edit Album</button>
+            
           </div>
         </div>
       )}

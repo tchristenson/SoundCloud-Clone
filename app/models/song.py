@@ -16,13 +16,13 @@ class Song(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     owner_id = db.Column(db.Integer, ForeignKey(add_prefix_for_prod('users.id')))
-    album_id = db.Column(db.Integer, ForeignKey(add_prefix_for_prod('albums.id')))
-    # playlist_id = db.Column(db.PickleType(), ForeignKey(add_prefix_for_prod('playlists.id')))
+    album_id = db.Column(db.Integer, ForeignKey(add_prefix_for_prod('albums.id')), nullable=True)
     name = db.Column(db.String(50), nullable=False)
-    # runtime = db.Column(db.String) # Undecided on datatype. Date, datetime, or integer?
     style_id = db.Column(db.Integer, ForeignKey(add_prefix_for_prod('styles.id')))
     cover_image = db.Column(db.String, nullable=False)
-    content = db.Column(db.String, nullable=False) # Keeping as a string for now. TBD based on AWS
+    content = db.Column(db.String, nullable=False)
+    # playlist_id = db.Column(db.PickleType(), ForeignKey(add_prefix_for_prod('playlists.id')))
+    # runtime = db.Column(db.String) # Undecided on datatype. Date, datetime, or integer?
 
     owner = db.relationship('User', back_populates='songs')
     album = db.relationship('Album', back_populates='songs')
