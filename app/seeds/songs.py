@@ -5,12 +5,10 @@ def seed_songs():
     song_one = Song(
         owner_id = 1,
         album_id = 1,
-        name = 'Song One',
-        style_id = 2,
-        cover_image = 'http://vibillow-images.s3.amazonaws.com/024c21e29efb4c6eb090d057a29eac79.jpg',
-        content = 'http://vibillow-songs.s3.amazonaws.com/0ae94e4ea5e34441b032038b63dbc95d.wav',
-        # playlist_id = [1, 2],
-        # user_likes = [all_users[0], all_users[1]]
+        name = 'Non-Violence',
+        style_id = 3,
+        cover_image = 'http://vibillow-images.s3.amazonaws.com/5c9bcb1130c744b78dc1b46d74c57b25.jpg',
+        content = 'http://vibillow-songs.s3.amazonaws.com/ef62d5ae422442da80248074565fbff4.wav',
     )
 
     song_two = Song(
@@ -20,9 +18,6 @@ def seed_songs():
         style_id = 2,
         cover_image = 'http://vibillow-images.s3.amazonaws.com/486dcfce2d944abe98f997322d7a5d89.jpg',
         content = 'https://vibillow-songs.s3.amazonaws.com/0da8b2074d06482a9f4b6af8066d86ae.wav',
-        # playlist_id = 1
-
-
     )
 
     song_three = Song(
@@ -78,7 +73,7 @@ def seed_songs():
         album_id = 5,
         name = 'Song Eight',
         style_id = 7,
-        cover_image = 'http://vibillow-images.s3.amazonaws.com/c7a31abf4bb448b1a5ab0ab0dc2c31a9.jpg',
+        cover_image = 'http://vibillow-images.s3.amazonaws.com/83c9c9ab42ab4fd3bf856b7f768fc295.jpg',
         content = 'https://vibillow-songs.s3.amazonaws.com/d981e8da966b432ea303f85a03422de3.wav',
         # playlist_id = 2
 
