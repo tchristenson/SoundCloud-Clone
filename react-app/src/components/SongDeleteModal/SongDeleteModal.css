@@ -27,6 +27,10 @@
     border: none;
 }
 
+.modalText{
+    color: white;
+}
+
 .confirm-song-delete:hover {
     background-color: rgba(180, 105, 105, 0.8);
     transition: .5s;
