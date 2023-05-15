@@ -4,12 +4,14 @@ import { useHistory } from "react-router-dom";
 import { createSongThunk } from "../../store/songs";
 import { getCurrentUsersAlbumsThunk } from "../../store/albums"
 import {BarLoader} from "react-spinners"
+import { useModal } from "../../context/Modal";
 import './songFormPage.css'
 
 function SongFormPage() {
 
     const dispatch = useDispatch();
     const history = useHistory()
+    const {closeModal} = useModal()
 
     const sessionUser = useSelector(state => state.session.user)
 
@@ -64,6 +66,7 @@ function SongFormPage() {
         setCoverImage('')
         setValidationErrors([])
         setHasSubmitted(false)
+        closeModal()
 
         history.push(`/songs/${newSong.id}`)
     }
