@@ -25,11 +25,11 @@ export const getCurrentUsersPlaylistsThunk = () => async (dispatch) => {
   const response = await fetch('/api/playlists/current');
   if (response.ok) {
     const userPlaylists = await response.json();
-    console.log('userplaylists inside of getCurrentUsersplaylistsThunk ======>', userPlaylists)
+    // console.log('userplaylists inside of getCurrentUsersplaylistsThunk ======>', userPlaylists)
     dispatch(getUserplaylistsAction(userPlaylists));
     return userPlaylists
   } else {
-    return console.log("Get current user's playlists: bad response")
+    return ("Get current user's playlists: bad response")
   }
 }
 
@@ -39,10 +39,10 @@ export const createPlaylistThunk = (playlist) => async (dispatch) => {
     method: "POST",
     body: playlist
   });
-  console.log('response inside of createAlbumThunk', response)
+  // console.log('response inside of createAlbumThunk', response)
   if (response.ok) {
     const playlist = await response.json();
-    console.log('newAlbum inside of createAlbumThunk', playlist)
+    // console.log('newAlbum inside of createAlbumThunk', playlist)
     dispatch(createPlaylistAction(playlist));
     return playlist;
   } else {
@@ -55,7 +55,7 @@ const playlistReducer = (state = {}, action) => {
     switch (action.type) {
       case GET_USER_PLAYLISTS:
         newState = {...state}
-        console.log('playlist reducer action ==> :', action)
+        // console.log('playlist reducer action ==> :', action)
         action.playlists.playlists.forEach(playlist => newState[playlist.id] = playlist)
         return newState
       case CREATE_PLAYLIST:

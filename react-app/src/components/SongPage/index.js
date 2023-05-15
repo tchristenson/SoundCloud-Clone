@@ -41,16 +41,16 @@ function SongPage() {
 
   const styleIds = styles.map(style =>
     style.genre)
-    
+
   const songUsers2 = songs.map((val, index) => {
     const username = songUsers[index]
-    console.log("this is the styles========", styles)
+    // console.log("this is the styles========", styles)
     return (<>
       <a className='artistName' href={`/users/${val.ownerId}`}>{username}</a>
     </>)
   })
 
-  console.log("alubbbbbbbbbbbbums", albumIds)
+  // console.log("alubbbbbbbbbbbbums", albumIds)
 
   if (!songs || !users) {
     return <h1>testerrrrr</h1>;

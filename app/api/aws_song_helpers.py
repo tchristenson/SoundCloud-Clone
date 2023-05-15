@@ -39,7 +39,7 @@ def remove_song_file_from_s3(url):
     # AWS needs the song file name, not the URL,
     # so we split that out of the URL
     key = url.rsplit("/", 1)[1]
-    print(key)
+    # print(key)
     try:
         s3.delete_object(
         Bucket=BUCKET_NAME,

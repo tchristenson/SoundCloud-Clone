@@ -29,7 +29,7 @@ def get_album_by_id(id):
     Query for an album by id and returns that album in a dictionary
     """
     album = Album.query.get(id)
-    print('album inside of Get Album by ID route', album)
+    # print('album inside of Get Album by ID route', album)
     return album.to_dict()
 
 @album_routes.route('/delete/<int:id>', methods=["DELETE"])
@@ -55,7 +55,7 @@ def add_album():
     form = NewAlbum()
     form['csrf_token'].data = request.cookies['csrf_token']
 
-    print("form.data inside New Album Route ======>>", form.data)
+    # print("form.data inside New Album Route ======>>", form.data)
 
     if form.validate_on_submit():
         # style_name = form.data['style']
@@ -67,7 +67,7 @@ def add_album():
         cover_image.filename = get_unique_image_filename(cover_image.filename)
         image_upload = upload_image_file_to_s3(cover_image)
 
-        print("IMAGE UPLOAD DATA HERE =========>  :", image_upload)
+        # print("IMAGE UPLOAD DATA HERE =========>  :", image_upload)
 
         album = Album(name = form.data['name'],
                       owner_id = current_user.id,
@@ -92,7 +92,7 @@ def edit_album(id):
     form = EditAlbum()
     form['csrf_token'].data = request.cookies['csrf_token']
 
-    print("form.data ======>>", form.data)
+    # print("form.data ======>>", form.data)
 
     if form.validate_on_submit():
         album.name = form.data['name']

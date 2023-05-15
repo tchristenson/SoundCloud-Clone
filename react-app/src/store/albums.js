@@ -61,38 +61,38 @@ export const getAllAlbumsThunk = () => async (dispatch) => {
 
 export const getOneAlbumThunk = (albumId) => async (dispatch) => {
   const response = await fetch(`/api/albums/${albumId}`)
-  console.log('checking inside of getOneAlbumThunk')
+  // console.log('checking inside of getOneAlbumThunk')
 
   if (response.ok) {
     const album = await response.json()
-    console.log('album inside of getOneAlbumThunk', album)
+    // console.log('album inside of getOneAlbumThunk', album)
     dispatch(getOneAlbumAction(album))
     return album
   }
 }
 
 export const getCurrentUsersAlbumsThunk = () => async (dispatch) => {
-  console.log('getCurrentUsersAlbumsThunk running')
+  // console.log('getCurrentUsersAlbumsThunk running')
   const response = await fetch('/api/albums/current');
 
   if (response.ok) {
     const userAlbums = await response.json();
-    console.log('userAlbums inside of getCurrentUsersAlbumsThunk ======>', userAlbums)
+    // console.log('userAlbums inside of getCurrentUsersAlbumsThunk ======>', userAlbums)
     dispatch(getUserAlbumsAction(userAlbums));
     return userAlbums
   } else {
-    return console.log("Get current user's albums: bad response")
+    // return console.log("Get current user's albums: bad response")
   }
 }
 
 export const deleteAlbumThunk = (albumId) => async (dispatch) => {
-  console.log('albumId inside deleteAlbumThunk', albumId)
+  // console.log('albumId inside deleteAlbumThunk', albumId)
   const response = await fetch(`/api/albums/delete/${albumId}`, {
     method: "DELETE"
   });
 
   if (response.ok) {
-    console.log('response inside of deleteAlbumThunk', response)
+    // console.log('response inside of deleteAlbumThunk', response)
     // const delAlbum = response.json();
     dispatch(deleteAlbumAction(albumId));
     return {'message': 'delete successful'}
@@ -102,15 +102,15 @@ export const deleteAlbumThunk = (albumId) => async (dispatch) => {
 }
 
 export const createAlbumThunk = (album) => async (dispatch) => {
-  console.log('album inside of createAlbumThunk', album)
+  // console.log('album inside of createAlbumThunk', album)
   const response = await fetch('/api/albums/new', {
     method: "POST",
     body: album
   });
-  console.log('response inside of createAlbumThunk', response)
+  // console.log('response inside of createAlbumThunk', response)
   if (response.ok) {
     const album = await response.json();
-    console.log('newAlbum inside of createAlbumThunk', album)
+    // console.log('newAlbum inside of createAlbumThunk', album)
     dispatch(createAlbumAction(album));
     return album;
   } else {
@@ -120,15 +120,15 @@ export const createAlbumThunk = (album) => async (dispatch) => {
 
 export const editAlbumThunk = (album) => async (dispatch) => {
   const albumId = parseInt(album.get('id'))
-  console.log('albumId inside editAlbumThunk', albumId)
+  // console.log('albumId inside editAlbumThunk', albumId)
   const response = await fetch(`/api/albums/edit/${albumId}`, {
     method: 'PUT',
     body: album
   })
-  console.log('response inside editAlbumThunk', response)
+  // console.log('response inside editAlbumThunk', response)
   if (response.ok) {
     const album = await response.json()
-    console.log('album after response inside editAlbumsThunk', album)
+    // console.log('album after response inside editAlbumsThunk', album)
     dispatch(editAlbumAction(album))
     return album
   } else {

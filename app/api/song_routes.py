@@ -88,8 +88,8 @@ def add_song():
     form['csrf_token'].data = request.cookies['csrf_token']
 
 
-    print("form.data inside New Song route ======>>", form.data)
-    print("request.files ======>", request.files)
+    # print("form.data inside New Song route ======>>", form.data)
+    # print("request.files ======>", request.files)
 
     if form.validate_on_submit():
         # style_name = form.data['style']
@@ -110,10 +110,10 @@ def add_song():
         #     return { "errors": form.errors}
         # if "url" not in image_upload:
         #     return { "errors": form.errors}
-        print('form.data[album_id] =============>>>>>>>>>', form.data['album_id'])
-        print('form.data[album_id] type =============>>>>>>>>>', type(form.data['album_id']))
-        print('form.data[album_id] == 0 =============>>>>>>>>>', form.data['album_id'] == 0)
-        print('form.data[album_id] == string 0 =============>>>>>>>>>', form.data['album_id'] == '0')
+        # print('form.data[album_id] =============>>>>>>>>>', form.data['album_id'])
+        # print('form.data[album_id] type =============>>>>>>>>>', type(form.data['album_id']))
+        # print('form.data[album_id] == 0 =============>>>>>>>>>', form.data['album_id'] == 0)
+        # print('form.data[album_id] == string 0 =============>>>>>>>>>', form.data['album_id'] == '0')
 
 
         song= Song(name = form.data['name'],
@@ -123,14 +123,14 @@ def add_song():
                         album_id = form.data['album_id'],
                         style_id = form.data['style_id'])
 
-        print("song here look belive me ===> :", song)
+        # print("song here look belive me ===> :", song)
 
         if song.album_id == '0':
             song.album_id = None
         if song.album_id == 'No Album':
             song.album_id = None
 
-        print('song.album_id =============>>>>>>>>>', song.album_id)
+        # print('song.album_id =============>>>>>>>>>', song.album_id)
 
         db.session.add(song)
         db.session.commit()
@@ -165,8 +165,8 @@ def edit_song(id):
     form = EditSong()
     form['csrf_token'].data = request.cookies['csrf_token']
 
-    print('song printing inside of edit route ======>>', song.to_dict())
-    print("form.data ======>>", form.data)
+    # print('song printing inside of edit route ======>>', song.to_dict())
+    # print("form.data ======>>", form.data)
 
     if form.validate_on_submit():
         # style_name = form.data['style']
@@ -189,7 +189,7 @@ def edit_song(id):
         # song.content = audio_upload["url"]
         # db.session.add(song)
         db.session.commit()
-        print('song printing inside of validate on submit route ======>>', song.to_dict())
+        # print('song printing inside of validate on submit route ======>>', song.to_dict())
         return song.to_dict()
 
 
@@ -209,8 +209,8 @@ def add_bulk_songs():
     form['csrf_token'].data = request.cookies['csrf_token']
 
 
-    print("form.data inside Bulk Songs route ======>>", form.data)
-    print("request.files ======>", request.files)
+    # print("form.data inside Bulk Songs route ======>>", form.data)
+    # print("request.files ======>", request.files)
 
     if form.validate_on_submit():
         # style_name = form.data['style']
@@ -225,7 +225,7 @@ def add_bulk_songs():
         content.filename = get_unique_song_filename(content.filename)
         audio_upload = upload_song_file_to_s3(content)
 
-        print("=========> upload data here get y AUDIO :", audio_upload["url"])
+        # print("=========> upload data here get y AUDIO :", audio_upload["url"])
 
         # if "url" not in audio_upload:
         #     return { "errors": form.errors}
@@ -238,7 +238,7 @@ def add_bulk_songs():
                         content = audio_upload["url"],
                         album_id = form.data['album_id'],
                         style_id = form.data['style_id'])
-        print("song here look belive me ===> :", song)
+        # print("song here look belive me ===> :", song)
         db.session.add(song)
         db.session.commit()
         return song.to_dict()

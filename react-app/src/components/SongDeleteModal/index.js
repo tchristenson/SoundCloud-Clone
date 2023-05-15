@@ -15,8 +15,8 @@ function SongDeleteModal({songId}) {
 
     const deletedSong = await dispatch(deleteOneSongThunk(songId))
     if (deletedSong.message === 'delete successful') {
-      console.log('if deletedSong running')
-      console.log('deletedSong', deletedSong)
+      // console.log('if deletedSong running')
+      // console.log('deletedSong', deletedSong)
       history.push("/songs/current");
       closeModal();
     }

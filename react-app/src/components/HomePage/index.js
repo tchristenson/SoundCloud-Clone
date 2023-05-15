@@ -38,11 +38,11 @@ function HomePage() {
     // return (users[id].id === song.ownerId ? (<p>{users[id].alias}</p>) : null)
     // })
   })
-  console.log("songs", songUsers)
+  // console.log("songs", songUsers)
 
   const songUsers2 = songs.map((val, index) => {
     const username = songUsers[index]
-    console.log("this is the song content========", username)
+    // console.log("this is the song content========", username)
     return (<>
       <a className='songLink' href={`/users/${val.ownerId}`}>{username}</a>
     </>)

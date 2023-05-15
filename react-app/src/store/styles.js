@@ -20,7 +20,7 @@ const styleReducer = (state = initState, action) => {
 
     switch (action.type) {
         case GET_ALL_STYLES:
-            console.log("acttttioooooooooooooon", action)
+            // console.log("acttttioooooooooooooon", action)
             const newState = { ...state };
             action.styles.styles.forEach(style =>
                 newState[style.id] = style);

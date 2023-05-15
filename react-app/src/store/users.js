@@ -21,11 +21,11 @@ const getAllUsersAction = (users) => {
 
 export const getOneUserThunk = (userId) => async (dispatch) => {
     const response = await fetch(`/api/users/${userId}`);
-    console.log("response ", response);
+    // console.log("response ", response);
 
     if (response.ok) {
         const user = await response.json();
-        console.log("user ", user);
+        // console.log("user ", user);
         dispatch(getOneUserAction(user))
         return user
     }
@@ -33,11 +33,11 @@ export const getOneUserThunk = (userId) => async (dispatch) => {
 
 export const getAllUsersThunk = () => async (dispatch) => {
     const response = await fetch(`/api/users/`);
-    console.log("response ", response);
+    // console.log("response ", response);
 
     if (response.ok) {
         const {users} = await response.json();
-        console.log("this is the users THUNK", users)
+        // console.log("this is the users THUNK", users)
         dispatch(getAllUsersAction(users))
         return users
     }

@@ -62,9 +62,9 @@ function AlbumFormPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('files inside handleSubmit', files)
-    console.log('files[0]', files[0])
-    console.log('files[1]', files[1])
+    // console.log('files inside handleSubmit', files)
+    // console.log('files[0]', files[0])
+    // console.log('files[1]', files[1])
 
     // files.forEach(file => console.log('file.name', file.name))
 
@@ -77,11 +77,11 @@ function AlbumFormPage() {
     albumFormData.append('style_id', styleId)
 
     for (let key of albumFormData.entries()) {
-      console.log(key[0] + '----->' + key[1]);
+    //   console.log(key[0] + '----->' + key[1]);
     }
 
     const newAlbum = await dispatch(createAlbumThunk(albumFormData))
-    console.log('newAlbum after awaiting dispatch ---->', newAlbum)
+    // console.log('newAlbum after awaiting dispatch ---->', newAlbum)
 
 
     for (let i = 0; i < files.length; i++) {
@@ -224,11 +224,11 @@ function AlbumFormPage() {
                 </div>
 
             </div>
-            
+
             <div className="four album-four">
                 <button className="confirm-submit" type="submit">Create Album</button>
             </div>
-            
+
 
         </form>
     </div>
