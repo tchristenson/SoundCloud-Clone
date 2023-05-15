@@ -26,6 +26,20 @@ body {
   display: none;
 }
 
+
+.allNav{
+
+  color: white;
+  padding: 0px 10px;
+  margin: 0px 10px;
+  border: 2px solid white;
+
+}
+.allNav:hover{
+  background-color: white;
+  color: rgb(112, 112, 112);
+}
+
 .nav-bar {
   list-style-type: none;
   display: flex;
@@ -54,7 +68,7 @@ body {
   margin-right: 32px;
   margin-top: 8px;
   background-color: rgb(112, 112, 112);
-  
+
   border: none;
   border-left: 1px solid rgb(153, 153, 153);
   border-right: 1px solid rgb(153, 153, 153);
@@ -66,14 +80,15 @@ body {
 .profile-button:hover {
   background-color: rgb(121, 121, 121);
   transition: .5s;
+  cursor: pointer;
 }
 
 .logout-btn, .login-btn, .signup-btn {
   background-color: rgb(112, 112, 112);
-  
+
   border: none;
-  border-top: 1px solid rgb(153, 153, 153);
-  border-bottom: 1px solid rgb(153, 153, 153);
+  /* border-top: 1px solid rgb(153, 153, 153);
+  border-bottom: 1px solid rgb(153, 153, 153); */
   padding-top: 10px;
   padding-bottom: 10px;
   width: max-content;
@@ -83,13 +98,35 @@ body {
   bottom: 0px;
 }
 
-.logout-btn:hover, .signup-btn:hover, .login-btn:hover {
+.logout-btn:hover, .signup-btn:hover, .login-btn:hover, .songs-link:hover, .albums-link:hover, .profile-link:hover {
   text-decoration: underline;
 }
 
 .username-li, .email-li {
   margin: 6px 0px;
   font-weight: bold;
+}
+
+.albums-li, .songs-li, .profile-li {
+  padding: 8px 0px;
+}
+
+.profile-li {
+  border-top: 1px solid rgb(153, 153, 153);
+  padding-bottom: 6px;
+}
+
+.albums-li {
+  padding: 6px 0px;
+}
+
+.songs-li {
+  border-bottom: 1px solid rgb(153, 153, 153);
+  padding-top: 6px;
+}
+
+.songs-link, .albums-link, .profile-link {
+  color: white;
 }
 
 .login-btn, .signup-btn {

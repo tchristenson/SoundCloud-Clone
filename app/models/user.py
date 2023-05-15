@@ -28,8 +28,8 @@ class User(db.Model, UserMixin):
 
     style = db.relationship('Style', back_populates='owners')
 
-    songs = db.relationship('Song', back_populates='owner')
-    albums = db.relationship('Album', back_populates='owner')
+    songs = db.relationship('Song', back_populates='owner', cascade="all, delete-orphan")
+    albums = db.relationship('Album', back_populates='owner', cascade="all, delete-orphan")
     # playlists = db.relationship('Playlist', back_populates='owner')
 
 

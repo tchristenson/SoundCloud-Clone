@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams, useHistory } from "react-router-dom";
+import { useParams, useHistory, Link } from "react-router-dom";
 import { useEffect } from "react";
-import { getOneSongThunk} from "../../store/songs";
+import { editSongThunk, getOneSongThunk } from "../../store/songs";
 import SongDeleteModal from "../SongDeleteModal";
 import OpenModalButton from "../OpenModalButton";
 import AudioPlayer from "../ReactAudioPlayer/AudioPlayer";
@@ -12,22 +12,36 @@ import LikeComponent from "../LikeComponent";
 
 function SongPageSingle() {
   const dispatch = useDispatch();
-  const sessionUser = useSelector((state) => state.session.user);
   const { songId } = useParams();
+  const sessionUser = useSelector((state) => state.session.user);
+  const song = useSelector((state) => state.songs[songId]);
   //   const songLength = useSelector((state)=> Object.values(state.songs).length)
 
   // console.log("this is the length of the users songs", song);
   useEffect(() => {
-    dispatch(getOneSongThunk(songId));
+  dispatch(getOneSongThunk(songId));
   }, [songId, dispatch]);
 
-  const song = useSelector((state) => state.songs[songId]);
+  console.log('song inside SongPageSingle', song)
+  const [liked, setLiked] = useState(false)
+  const [likeCount, setLikeCount] = useState(+(song?.likes))
+
+
+  const addLike = () =>{
+    setLiked(!liked)
+    setLikeCount(likeCount + 1)
+
+  }
+  const removeLike = () =>{
+    setLiked(!liked)
+    setLikeCount(likeCount - 1)
+  }
+
 
   if (!song) {
     return null;
   }
 
-  console.log('song inside SongPageSingle', song)
 
   return (
     <div id="singSongPage">
@@ -39,6 +53,12 @@ function SongPageSingle() {
         {/* <AddToPlaylistButton song={song} /> */}
         {sessionUser && sessionUser.id === song.ownerId && (
           <OpenModalButton buttonClass="song-del-btn" buttonText="Delete Song" modalComponent={<SongDeleteModal songId = {songId}/>} />
+        )}
+        {sessionUser && sessionUser.id === song.ownerId && (
+          <Link to={`/songs/${song.id}/edit`}>
+            <button className="song-edit-btn">Edit Song</button>
+          </Link>
+
         )}
       </div>
 

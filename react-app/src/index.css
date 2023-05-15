@@ -9,7 +9,12 @@
   }
 
   .audio-player {
-    background: #c1b6bc;
+    /* background: #c1b6bc; */
+    background: linear-gradient(45deg, rgb(121, 121, 121) 20%, rgb(207, 115, 87));
+  }
+  h1{
+    color: rgb(121, 121, 121);
+    text-shadow: 1px 1px 2px black;
   }
 
   .inner {

@@ -4,6 +4,7 @@ import session from './session'
 import userReducer from './users';
 import songReducer from './songs';
 import albumReducer from './albums';
+import styleReducer from './styles';
 // import playlistReducer from './playlists';
 
 const rootReducer = combineReducers({
@@ -11,6 +12,7 @@ const rootReducer = combineReducers({
   users: userReducer,
   songs: songReducer,
   albums: albumReducer,
+  styles: styleReducer
   // playlists: playlistReducer
 });
 

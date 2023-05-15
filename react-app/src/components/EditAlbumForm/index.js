@@ -9,7 +9,16 @@ const EditAlbumFormPage = () => {
   const dispatch = useDispatch()
   const history = useHistory()
 
+  const sessionUser = useSelector(state => state.session.user)
   const album = useSelector(state => state.albums[albumId])
+
+  useEffect(() => {
+    if (album) {
+      if (!sessionUser || sessionUser.id !== album.ownerId) {
+        history.push('/')
+      }
+    }
+  }, [album, sessionUser, history])
 
   const [name, setName] = useState("");
   const [styleId, setStyleId] = useState(0);
@@ -100,7 +109,7 @@ const EditAlbumFormPage = () => {
             <div className="form-input-box">
                 <label>Album Style:</label>
                 <select required={true} value={styleId} onChange={(e) => setStyleId(e.target.value)}>
-                    <option value={0}>{'(select one)'}</option>
+                    <option value="" disabled>{'(select one)'}</option>
                     <option value={1}>Reggae</option>
                     <option value={2}>Rock</option>
                     <option value={3}>Punk</option>

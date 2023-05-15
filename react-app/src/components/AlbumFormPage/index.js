@@ -10,6 +10,14 @@ function AlbumFormPage() {
   const dispatch = useDispatch();
   const history = useHistory();
 
+  const sessionUser = useSelector(state => state.session.user)
+
+  useEffect(() => {
+    if (!sessionUser) {
+      history.push('/')
+    }
+  }, [sessionUser, history])
+
   const [name, setName] = useState("");
   const [coverImage, setCoverImage] = useState("");
   const [styleId, setStyleId] = useState(0);
@@ -100,8 +108,7 @@ function AlbumFormPage() {
     setValidationErrors([])
     setHasSubmitted(false)
     setFiles([])
-
-    history.push(`/albums/${newAlbum.id}`)
+     if(newAlbum) history.push(`/albums/${newAlbum.id}`)
   }
 
   useEffect(() => {
@@ -161,7 +168,7 @@ function AlbumFormPage() {
             <div className="form-input-box">
                 <label>Album Style:</label>
                 <select required={true} onChange={(e) => setStyleId(e.target.value)}>
-                    <option value={0}>{'(select one)'}</option>
+                    <option value="" disabled>{'(select one)'}</option>
                     <option value={1}>Reggae</option>
                     <option value={2}>Rock</option>
                     <option value={3}>Punk</option>

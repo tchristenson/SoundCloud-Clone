@@ -1,5 +1,10 @@
-.album-div {
+.user-album-page-div {
     margin: 24px;
+}
+
+.album-div {
+    margin-left: 0px;
+    margin-right: 0px;
     padding: 16px;
     background-color: rgb(131, 131, 131);
 
