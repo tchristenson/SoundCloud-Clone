@@ -57,14 +57,14 @@ const EditAlbumFormPage = () => {
     formData.append('style_id', styleId)
     formData.append('id', album.id)
 
-    const editedAlbum = await dispatch(editAlbumThunk(formData)) // Need to actually make this
+    const editedAlbum = await dispatch(editAlbumThunk(formData))
 
     setName('')
     setStyleId('')
     setValidationErrors([])
     setHasSubmitted(false)
 
-    history.push(`/albums/${editedAlbum.id}`) // Comment this back in when complete
+    history.push(`/albums/${editedAlbum.id}`)
 
   }
 
