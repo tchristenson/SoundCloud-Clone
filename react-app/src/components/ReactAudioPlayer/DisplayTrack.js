@@ -6,7 +6,7 @@ const DisplayTrack = ({ currentTrack, audioRef, setDuration, progressBarRef, ses
     setDuration(seconds);
     progressBarRef.current.max = seconds;
   };
-console.log("this is the current user ======>", sessionUser)
+// console.log("this is the current user ======>", sessionUser)
   return (
     <div>
       <audio src={currentTrack.content} ref={audioRef}  onLoadedMetadata={onLoadedMetadata}/>

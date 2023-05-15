@@ -11,7 +11,7 @@ function UsersPlaylistPage() {
     }, [dispatch])
 
     const playlist = useSelector((state) => state.playlists);
-    console.log('user playlist inside UsersPlaylistPage', playlist)
+    // console.log('user playlist inside UsersPlaylistPage', playlist)
 
     if (!playlist) return <h1>no playlist found</h1>;
 

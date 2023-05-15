@@ -66,7 +66,7 @@ const EditSongFormPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    console.log('handleSubmit running on EditSongForm')
+    // console.log('handleSubmit running on EditSongForm')
 
     setHasSubmitted(true)
     if (validationErrors.length) return alert('Your Post has errors, cannot submit!')
@@ -84,12 +84,12 @@ const EditSongFormPage = () => {
     // formData.append('cover_image', coverImage)
     formData.append('style_id', styleId)
     formData.append('id', song.id)
-    console.log('formData inside handleSubmit', formData)
+    // console.log('formData inside handleSubmit', formData)
     // formData.append('content', song.content)
 
     for (let key of formData.entries()) {
-      console.log('is this hitting')
-      console.log('formData before sending to Thunk', '---', key[0] + '---' + key[1]);
+      // console.log('is this hitting')
+      // console.log('formData before sending to Thunk', '---', key[0] + '---' + key[1]);
   }
   // console.log('payload before sending to thunk', payload)
 

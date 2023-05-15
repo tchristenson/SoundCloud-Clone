@@ -20,11 +20,11 @@ function SongFormPage() {
       }, [sessionUser, history])
 
     useEffect(() => {
-        console.log('useEffect running in SongFormPage to get current users albums')
+        // console.log('useEffect running in SongFormPage to get current users albums')
         dispatch(getCurrentUsersAlbumsThunk())
         .then((data) => {
             setAlbums(data);
-            console.log('useEffect complete. Here are the users albums ======>', albums)
+            // console.log('useEffect complete. Here are the users albums ======>', albums)
         })
     }, [dispatch])
 
@@ -51,7 +51,7 @@ function SongFormPage() {
         formData.append('style_id', styleId)
 
         for (let key of formData.entries()) {
-            console.log(key[0] + '----->' + key[1]);
+            // console.log(key[0] + '----->' + key[1]);
         }
 
         const newSong = await dispatch(createSongThunk(formData))

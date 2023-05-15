@@ -32,7 +32,7 @@ function AllAlbums() {
 
   const styleIds = styles.map(style =>
     style.genre)
-  console.log("USERRSSSSSS", users)
+  // console.log("USERRSSSSSS", users)
   if (!albums) return null
 
   const albumsArr = Object.values(albums)
