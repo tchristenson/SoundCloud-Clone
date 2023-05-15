@@ -21,7 +21,7 @@
     display: flex;
 }
 
-.like-btn, .add-to-pl-btn, .song-del-btn {
+.like-btn, .add-to-pl-btn, .song-del-btn, .song-edit-btn {
     background-color: rgb(121, 121, 121);
 
     border: none;
@@ -42,6 +42,11 @@
     margin: 10px;
 }
 
+.song-edit-btn {
+    margin: 10px;
+    margin-left: -11px;
+}
+
 .like-btn:hover {
     background-color: rgba(228, 88, 134, 0.7);
     transition: .5s;
@@ -54,5 +59,10 @@
 
 .song-del-btn:hover {
     background-color: rgba(180, 105, 105, 0.8);
+    transition: .5s;
+}
+
+.song-edit-btn:hover {
+    background-color: rgba(140, 187, 209, 0.7);
     transition: .5s;
 }

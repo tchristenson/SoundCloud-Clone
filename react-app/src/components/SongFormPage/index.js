@@ -46,7 +46,7 @@ function SongFormPage() {
         const formData = new FormData()
         formData.append('name', name)
         formData.append('content', content)
-        formData.append('album_id', +selectedAlbumId)
+        formData.append('album_id', selectedAlbumId)
         formData.append('cover_image', coverImage)
         formData.append('style_id', styleId)
 
@@ -59,8 +59,8 @@ function SongFormPage() {
         setName('')
         setContent('')
         setAlbums([])
-        setSelectedAlbumId('')
-        setStyleId('')
+        setSelectedAlbumId(0)
+        setStyleId(0)
         setCoverImage('')
         setValidationErrors([])
         setHasSubmitted(false)
@@ -75,7 +75,7 @@ function SongFormPage() {
         if (!content) errors.push('Please provide an audio file!')
         if (!coverImage) errors.push('Please provide an image file!')
         if (!styleId) errors.push('Please enter a style!')
-        if (!selectedAlbumId) errors.push('Please enter album details!')
+        // if (!selectedAlbumId) errors.push('Please enter album details!')
         setValidationErrors(errors)
     }, [name, content, styleId, coverImage, selectedAlbumId])
 

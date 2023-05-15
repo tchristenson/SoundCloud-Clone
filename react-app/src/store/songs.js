@@ -132,7 +132,9 @@ export const getCurrentUsersSongsThunk = () => async (dispatch) => {
 }
 
 export const createSongThunk = (song) => async (dispatch) => {
-  console.log('song inside of createSongThunk', song)
+  for (let key of song.entries()) {
+    console.log(key[0] + '----->' + key[1]);
+  }
   const response = await fetch('/api/songs/new', {
     method: "POST",
     body: song
@@ -189,9 +191,14 @@ export const deleteOneLikeThunk = (songId, userId) => async (dispatch) => {
 }
 
 export const editSongThunk = (song) => async (dispatch) => {
-  // const songId = parseInt(song.get('id'))
-  console.log('songId inside editSongThunk', song.id)
-  const response = await fetch(`/api/songs/edit/${song.id}`, {
+  // console.log('inside editSongThunk')
+  // console.log('song inside editSongThunk', song)
+  for (let key of song.entries()) {
+    console.log('formData inside Thunk', '---', key[0] + '---' + key[1]);
+  }
+  const songId = parseInt(song.get('id'))
+  console.log('songId inside editSongThunk', songId)
+  const response = await fetch(`/api/songs/edit/${songId}`, {
     method: 'PUT',
     body: song
   })

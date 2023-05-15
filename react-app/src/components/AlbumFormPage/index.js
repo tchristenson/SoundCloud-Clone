@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { createAlbumThunk } from "../../store/albums"
 import { bulkCreateSongThunk } from "../../store/songs";
+import './AlbumFormPage.css';
 
 
 function AlbumFormPage() {
@@ -122,13 +123,13 @@ function AlbumFormPage() {
   }, [name, styleId, coverImage, files])
 
   return (
-    <div>
-        <h1>Create a New Album</h1>
-              <p>Note: The drag and drop feature is in process, so to create an album with
+    <div class="new-album-form">
+        <h1 className="form-header">Create a New Album</h1>
+              {/* <p>Note: The drag and drop feature is in process, so to create an album with
         songs on it you must select multiple song files at once and drag them onto the
          div tag that says "Drag and Drop Songs to Upload". You cannot drag and drop songs one by one
          and the songs cannot be inside of a folder. But as long as you  drop multiple files all together, the songs
-         should simultaneously be created when creating the album. An actual song-length audio file could take a couple minutes  </p>
+         should simultaneously be created when creating the album. An actual song-length audio file could take a couple minutes  </p> */}
         {hasSubmitted && validationErrors.length > 0 && (
             <div>
                 <h2>The following errors were found:</h2>
@@ -142,11 +143,13 @@ function AlbumFormPage() {
         <form
             onSubmit={(e) => handleSubmit(e)}
             encType="multipart/form-data"
+            className="new-album-form-details"
         >
-            <div className="form-input-box">
-                <label>Album Name:</label>
+            <div className="form-input-box name-input album-name-input">
+                <div><label className="album-name-label" for="name">Album Name:</label></div>
                 <input
                     type="text"
+                    name="name"
                     onChange={(e) => setName(e.target.value)}
                     value={name}
                     required={true}
@@ -154,8 +157,8 @@ function AlbumFormPage() {
                 </input>
             </div>
 
-            <div className="form-input-box">
-                <label>Cover Image:</label>
+            <div className="form-input-box album-file-input">
+                <div><label>Cover Image:</label></div>
                 <input
                     type="file"
                     accept="image/*"
@@ -165,8 +168,8 @@ function AlbumFormPage() {
                 </input>
             </div>
 
-            <div className="form-input-box">
-                <label>Album Style:</label>
+            <div className="form-input-box album-style-input">
+                <div><label>Album Style:</label></div>
                 <select required={true} onChange={(e) => setStyleId(e.target.value)}>
                     <option value="" disabled>{'(select one)'}</option>
                     <option value={1}>Reggae</option>
@@ -186,7 +189,7 @@ function AlbumFormPage() {
                 </select>
             </div>
 
-            <div className="form-input-box">
+            <div className="form-input-box dropdown-input">
                 {files && (
                     <>
                     <div className="uploads">
@@ -194,7 +197,7 @@ function AlbumFormPage() {
                         {Array.from(files).map((file, idx) =>
                             <li key={idx}>
                             {file.name}
-                            <button onClick={() => handleCancel(file)}>Cancel</button>
+                            <button className="cancel-song" onClick={() => handleCancel(file)}>Cancel</button>
                             </li>)}
                         </ul>
                     </div>
@@ -207,9 +210,9 @@ function AlbumFormPage() {
                 onDrop={handleDrop}
                 >
 
-                <label>Drag and Drop Songs to Upload</label>
+                <label className="dropdown-text">Drag and Drop Songs to Upload</label>
                 {/* <label>Or</label> */}
-                <input
+                <input className="song-dropdown"
                     type="file"
                     accept="audio/*"
                     multiple
@@ -221,8 +224,11 @@ function AlbumFormPage() {
                 </div>
 
             </div>
-
-            <button type="submit">Create Album</button>
+            
+            <div className="four album-four">
+                <button className="confirm-submit" type="submit">Create Album</button>
+            </div>
+            
 
         </form>
     </div>
