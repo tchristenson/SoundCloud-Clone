@@ -24,25 +24,10 @@ function SongPageSingle() {
   }, [songId, dispatch]);
 
   // console.log('song inside SongPageSingle', song)
-  const [liked, setLiked] = useState(false)
-  const [likeCount, setLikeCount] = useState(+(song?.likes))
-
-
-  const addLike = () =>{
-    setLiked(!liked)
-    setLikeCount(likeCount + 1)
-
-  }
-  const removeLike = () =>{
-    setLiked(!liked)
-    setLikeCount(likeCount - 1)
-  }
-
 
   if (!song) {
     return null;
   }
-
 
   return (
     <div id="singSongPage">
