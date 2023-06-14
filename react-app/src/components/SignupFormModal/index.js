@@ -72,6 +72,8 @@ function SignupFormModal() {
 						value={password}
 						onChange={(e) => setPassword(e.target.value)}
 						required
+						minLength={6}
+						maxLength={15}
 					/>
 				</label>
 				<label className="signup-text">
@@ -81,6 +83,8 @@ function SignupFormModal() {
 						value={confirmPassword}
 						onChange={(e) => setConfirmPassword(e.target.value)}
 						required
+						minLength={6}
+						maxLength={15}
 					/>
 				</label>
 				<label className="signup-text">
@@ -125,8 +129,7 @@ function SignupFormModal() {
 				</label>
 				<div className="form-input-box">
                 <select onChange={(e) => setStyleId(e.target.value)}>
-                    <option value='' disabled selected>{'Music Style'}</option>
-										<option value={null}>No Style</option>
+                    <option value=''>{'Music Style'}</option>
                     <option value={1}>Reggae</option>
                     <option value={2}>Rock</option>
                     <option value={3}>Punk</option>

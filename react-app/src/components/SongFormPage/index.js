@@ -155,7 +155,7 @@ function SongFormPage() {
                     <div className="form-input-box">
                         <div><label for="style">Song Style:</label></div>
                         <select name="style" required={true} onChange={(e) => setStyleId(e.target.value)}>
-                            <option value="" disabled>{'(select one)'}</option>
+                            <option value={""} >Please select a style</option>
                             <option value={1}>Reggae</option>
                             <option value={2}>Rock</option>
                             <option value={3}>Punk</option>
