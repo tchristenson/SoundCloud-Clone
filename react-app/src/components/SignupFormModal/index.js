@@ -128,22 +128,7 @@ function SignupFormModal() {
 					/>
 				</label>
 				<div className="form-input-box">
-                <select onChange={(e) => setStyleId(e.target.value)}>
-                    <option value=''>{'Music Style'}</option>
-                    <option value={1}>Reggae</option>
-                    <option value={2}>Rock</option>
-                    <option value={3}>Punk</option>
-                    <option value={4}>Pop</option>
-                    <option value={5}>Electronic</option>
-                    <option value={6}>Jazz</option>
-                    <option value={7}>Blues</option>
-                    <option value={8}>Country</option>
-                    <option value={9}>Metal</option>
-                    <option value={10}>Folk</option>
-                    <option value={11}>Funk</option>
-                    <option value={12}>Soul</option>
-                    <option value={13}>Classical</option>
-                </select>
+               
             </div>
 				<button className="confirm-signup" type="submit">Sign Up!</button>
 			</form>

@@ -40,5 +40,4 @@ class SignUpForm(FlaskForm):
     bio = StringField('bio')
     first_name = StringField('first_name')
     last_name = StringField('last_name')
-    style_id = IntegerField('style')
     profile_image = StringField('profile_picture')
