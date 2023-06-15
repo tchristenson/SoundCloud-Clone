@@ -50,6 +50,7 @@
 .like-btn:hover {
     background-color: rgba(228, 88, 134, 0.7);
     transition: .5s;
+    cursor: pointer;
 }
 
 .add-to-pl-btn:hover {
