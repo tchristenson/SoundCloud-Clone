@@ -24,9 +24,9 @@ class User(db.Model, UserMixin):
     profile_image = db.Column(db.String(40))
     first_name = db.Column(db.String(40))
     last_name = db.Column(db.String(40))
-    style_id = db.Column(db.Integer, ForeignKey(add_prefix_for_prod('styles.id')))
 
-    style = db.relationship('Style', back_populates='owners')
+
+    
 
     songs = db.relationship('Song', back_populates='owner', cascade="all, delete-orphan")
     albums = db.relationship('Album', back_populates='owner', cascade="all, delete-orphan")
@@ -59,6 +59,6 @@ class User(db.Model, UserMixin):
             'profileImage': self.profile_image,
             'firstName': self.first_name,
             'lastName': self.last_name,
-            'styleId': self.style_id,
+
             # 'likes': self.user_likes
         }
