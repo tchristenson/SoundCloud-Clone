@@ -3,6 +3,7 @@
 
 
 Vibillow is a website clone, inspired by [SoundCloud](https://soundcloud.com/discover). Vibillow can be used to post songs and albums for everyone to hear. Users can also like songs and search for their favorite songs. Interested parties can sign up to post content at their leisure.
+>>>>>>> d28e5d2f001c15797fca94faea51eddf7d20d1a1
 
 **Live Site: [Vibillow](https://vibillow.onrender.com)**
 
@@ -85,3 +86,4 @@ You can access the Login and Signup Modal here. Also, we have a demo user button
 + [Tommy Christenson](https://github.com/tchristenson)
 + [Josh Johnson](https://github.com/sousyoshi)
 + [Matt Meyer](https://github.com/meyermatt22)
+=========
