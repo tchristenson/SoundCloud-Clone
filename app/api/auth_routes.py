@@ -3,6 +3,7 @@ from app.models import User, db
 from app.forms import LoginForm
 from app.forms import SignUpForm
 from flask_login import current_user, login_user, logout_user, login_required
+from ..api.aws_image_helpers import get_unique_image_filename, upload_image_file_to_s3
 
 auth_routes = Blueprint('auth', __name__)
 
@@ -63,6 +64,13 @@ def sign_up():
     # print('form.Data ============>>>>>>>>>>>>', form.data)
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
+
+        if form.data["profile_picture"]:
+            image = form.data["profile_picture"]
+            image.filename = get_unique_image_filename(image.filename)
+            upload = upload_image_file_to_s3(image)
+
+
         user = User(
             username=form.data['username'],
             email=form.data['email'],
@@ -71,8 +79,7 @@ def sign_up():
             bio=form.data['bio'],
             first_name=form.data['first_name'],
             last_name=form.data['last_name'],
-            profile_image=form.data['profile_image'],
-            
+            profile_picture=upload['url'] if form.data['profile_picture'] else form.data['profile_picture']
         )
         db.session.add(user)
         db.session.commit()
