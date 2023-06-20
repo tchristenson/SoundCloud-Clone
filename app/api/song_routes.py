@@ -1,5 +1,6 @@
 from flask import Blueprint, request
-from app.models import Song, Style, User, likes
+from app.models import Song, Style, User
+from app.models.like import likes
 from flask_login import current_user, login_required, current_user
 from ..forms.song_form import NewSong
 from ..forms.edit_song_form import EditSong
@@ -7,6 +8,7 @@ from ..forms.bulk_songs_form import BulkSongs
 from ..models import db
 from ..api.aws_song_helpers import get_unique_song_filename, upload_song_file_to_s3
 from ..api.aws_image_helpers import get_unique_image_filename, upload_image_file_to_s3
+from sqlalchemy import select
 
 
 
@@ -40,38 +42,38 @@ def song(id):
     song = Song.query.get(id)
     return song.to_dict()
 
-@song_routes.route('/<int:id>/likes/<int:userId>', methods=['POST'])
+## ----------------------------------------  LIKE OR UNLIKE A SONG  ----------------------------------------
+@song_routes.route('/<int:id>/likes/<int:user_id>', methods=['POST'])
 @login_required
-def like_song(id, userId):
-    """Query for a song by id and user, adds user to song.user_likes"""
+def like_song(id, user_id):
+    """Queries for a song and user, and adds the user's like to that song if they have not liked the song.
+        Otherwise, the like is removed if the user has already liked the song"""
     song = Song.query.get(id)
-    user = User.query.get(userId)
+    if not song:
+        return {'error': 'song not found'}
 
-    song.user_likes.append(user)
-    db.session.commit()
-    return song.to_dict()
+    user = User.query.get(user_id)
+    if not user:
+        return {'error': 'user not found'}
 
-@song_routes.route('/<int:id>/likes/delete/<int:userId>', methods=['DELETE'])
-@login_required
-def delete_like(id, userId):
-    """Handles deleting a like for a song by userId"""
-    song = Song.query.get(id)
-    user = User.query.get(userId)
+    query = select([likes]).where(
+        (likes.c.user_id == user_id) & (likes.c.song_id == id)
+    )
 
-    # song.user_likes.get(user.id == id).remove(user)
-    # like_list = [x for x in song.user_likes if id in x]
-    # for x in range(0, len(song.user_likes)):
-    #     # users = song.user_likes[x]
-    #     if id == user.id:
-    #         song.user_likes.pop(user[x])
-    #         db.session.commit()
-    #         return "song deleted"
+    result = db.session.execute(query)
+    print('result =============>>>>>>>>>>>>>>', result)
 
+    has_liked = result.fetchone() is not None
+    print('has_liked =============>>>>>>>>>>>>>>', has_liked)
 
-    user.song_likes.remove(song)
-
-    db.session.commit()
-    return song.to_dict()
+    if has_liked:
+        song.user_likes.remove(user)
+        db.session.commit()
+        return song.to_dict()
+    else:
+        song.user_likes.append(user)
+        db.session.commit()
+        return song.to_dict()
 
 
 @song_routes.route('/new', methods = ['POST'])

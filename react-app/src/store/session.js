@@ -67,26 +67,47 @@ export const logout = () => async (dispatch) => {
 	}
 };
 
-export const signUp = (username, email, password, alias, bio, firstName, lastName, styleId, profilePicture) => async (dispatch) => {
-	// console.log(username, email, password, alias, bio, firstName, lastName, styleId, profilePicture)
+// export const signUp = (username, email, password, alias, bio, firstName, lastName, styleId, profilePicture) => async (dispatch) => {
+// 	// console.log(username, email, password, alias, bio, firstName, lastName, styleId, profilePicture)
+// 	const response = await fetch("/api/auth/signup", {
+// 		method: "POST",
+// 		headers: {
+// 			"Content-Type": "application/json",
+// 		},
+// 		body: JSON.stringify({
+// 			username,
+// 			email,
+// 			password,
+// 			alias,
+// 			bio,
+// 			first_name: firstName,
+// 			last_name: lastName,
+// 			style_id: styleId,
+// 			profile_picture: profilePicture
+// 		}),
+// 	});
+
+// 	if (response.ok) {
+// 		const data = await response.json();
+// 		dispatch(setUser(data));
+// 		return null;
+// 	} else if (response.status < 500) {
+// 		const data = await response.json();
+// 		if (data.errors) {
+// 			return data.errors;
+// 		}
+// 	} else {
+// 		return ["An error occurred. Please try again."];
+// 	}
+// };
+export const signUp = (formData) => async (dispatch) => {
+    // for (let key of formData.entries()) {
+    //     console.log('formData inside of the thunk', key[0] + '----->' + key[1]);
+    //   }
 	const response = await fetch("/api/auth/signup", {
 		method: "POST",
-		headers: {
-			"Content-Type": "application/json",
-		},
-		body: JSON.stringify({
-			username,
-			email,
-			password,
-			alias,
-			bio,
-			first_name: firstName,
-			last_name: lastName,
-			style_id: styleId,
-			profile_image: profilePicture
-		}),
+		body: formData
 	});
-
 	if (response.ok) {
 		const data = await response.json();
 		dispatch(setUser(data));

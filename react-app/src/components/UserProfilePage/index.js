@@ -39,6 +39,7 @@ function UserProfilePage() {
     }
   }
 
+  console.log('profile image here? ', user?.profileImage)
 
   if (!user) {
     return null;
@@ -50,9 +51,9 @@ function UserProfilePage() {
 
       <div className="user-main-details">
         <div className="user-image-div">
-          <img className="user-image" src={user.profileImage}/>
+          <img className="user-image" src={user.profilePicture}/>
         </div>
-        
+
         <div className="user-text-details">
           <p className="user-text-username">{user.username}</p>
           <div className="user-text-full-name">

@@ -122,9 +122,13 @@ a:-webkit-any-link {
     display: flex;
 }
 
+.album-user-settings-ui button:hover {
+    cursor: pointer;
+}
+
 .album-user-settings-del, .album-user-settings-edit {
     background-color: rgb(121, 121, 121);
-  
+
     border: none;
     border-right: 1px solid rgb(153, 153, 153);
     border-left: 1px solid rgb(153, 153, 153);

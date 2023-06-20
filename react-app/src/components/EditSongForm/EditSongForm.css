@@ -1,3 +1,7 @@
 .edit-song-header {
     margin-bottom: 24px;
 }
+
+.confirm-submit:hover {
+    cursor: pointer;
+}

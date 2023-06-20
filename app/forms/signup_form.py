@@ -1,8 +1,12 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, IntegerField, SelectField
 from wtforms.validators import DataRequired, Email, ValidationError
+from flask_wtf.file import FileField, FileAllowed, FileRequired
+from ..api.aws_image_helpers import ALLOWED_IMAGE_EXTENSIONS
 from app.models import User
+import re
 
+regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b'
 
 def user_exists(form, field):
     # Checking if user exists
@@ -20,12 +24,14 @@ def username_exists(form, field):
         raise ValidationError('Username is already in use.')
 
 def valid_email(form, field):
-# Checking if username is already in use
     email = field.data
     email_error = '@' not in email
     if email_error:
         raise ValidationError('Email is not valid.')
-
+    if(re.fullmatch(regex, email)):
+        print("Valid Email")
+    else:
+        raise ValidationError("Invalid Email")
 
 class SignUpForm(FlaskForm):
     username = StringField(
@@ -36,5 +42,4 @@ class SignUpForm(FlaskForm):
     bio = StringField('bio')
     first_name = StringField('first_name')
     last_name = StringField('last_name')
-    style_id = IntegerField('style')
-    profile_image = StringField('profile_picture')
+    profile_picture = FileField("profile_picture", validators=[FileAllowed(list(ALLOWED_IMAGE_EXTENSIONS))])

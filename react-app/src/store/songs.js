@@ -1,3 +1,6 @@
+
+// ----------------------------------------  ACTIONS  ----------------------------------------
+
 const GET_ALL_SONGS = "/GET_SONGS";
 const GET_USERS_SONGS = "/GET_USERS_SONGS";
 const GET_SONG = "/GET_SONG";
@@ -5,9 +8,7 @@ const CREATE_SONG = "/CREATE_SONG";
 const DELETE_SONG = "/DELETE_SONG";
 const EDIT_SONG = "/EDIT_SONG"
 const BULK_CREATE_SONGS = '/BULK_CREATE_SONGS'
-// const ADD_SONG_TO_PLAYLIST = '/ADD_SONG_TO_PLAYLIST'
-const ADD_LIKE_TO_SONG = '/ADD_LIKE_TO_SONG'
-const DELETE_LIKE_FROM_SONG = '/DELETE_LIKE_FROM_SONG'
+const LIKE_OR_UNLIKE_SONG = '/LIKE_OR_UNLIKE_SONG'
 
 
 const getAllSongsAction = (songs) => {
@@ -37,13 +38,6 @@ const deleteOneSongAction = (songId) => {
   };
 };
 
-const deleteOneLikeAction = (songId) => {
-  return {
-    type: DELETE_LIKE_FROM_SONG,
-    songId,
-  }
-}
-
 const createSongAction = (song) => {
   return {
     type: CREATE_SONG,
@@ -58,13 +52,6 @@ const editSongAction = (song) => {
   }
 }
 
-const createLikeAction = (song) => {
-  return {
-    type: ADD_LIKE_TO_SONG,
-    song
-  }
-}
-
 const bulkCreateSongAction = (song) => {
   return {
     type: BULK_CREATE_SONGS,
@@ -72,28 +59,14 @@ const bulkCreateSongAction = (song) => {
   }
 }
 
-// const addSongToPlaylistAction = (song) => {
-//   return {
-//     type: ADD_SONG_TO_PLAYLIST,
-//     song
-//   }
-// }
+const likeOrUnlikeSongAction = song => {
+    return {
+        type: LIKE_OR_UNLIKE_SONG,
+        song
+    }
+}
 
-
-// export const addSongToPlaylistThunk = (playlistId, songId) => async (dispatch) => {
-//   const response = await fetch(`/api/playlists/${playlistId}/new_song/${songId}`, {
-//     method: "PUT",
-//     body: playlistId, songId
-//   });
-//   if (response.ok) {
-//     const song = await response.json()
-//     dispatch(addSongToPlaylistAction(song))
-//     return song
-//   } else {
-//     return 'addSongToPlaylist response not ok!!!!!!!!!!!!'
-//   }
-
-// }
+// ----------------------------------------  THUNKS  ----------------------------------------
 
 export const getAllSongsThunk = () => async (dispatch) => {
   const response = await fetch("/api/songs");
@@ -162,33 +135,6 @@ export const deleteOneSongThunk = (songId) => async (dispatch) => {
     return ("Song couldnt be deleted")
   }
 };
-export const addLikeToSongThunk = (songId, userId) => async (dispatch) => {
-  const response = await fetch(`/api/songs/${songId}/likes/${userId}`, {
-    method: "POST",
-    body: songId, userId
-  });
-  if (response.ok) {
-    const song = await response.json()
-    // console.log("song inside add like thunk ============>", song)
-    dispatch(createLikeAction(song))
-    return song
-  } else {
-    return 'response in add liketosongthunk not ok'
-  }
-}
-
-export const deleteOneLikeThunk = (songId, userId) => async (dispatch) => {
-  const res = await fetch(`/api/songs/${songId}/likes/delete/${userId}`, {
-    method: 'DELETE'
-  });
-  if(res.ok) {
-    const song = await res.json()
-    dispatch(deleteOneLikeAction(songId));
-    return song
-  } else {
-    return "delete on like thunk: res not ok"
-  }
-}
 
 export const editSongThunk = (song) => async (dispatch) => {
   // console.log('inside editSongThunk')
@@ -232,6 +178,20 @@ export const bulkCreateSongThunk = (song) => async (dispatch) => {
   }
 };
 
+export const likeOrUnlikeSongThunk = (songId, userId) => async (dispatch) => {
+    const response = await fetch(`/api/songs/${songId}/likes/${userId}`, {
+        method: 'POST',
+        body: songId, userId
+    });
+    if (response.ok) {
+        const song = await response.json()
+        dispatch(likeOrUnlikeSongAction(song))
+        return song
+    }
+}
+
+// ----------------------------------------  REDUCER  ----------------------------------------
+
 const initState = {};
 function songReducer(state = initState, action) {
   let newState;
@@ -273,20 +233,10 @@ function songReducer(state = initState, action) {
       // console.log('action.song inside BULK_CREATE_SONG Reducer', action.song)
       newState[action.song.id] = action.song
       return newState;
-    // case ADD_SONG_TO_PLAYLIST:
-    //   newState = { ...state };
-    //   console.log('action.song inside EDIT_SONG Reducer', action.song)
-    //   newState[action.song.id] = action.song
-    //   return newState;
-    case ADD_LIKE_TO_SONG:
-      newState = { ...state };
-      // console.log('action.song inside EDIT_SONG Reducer', action.song)
-      newState[action.song.id] = action.song
-      return newState;
-    case DELETE_LIKE_FROM_SONG:
-      newState = { ...state};
-      delete newState[action.songId]
-      return newState
+    case LIKE_OR_UNLIKE_SONG:
+        newState = { ...state }
+        newState[action.song.id] = action.song
+        return newState;
     default:
       return state;
   }

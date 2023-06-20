@@ -21,12 +21,12 @@ class User(db.Model, UserMixin):
     hashed_password = db.Column(db.String(255), nullable=False)
     bio = db.Column(db.String(255))
     alias = db.Column(db.String(40))
-    profile_image = db.Column(db.String(40))
+    profile_picture = db.Column(db.Text)
     first_name = db.Column(db.String(40))
     last_name = db.Column(db.String(40))
-    style_id = db.Column(db.Integer, ForeignKey(add_prefix_for_prod('styles.id')))
 
-    style = db.relationship('Style', back_populates='owners')
+
+
 
     songs = db.relationship('Song', back_populates='owner', cascade="all, delete-orphan")
     albums = db.relationship('Album', back_populates='owner', cascade="all, delete-orphan")
@@ -56,9 +56,9 @@ class User(db.Model, UserMixin):
             'email': self.email,
             'alias': self.alias,
             'bio': self.bio,
-            'profileImage': self.profile_image,
+            'profilePicture': self.profile_picture,
             'firstName': self.first_name,
             'lastName': self.last_name,
-            'styleId': self.style_id,
+
             # 'likes': self.user_likes
         }
