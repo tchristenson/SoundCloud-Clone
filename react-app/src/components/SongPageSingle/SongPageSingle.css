@@ -36,6 +36,7 @@
     margin-left: -1px;
 
     padding: 6px 18px;
+    cursor: pointer;
 }
 
 .song-del-btn {

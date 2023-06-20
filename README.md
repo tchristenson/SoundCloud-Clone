@@ -41,6 +41,13 @@ Vibillow is a website clone, inspired by [SoundCloud](https://soundcloud.com/dis
 
 7. Browse the site and enjoy
 
+### Splash Page
+![Splash Page](/react-app/public/vibillow-splash-page.gif)
+### Songs Page
+![Single Video Page](/react-app/public/vibillow-songs-page.gif)
+### User Profile Page
+![User Profile Page](/react-app/public/vibillow-profile-page.gif)
+
 ### API Endpoints
 | HTTP Verbs | Endpoints | Action |
 | --- | --- | --- |
