@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
 import './Navigation.css';
+import SearchBar from '../SearchBar';
 
 function Navigation({ isLoaded }){
 	const sessionUser = useSelector(state => state.session.user);
@@ -12,6 +13,9 @@ function Navigation({ isLoaded }){
 			<li className='website-title'>
 				<NavLink className="website-title" exact to="/">Vibillow</NavLink>
 			</li>
+
+            <SearchBar />
+
 			{isLoaded && (
 				<li className='rightNav'>
 					<NavLink className='allNav' exact to="/albums">Albums</NavLink> {" "}
