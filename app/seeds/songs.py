@@ -16,7 +16,7 @@ def seed_songs():
         album_id = 2,
         name = 'Song Two',
         style_id = 2,
-        cover_image = 'http://vibillow-images.s3.amazonaws.com/486dcfce2d944abe98f997322d7a5d89.jpg',
+        cover_image = 'https://i.imgur.com/kvEQyMo.jpg',
         content = 'https://vibillow-songs.s3.amazonaws.com/0da8b2074d06482a9f4b6af8066d86ae.wav',
     )
 
@@ -25,7 +25,7 @@ def seed_songs():
         album_id = 3,
         name = 'Song Three',
         style_id = 3,
-        cover_image = 'http://vibillow-images.s3.amazonaws.com/65c6f472a54f4d0c91f95273157da559.jpg',
+        cover_image = 'https://i.imgur.com/w23vYOi.jpg',
         content = 'https://vibillow-songs.s3.amazonaws.com/2212ed545aff49ac9f69ebd364dc3673.wav',
         # playlist_id = 1
 
@@ -37,7 +37,7 @@ def seed_songs():
         album_id = 4,
         name = 'Song Four',
         style_id = 4,
-        cover_image = 'http://vibillow-images.s3.amazonaws.com/941d308d780b4c14bd49cba0fb95f48f.jpg',
+        cover_image = 'https://i.imgur.com/33858EJ.jpg',
         content = 'https://vibillow-songs.s3.amazonaws.com/3226d1015c2d4032b7a244cac7fb8b70.wav',
         # playlist_id = 1
 
@@ -49,7 +49,7 @@ def seed_songs():
         album_id = 5,
         name = 'Song Five',
         style_id = 7,
-        cover_image = 'http://vibillow-images.s3.amazonaws.com/b85e700b34474831a926e8f7709823d4.jpg',
+        cover_image = 'https://i.imgur.com/35t2wGj.jpg',
         content = 'https://vibillow-songs.s3.amazonaws.com/b92e4bbb980541c598a8ba5c0b4b3963.wav',
         # playlist_id = 1
 
@@ -61,7 +61,7 @@ def seed_songs():
         album_id = 5,
         name = 'Song Seven',
         style_id = 7,
-        cover_image = 'http://vibillow-images.s3.amazonaws.com/bc76c0b175bc46abad3bfdf479fa7cab.jpg',
+        cover_image = 'https://i.imgur.com/5CahQbr.jpg',
         content = 'https://vibillow-songs.s3.amazonaws.com/c2f43bee2623462a9932737b33d7dad8.wav',
         # playlist_id = 2
 
@@ -73,7 +73,7 @@ def seed_songs():
         album_id = 5,
         name = 'Song Eight',
         style_id = 7,
-        cover_image = 'http://vibillow-images.s3.amazonaws.com/83c9c9ab42ab4fd3bf856b7f768fc295.jpg',
+        cover_image = 'https://i.imgur.com/l9gesTl.jpg',
         content = 'https://vibillow-songs.s3.amazonaws.com/d981e8da966b432ea303f85a03422de3.wav',
         # playlist_id = 2
 
@@ -84,7 +84,7 @@ def seed_songs():
         album_id = 5,
         name = 'Song Nine',
         style_id = 7,
-        cover_image = 'http://vibillow-images.s3.amazonaws.com/d4659de1fafc427bbbc256c06eaf9a7b.jpg',
+        cover_image = 'https://i.imgur.com/PmHN2v3.jpg',
         content = 'https://vibillow-songs.s3.amazonaws.com/daf90ec7342b45c6bcd6e6dac1f5a64d.wav',
         # playlist_id = 3
 
@@ -95,7 +95,7 @@ def seed_songs():
         album_id = 5,
         name = 'Song Ten',
         style_id = 7,
-        cover_image = 'http://vibillow-images.s3.amazonaws.com/fe8731f738c9466b872a735273865642.png',
+        cover_image = 'https://i.imgur.com/QQGpEO9.jpg',
         content = 'https://vibillow-songs.s3.amazonaws.com/dcaa80a1d7434b349a50ec64c06ef59f.wav',
         # playlist_id = None
 
