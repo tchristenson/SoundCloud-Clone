@@ -71,7 +71,8 @@ function AllAlbums() {
             </div>
             <div>
               <div>{album.name}</div>
-              <div>alias: {users[album.ownerId]?.alias}</div> <div>Genre: {styleIds[album.styleId - 1]?.toUpperCase()}</div>
+              <div>alias: {users[album.ownerId]?.alias}</div> <div>
+                    Genre: {styleIds[album.styleId - 1]?.toUpperCase().charAt(0) + styleIds[album.styleId - 1]?.toLowerCase().substring(1)}</div>
             </div>
           </div>
 
