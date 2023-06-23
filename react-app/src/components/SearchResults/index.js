@@ -76,8 +76,8 @@ function SearchResults() {
               <div className="playlogo"></div>
               <div className="song-name">Title: {name}</div>
               <div>Artist: {songUsers2[id - 1]}  </div>
-              <div>Genre: {styleIds[styleId - 1]}</div>
-              <div>Album name: {albumIds[albumId - 1]} </div>
+              <div>Genre: {styleIds[styleId - 1]?.charAt(0).toUpperCase() + styleIds[styleId - 1]?.substring(1)}</div>
+              {/* <div>Album name: {albumIds[albumId - 1]} </div> */}
 
             </div>
             {/* <AddToPlaylistButton /> */}
@@ -93,7 +93,8 @@ function SearchResults() {
             </div>
             <div>
               <div>{album.name}</div>
-              <div>alias: {users[album.ownerId]?.alias}</div> <div>Genre: {styleIds[album.styleId - 1]?.toUpperCase()}</div>
+              <div>alias: {users[album.ownerId]?.alias}</div> <div>
+                    Genre: {styleIds[album.styleId - 1]?.toUpperCase().charAt(0) + styleIds[album.styleId - 1]?.toLowerCase().substring(1)}</div>
             </div>
           </div>
 
