@@ -1,0 +1,28 @@
+.search-bar {
+    background-color: transparent;
+    height: 30px;
+    border-radius: 30px;
+    border: 1px solid white;
+    width: 80%;
+    padding: 5px 5px 5px 10px;
+    color: white;
+}
+
+.search-bar-container {
+    position: relative;
+    width: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.search-button-container {
+    margin-left: 10px;
+    color: white;
+    font-weight: bold;
+}
+
+.search-button-container:hover {
+    cursor: pointer;
+    color: rgb(201, 201, 201);
+}

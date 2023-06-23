@@ -78,7 +78,7 @@ function SongPage() {
               <div className="playlogo"></div>
               <div className="song-name">Title: {name}</div>
               <div>Artist: {songUsers2[id - 1]}  </div>
-              <div>Genre: {styleIds[styleId - 1]}</div>
+              <div>Genre: {styleIds[styleId - 1]?.charAt(0).toUpperCase() + styleIds[styleId - 1]?.substring(1)}</div>
               <div>Album name: {albumIds[albumId - 1]} </div>
 
             </div>
