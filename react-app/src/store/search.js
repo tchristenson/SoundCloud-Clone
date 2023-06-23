@@ -25,7 +25,12 @@ export const searchSongsAlbumsUsersThunk = (query) => async (dispatch) => {
     console.log('query inside thunk ------->', query)
     const response = await fetch('/api/search', {
         method: 'POST',
-        body: query
+        headers: {
+            "Content-Type": "application/json",
+          },
+        body: JSON.stringify({
+            query: query
+          })
     })
     if (response.ok) {
         const searchResults = await response.json()

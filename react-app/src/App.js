@@ -20,6 +20,7 @@ import EditAlbumFormPage from "./components/EditAlbumForm";
 import UserSearchPage from "./components/UserSearchPage";
 // import UsersPlaylistPage from "./components/UserPlaylist";
 // import PlaylistFormPage from "./components/PlaylistFormPage";
+import SearchResults from "./components/SearchResults";
 
 function App() {
   const dispatch = useDispatch();
@@ -71,6 +72,9 @@ function App() {
           </Route>
           <Route exact path="/albums/:albumId">
             <AlbumPage />
+          </Route>
+          <Route exact path="/search">
+            <SearchResults />
           </Route>
           {/* <Route exact path="/playlists/current">
             <UsersPlaylistPage />
